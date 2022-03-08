@@ -43,6 +43,8 @@ class Dashboard extends CI_Controller
 	public function ambilTeknisi()
 	{
 		$queryGetDataTeknisi = $this->m->getDataTeknisi();
+		
+
 		echo json_encode($queryGetDataTeknisi);
 	}
 

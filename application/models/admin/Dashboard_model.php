@@ -9,9 +9,10 @@ class Dashboard_model extends CI_Model
 
 	public function getData()
 	{
-		$query = $this->db->select('*')
-			->from('tb_pesanan')
-			->where('status', null)
+		$query = $this->db->select('tp.*,tk.nama_keluhan')
+			->from('tb_pesanan tp')
+			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
+			->where('tp.status', null)
 			->get();
 		return $query->result();
 	}
@@ -20,7 +21,7 @@ class Dashboard_model extends CI_Model
 	{
 		$query = $this->db->select('*')
 			->from('user')
-			->where('level',2)
+			->where('level', 2)
 			->get();
 		return $query->result();
 	}
@@ -104,16 +105,29 @@ class Dashboard_model extends CI_Model
 
 	public function verifikasi($id_pesanan, $status, $teknisi)
 	{
-		$this->db->trans_start();
+		if ($status == 1) {
+			$this->db->trans_start();
 
-		$this->db->query("UPDATE tb_pesanan SET status = $status, teknisi = $teknisi WHERE id_pesanan = $id_pesanan");
-		$this->db->query("UPDATE user SET status = '0' where id_user = $teknisi");
-		$this->db->trans_complete();
-		if ($this->db->trans_status() === FALSE) {
-			return $result = array('error' => 1);
-		}else {
-			return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
-		} 
+			$this->db->query("UPDATE tb_pesanan SET status = $status, teknisi = $teknisi WHERE id_pesanan = $id_pesanan");
+			$this->db->query("UPDATE user SET status = '0' where id_user = $teknisi");
+			$this->db->trans_complete();
+			if ($this->db->trans_status() === FALSE) {
+				return $result = array('error' => 1);
+			} else {
+				return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
+			}
+		}else{
+			$this->db->trans_start();
+
+			$this->db->query("UPDATE tb_pesanan SET status = $status WHERE id_pesanan = $id_pesanan");
+			$this->db->trans_complete();
+			if ($this->db->trans_status() === FALSE) {
+				return $result = array('error' => 1);
+			} else {
+				return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
+			}
+		}
+		
 	}
 
 	public function updateStatusTeknisi($id_user, $status)

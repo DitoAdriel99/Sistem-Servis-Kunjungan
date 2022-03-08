@@ -399,7 +399,7 @@
 						baris += '<tr>' +
 							'<td>' + (i + 1) + '</td>' +
 							'<td>' + data[i].nama_customer + '</td>' +
-							'<td>' + data[i].keluhan + '</td>' +
+							'<td>' + data[i].nama_keluhan + '</td>' +
 							'<td><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + data[i].gambar + '></td>' +
 							'<td><a href="#form" data-toggle="modal" onclick="submit(' + data[i].id_pesanan + ')" class="btn btn-md btn-warning"><i class="fa fa-pencil"></i><a href="#detail_pesanan" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')" class="btn btn-md btn-success"><i class="fa fa-list"></i><a onclick="hapusData(' + data[i].id_pesanan + ')" class="btn btn-md btn-danger"><i class="fa fa-trash"></i></td>' +
 							'<tr>';
@@ -417,6 +417,13 @@
 			dataType: 'json',
 			success: function(data) {
 				console.log(data);
+
+				if(data['status'] == 1){
+					var ket = 'Tersedia';
+				}else{
+					var ket = 'Tidak Tersedia';
+				}
+
 				var baris = '';
 					for (var i = 0; i < data.length; i++) {
 						baris += '<tr>' +

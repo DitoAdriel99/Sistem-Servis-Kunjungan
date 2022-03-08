@@ -9,10 +9,11 @@ class Dashboard_model extends CI_Model
 
 	public function getData($id_user)
 	{
-		$query = $this->db->select('*')
-			->from('tb_pesanan')
+		$query = $this->db->select('tp.*,tk.nama_keluhan')
+			->from('tb_pesanan tp')
+			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
 			->where('id_user', $id_user)
-			->where('status', null)
+			// ->where('status', null)
 			// ->where('status', '1')
 			->get();
 		$exist = $this->db->affected_rows();

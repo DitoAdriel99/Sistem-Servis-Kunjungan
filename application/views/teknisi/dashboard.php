@@ -83,18 +83,18 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+						<!-- <div class="form-group">
 							<label class="control-label col-md-3">Jam Mulai</label>
 							<div class="col-md-9">
 
 								<label class="control-label" name="jam_mulai_detail"></label>
 
 							</div>
-						</div>
+						</div> -->
 					</div>
 					<div class="modal-footer">
-
 						<button type="button" id="btn_mulai" value="0" onclick="statuspekerjaan(this.value)" class="btn btn-primary">Mulai Kerja</button>
+						<button type="button" id="btn_selesai" value="1" onclick="statuspekerjaan(this.value)" class="btn btn-success">Pekerjaan Selesai</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
 					</div>
 				</form>
@@ -118,7 +118,7 @@
 							'<td>' + (i + 1) + '</td>' +
 							'<td>' + data[i].nama_customer + '</td>' +
 							'<td>' + data[i].alamat + '</td>' +
-							'<td>' + data[i].keluhan + '</td>' +
+							'<td>' + data[i].nama_keluhan + '</td>' +
 							'<td>' + data[i].detail_keluhan + '</td>' +
 							'<td><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + data[i].gambar + '></td>' +
 							'<td><a href="#detail_pesanan" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')" class="btn btn-md btn-success"><i class="fa fa-list"></i></td>' +
@@ -140,10 +140,15 @@
 
 				if(data['status_pekerjaan'] == null){
 					var sp = 'Menuju Lokasi'
+					$('#btn_selesai').hide();
 				} else if (data['status_pekerjaan'] == 0 ){
-					var sp = 'Proses'
+					var sp = 'Mulai Pekerjaan';
+					$('#btn_mulai').hide();
+					$('#btn_selesai').show();
 				} else {
-					var sp = 'Selesai'
+					var sp = 'Selesai';
+					$('#btn_mulai').hide();
+					$('#btn_selesai').hide();
 				}
 
 				$('#id_pesanan').val(data['id_pesanan']);

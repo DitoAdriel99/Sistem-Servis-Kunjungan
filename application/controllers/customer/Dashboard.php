@@ -70,8 +70,8 @@ class Dashboard extends CI_Controller
 			}
 
 			$result[$i++] = array(
-				// 'id' => $key->id_pesanan,
-				'keluhan' => $key->keluhan,
+				'id' => $key->id_pesanan,
+				'keluhan' => $key->nama_keluhan,
 				'harga' => $key->harga,
 				'gambar' => $key->gambar,
 				'status' => $status,

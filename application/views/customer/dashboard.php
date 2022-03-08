@@ -1,83 +1,87 @@
-<!-- ============================================================== -->
-<!-- Container fluid  -->
-<!-- ============================================================== -->
-<div class="container-fluid">
-	<div class="col-md-12 col-lg-12 col-sm-12">
-		<div class="white-box">
-			<div class="d-md-flex mb-3">
-				<h3 class="box-title mb-0">Pesanan Jasa Servis <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#form">Tambah Keluhan</button></h3>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="card">
+			<div class="card-header">
+				<h5>Pesanan Anda</h5>
+				<span>use class <code>table-hover</code> inside table element</span>
+				<div class="card-header-right">
+					<button class="btn waves-effect waves-light btn-primary" data-target="#forms" data-toggle="modal">Tambah Pesanan</button>
+				</div>
 			</div>
-			<div class="table-responsive">
-				<table class="table no-wrap">
-					<thead>
-						<tr>
-							<th class="border-top-0">#</th>
-							<th class="border-top-0">Keluhan</th>
-							<th class="border-top-0">Harga</th>
-							<th class="border-top-0">gambar</th>
-							<th class="border-top-0">Status</th>
-						</tr>
-					</thead>
-					<tbody id="target">
+			<div class="card-block table-border-style">
+				<div class="table-responsive">
+					<table class="table table-hover">
+						<thead>
+							<tr>
+								<th>#</th>
+								<th>Keluhan</th>
+								<th>Gambar</th>
+								<th>Status</th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody id="target">
 
-					</tbody>
-				</table>
+						</tbody>
+					</table>
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
 
-<!-- Bootstrap modal -->
-<div class="modal fade" id="form" role="dialog">
-	<div class="modal-dialog">
+<div class="modal fade" id="forms" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<!-- <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button> -->
-				<h3 class="modal-title">Form Pemesanan</h3>
+				<h5 class="modal-title" id="exampleModalLabel">Tambah Keluhan</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
 			</div>
-			<div class="modal-body form">
+			<div class="modal-body">
 				<form action="#" id="forms" class="form-horizontal" method="POST" enctype="multipart/form-data">
-					<div class="mb-3">
-						<label for="exampleInputEmail1" class="form-label">Keluhan</label>
-						<select class="form-select" name="keluhan" id="keluhan" onchange="harga_keluhan()" aria-label="Default select example">
-
-						</select>
-					</div>
-					<div class="mb-3">
-						<div class="form-floating">
-							<textarea class="form-control" id="detail_keluhan" name="detail_keluhan" placeholder="Leave a comment here" id="floatingTextarea"></textarea>
-							<label for="floatingTextarea">Detail Keluhan</label>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Keluhan</label>
+						<div class="col-sm-10">
+							<select name="keluhan" id="keluhan" onchange="harga_keluhan()" class="form-control fill">
+							</select>
 						</div>
 					</div>
-					<div class="mb-3">
-						<div class="mb-3">
-							<label for="formFileSm" class="form-label">Masukan Gambar</label>
-							<input class="form-control form-control-sm" name="gambar" id="gambar" onchange="loadFile(event)" type="file">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Detail Keluhan</label>
+						<div class="col-sm-10">
+							<textarea rows="5" cols="5" class="form-control" name="detail_keluhan" placeholder="Default textarea"></textarea>
 						</div>
 					</div>
-					<div class="mb-3">
-						<div class="col-md-9" id="preview">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Upload Gambar</label>
+						<div class="col-sm-10">
+							<input type="file" name="gambar" id="gambar" onchange="loadFile(event)" class="form-control">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Gambar Barang</label>
+						<div class="col-sm-10" id="preview">
 							<div class="tampil-gambar" accept="image/*"><img id="output" src="" style="height: 100px; "></div>
 						</div>
 					</div>
-					<div class="mb-3">
-						<label for="exampleInputEmail1" class="form-label">Harga</label>
-						<input class="form-control" type="text" name="harga" id="harga" value="Disabled readonly input" aria-label="Disabled input example" disabled readonly>
-						</select>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Disable Input</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="harga" id="harga" value="0" placeholder="Disabled text" disabled="">
+						</div>
 					</div>
-					<!-- <button type="submit" class="btn btn-primary">Submit</button> -->
+
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="btnSave" onclick="tambahData()" class="btn btn-primary">Save</button>
-				<button type="button" id="btnEdit" onclick="editData()" class="btn btn-warning">Edit</button>
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" id="btnSave" onclick="tambahData()" class="btn btn-primary">Save changes</button>
 			</div>
-		</div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
+		</div>
+	</div>
 </div>
-
-
 
 <script>
 	ambilData();
@@ -119,18 +123,11 @@
 			cache: false,
 			processData: false,
 			success: function(hasil) {
-				$(".form-group").removeClass('has-error');
-				// $( ".form-group" ).after('')
-
 				var json = $.parseJSON(hasil)
-				// console.log(json.data);
+				console.log(json.error);
 				if (json.error == 0) {
-					Swal.fire(
-						'Good job!',
-						'You clicked the button!',
-						'success'
-					);
-					$('#form').modal('hide');
+					alert('Data Berhasil Dimasukan')
+					$('#forms').modal('hide');
 					ambilData();
 					// $("[name='nama_customer']").val('')
 					// $("[name='alamat']").val('')
@@ -142,15 +139,8 @@
 
 
 				} else {
-					for (let index = 0; index < Object.keys(json.data).length; index++) {
-						$('[name="' + Object.keys(json.data)[index] + '"]').closest(".form-group").addClass('has-error')
-						// $('[name="'+Object.keys(json.data)[index]+'"]').after("<span class='help-block'>"+Object.values(json.data)[index]+"</span>")
-					}
-					Swal.fire(
-						'Gagal!',
-						json.data,
-						'error'
-					);
+
+					alert('Data Gagal dimasukan')
 					// console.log(Object.keys(json.data)[0]);
 					// alert(json.data);
 					// ambilData();
@@ -211,10 +201,10 @@
 						baris += '<tr>' +
 							'<td>' + (i + 1) + '</td>' +
 							'<td class="txt-oflo">' + data[i].keluhan + '</td>' +
-							'<td class="txt-oflo">' + data[i].harga + '</td>' +
 							'<td class="txt-oflo"><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + data[i].gambar + '></td>' +
 							'<td class="txt-oflo">' + data[i].status + '</td>' +
-							'<tr>';
+							'<td class="txt-oflo"><button class="btn waves-effect waves-light btn-info" onclick="detail(' + data[i].id_pesanan + ')"><i class="icofont icofont-info-square">cek Detail</i></button></td>'
+						'<tr>';
 					}
 					$('#target').html(baris);
 				}

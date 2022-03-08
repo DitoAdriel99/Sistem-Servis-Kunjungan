@@ -107,11 +107,12 @@ class Dashboard extends CI_Controller
 		$id_pesanan = $this->input->post('id_pesanan');
 		$status_pekerjaan = $this->input->post('status_pekerjaan');
 
+		// $time = date("H:i:s");
 
 		$update = $this->m->statuspekerjaan($id_pesanan, $status_pekerjaan);
 
-		print_r($update);
-		die();
+		// print_r($update);
+		// die();
 
 		if ($update['error'] == 0) {
 			$result = array(
