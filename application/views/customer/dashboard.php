@@ -83,6 +83,62 @@
 	</div>
 </div>
 
+<div class="modal fade bd-example-modal-lg" id="detail_forms" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Detail Keluhan</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="#" id="forms" class="form-horizontal" method="POST" enctype="multipart/form-data">
+					<input type="hidden" name="id_pesanan" id="id_pesanan" />
+
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Keluhan</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="detail_keluhan" placeholder="Disabled text" readonly>
+
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Detail Keluhan</label>
+						<div class="col-sm-10">
+							<textarea rows="5" cols="5" class="form-control" name="detail_keluhan_detail" placeholder="Default textarea" readonly></textarea>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Gambar Barang</label>
+						<div class="col-sm-10" id="preview">
+							<div class="tampil-gambar" accept="image/*"><img id="output_detail" src="" style="height: 100px; "></div>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Harga</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="harga_detail" id="harga" value="0" placeholder="Disabled text" readonly>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Status Pekerjaan</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="status_pekerjaan_detail" id="harga" value="0" placeholder="Disabled text" readonly>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" id="btnSelesai" onclick="selesai()" class="btn btn-success waves-effect waves-light">Verifikasi selesai</button>
+				<button type="button" id="btnBayar" onclick="bayar()" class="btn btn-info waves-effect waves-light">Pembayaran </button>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 	ambilData();
 	selectKeluhan();
@@ -203,11 +259,46 @@
 							'<td class="txt-oflo">' + data[i].keluhan + '</td>' +
 							'<td class="txt-oflo"><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + data[i].gambar + '></td>' +
 							'<td class="txt-oflo">' + data[i].status + '</td>' +
-							'<td class="txt-oflo"><button class="btn waves-effect waves-light btn-info" onclick="detail(' + data[i].id_pesanan + ')"><i class="icofont icofont-info-square">cek Detail</i></button></td>'
+							'<td class="txt-oflo"><button class="btn waves-effect waves-light btn-info" href="#detail_forms" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="detail_pesanan(' + data[i].id_pesanan + ')"><i class="icofont icofont-info-square">cek Detail</i></button></td>'
 						'<tr>';
 					}
 					$('#target').html(baris);
 				}
+			}
+		});
+	}
+
+	function detail_pesanan(x) {
+		$.ajax({
+			type: 'post',
+			url: '<?= base_url() . "customer/dashboard/ambilId" ?>',
+			dataType: 'json',
+			data: 'id_pesanan=' + x,
+			success: function(data) {
+				console.log(data)
+				if (data['status_pekerjaan'] == null) {
+					var sp = 'Menuju Lokasi'
+					$('#btnSelesai').hide();
+					$('#btnBayar').hide();
+				} else if (data['status_pekerjaan'] == 0) {
+					var sp = 'Mulai Pekerjaan';
+					$('#btnSelesai').hide();
+					$('#btnBayar').hide();
+				} else {
+					var sp = 'Selesai';
+					$('#btnSelesai').show();
+					$('#btnBayar').hide();
+				}
+
+
+				$('#id_pesanan').val(data['id_pesanan']);
+				$('[name="detail_keluhan"]').val(data['keluhan']);
+				$('[name="detail_keluhan_detail"]').val(data['detail_keluhan']);
+				$('[name="harga_detail"]').val(data['harga']);
+				$('[name="status_pekerjaan_detail"]').val(sp);
+				$('[name="jam_mulai_detail"]').val(data['jam_mulai']);
+
+				$('#output_detail').attr('src', '<?= base_url() ?>gambar/' + data['gambar']);
 			}
 		});
 	}

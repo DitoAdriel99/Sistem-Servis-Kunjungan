@@ -51,6 +51,50 @@ class Dashboard extends CI_Controller
 		// print_r($queryGetDataKeluhan);
 	}
 
+	public function ambilId()
+	{
+		$id_pesanan = $this->input->post('id_pesanan');
+		$where = array('id_pesanan' => $id_pesanan);
+		$data = $this->m->getId($id_pesanan);
+
+		// print_r($data);
+		// die();
+
+		if ($data['error'] == 0) {
+			$data['result'];
+			$dt = array(
+				'id_pesanan' => $data['result']->id_pesanan,
+				'nama_customer' => $data['result']->nama_customer,
+				'alamat' => $data['result']->alamat,
+				'keluhan' => $data['result']->nama_keluhan,
+				'detail_keluhan' => $data['result']->detail_keluhan,
+				'jam_mulai' => $data['result']->jam_mulai,
+				'jam_selesai' => $data['result']->jam_selesai,
+				'status_pekerjaan' => $data['result']->status_pekerjaan,
+				'harga' => $data['result']->harga,
+				'gambar' => $data['result']->gambar,
+				'status' => $data['result']->status,
+				'status_pekerjaan' => $data['result']->status_pekerjaan,
+			);
+		} else {
+			$dt = array(
+				'id_pesanan' => $data['error'],
+				'nama_customer' => $data['error'],
+				'keluhan' => $data['error'],
+				'detail_keluhan' => $data['error'],
+				'jam_mulai' => $data['error'],
+				'jam_selesai' => $data['error'],
+				'status_pekerjaan' => $data['error'],
+				'harga' => $data['error'],
+				'gambar' => $data['error'],
+				'status' => $data['error'],
+				'status_pekerjaan' => $data['error'],
+			);
+		}
+		echo json_encode($dt);
+
+	}
+
 	public function ambilData()
 	{
 		$id_user = $this->session->userdata('id_user');
@@ -63,18 +107,20 @@ class Dashboard extends CI_Controller
 		foreach ($queryGetData['result'] as $key) {
 			if ($key->status === '0') {
 				$status = 'Ditolak';
-			}else if($key->status === '1'){
+			} else if ($key->status === '1') {
 				$status = 'Diterima';
-			}else{
+			} else {
 				$status = 'Menunggu';
 			}
 
+
 			$result[$i++] = array(
-				'id' => $key->id_pesanan,
+				'id_pesanan' => $key->id_pesanan,
 				'keluhan' => $key->nama_keluhan,
 				'harga' => $key->harga,
 				'gambar' => $key->gambar,
 				'status' => $status,
+
 			);
 		}
 		echo json_encode($result);
@@ -165,6 +211,9 @@ class Dashboard extends CI_Controller
 		// echo json_encode($data);
 
 	}
+
+
+
 	public function sessions()
 	{
 		print_r($this->session->userdata());

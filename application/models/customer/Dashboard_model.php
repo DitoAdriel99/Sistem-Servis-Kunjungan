@@ -24,6 +24,21 @@ class Dashboard_model extends CI_Model
 		}
 	}
 
+	public function getId($where)
+	{
+		$query = $this->db->select('tp.*, tk.nama_keluhan')
+			->from('tb_pesanan tp')
+			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
+			->where('tp.id_pesanan', $where)
+			->get();
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0, 'result' => $query->row());
+		}else{
+			return $result = array('error' => 1, 'result' => 'data tidak ditemukan');
+		}
+	}
+
 	public function insertData($data, $table)
 	{
 		$this->db->insert($table, $data);
