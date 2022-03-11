@@ -132,7 +132,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" id="btnSelesai" onclick="selesai()" class="btn btn-success waves-effect waves-light">Verifikasi selesai</button>
+				<button type="button" id="btnSelesai" value="1" onclick="verifikasi(this.value)" class="btn btn-success waves-effect waves-light">Verifikasi selesai</button>
 				<button type="button" id="btnBayar" onclick="bayar()" class="btn btn-info waves-effect waves-light">Pembayaran </button>
 			</div>
 		</div>
@@ -300,6 +300,13 @@
 
 				$('#output_detail').attr('src', '<?= base_url() ?>gambar/' + data['gambar']);
 			}
+		});
+	}
+
+	function verifikasi(x){
+		$.ajax({
+			type: 'post',
+			url : '<?= base_url() . "customer/dashboard/verifikasi"?>'
 		});
 	}
 </script>

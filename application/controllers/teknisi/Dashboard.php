@@ -106,8 +106,9 @@ class Dashboard extends CI_Controller
 	{
 		$id_pesanan = $this->input->post('id_pesanan');
 		$status_pekerjaan = $this->input->post('status_pekerjaan');
-		$format = 'DATE_RFC822';
-		$time = time();
+		date_default_timezone_set("America/New_York");
+		$time=date("h");
+		// die();
 
 		$update = $this->m->statuspekerjaan($id_pesanan, $status_pekerjaan, $time);
 
