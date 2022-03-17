@@ -79,7 +79,8 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" id="btn_mulai" value="0" onclick="statuspekerjaan(this.value)" class="btn btn-primary">Mulai Kerja</button>
-						<button type="button" id="btn_selesai" value="1" onclick="statuspekerjaan(this.value)" class="btn btn-success">Pekerjaan Selesai</button>
+						<button type="button" id="btn_modal"href="#selesai" data-toggle="modal" class="btn btn-success"> Selesai</button>
+						<!-- <button type="button" id="btn_selesai" value="1" onclick="statuspekerjaan(this.value)" class="btn btn-success">Pekerjaan Selesai</button> -->
 						<button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
 					</div>
 				</form>
@@ -87,8 +88,50 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="selesai" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="modal-title">Bukti Pekerjaan</h3>
+			</div>
+			<div class="modal-body">
+				<form action="#" id="forms" class="form-horizontal" method="POST" enctype="multipart/form-data">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Upload Gambar</label>
+						<div class="col-sm-10">
+							<input type="file" name="gambar_selesai" id="gambar_pekerjaan" onchange="loadFile(event)" class="form-control">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Gambar Barang</label>
+						<div class="col-sm-10" id="preview">
+							<div class="tampil-gambar" accept="image/*"><img id="output" src="" style="height: 100px; "></div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" id="btnSelesai" value="1" onclick="selesai(this.value)" class="btn btn-primary">Selesai</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
 <script>
 	ambildata();
+
+	var loadFile = function(event) {
+		var reader = new FileReader();
+		reader.onload = function() {
+			var output = document.getElementById('output');
+			output.src = reader.result;
+		};
+		reader.readAsDataURL(event.target.files[0]);
+	}
+
 
 	function ambildata() {
 		$.ajax({
@@ -122,18 +165,22 @@
 			dataType: 'json',
 			success: function(data) {
 				console.log(data['status_pekerjaan']);
+				alert(data['status_pekerjaan'])
 
 				if (data['status_pekerjaan'] == null) {
 					var sp = 'Menuju Lokasi'
-					$('#btn_selesai').hide();
+					$('#btn_mulai').show();
+					$('#btn_modal').hide();
 				} else if (data['status_pekerjaan'] == 0) {
 					var sp = 'Mulai Pekerjaan';
 					$('#btn_mulai').hide();
 					$('#btn_selesai').show();
-				} else {
+				} else if (data['status_pekerjaan'] == 1) {
 					var sp = 'Selesai';
 					$('#btn_mulai').hide();
 					$('#btn_selesai').hide();
+					$('#btn_modal').hide();
+					
 				}
 
 				if (data['jam_mulai'] == null) {
@@ -197,5 +244,38 @@
 
 			}
 		})
+	}
+
+	function selesai() {
+		//stop submit the form, we will post it manually.
+		// event.preventDefault();
+
+		// Get form
+		var form = $('#forms')[0];
+
+
+		var data = new FormData();
+
+		// If you want to add an extra field for the FormData
+		data.append('id_pesanan',$('#id_pesanan').val());
+		data.append('gambar_pekerjaan', $('#gambar_pekerjaan').prop('files')[0]);
+
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() . 'teknisi/dashboard/selesai' ?>',
+			data: data,
+			contentType: false,
+			cache: false,
+			processData: false,
+			success: function(hasil) {
+
+				var json = $.parseJSON(hasil)
+				console.log(json);
+				$('#detail_pesanan').modal('hide');
+				$('#selesai').modal('hide');
+				alert('Harap Menunggu Verifikasi Dari Customer')
+				
+			}
+		});
 	}
 </script>

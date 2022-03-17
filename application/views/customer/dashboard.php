@@ -5,7 +5,7 @@
 				<h5>Pesanan Anda</h5>
 				<span>use class <code>table-hover</code> inside table element</span>
 				<div class="card-header-right">
-					<button class="btn waves-effect waves-light btn-primary" data-target="#forms" data-toggle="modal">Tambah Pesanan</button>
+					<button class="btn waves-effect waves-light btn-primary" id="btnTambah" data-target="#forms" data-toggle="modal">Tambah Pesanan</button>
 				</div>
 			</div>
 			<div class="card-block table-border-style">
@@ -247,11 +247,9 @@
 			success: function(data) {
 				console.log(data);
 				if (data.length < 1) {
-					baris += '<tr>' +
-						'<td colspan="5" class="text-center"> Data Tidak Ditemukan</td>' +
-						'<tr>';
-					$('#target').html(baris);
+					
 				} else {
+					$('#btnTambah').hide();
 					var baris = '';
 					for (var i = 0; i < data.length; i++) {
 						baris += '<tr>' +

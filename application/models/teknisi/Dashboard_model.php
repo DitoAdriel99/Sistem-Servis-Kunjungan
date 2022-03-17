@@ -43,26 +43,50 @@ class Dashboard_model extends CI_Model
 		}
 	}
 
-	public function statuspekerjaan($id_pesanan, $status_pekerjaan, $time)
+	public function statuspekerjaan($data)
 	{
-		if ($status_pekerjaan == 0) {
-			$this->db->trans_start();
+		// if ($status_pekerjaan == 0) {
+		// 	$this->db->trans_start();
 
-			$this->db->query("UPDATE tb_pesanan SET status_pekerjaan = $status_pekerjaan, jam_mulai = $time WHERE id_pesanan = $id_pesanan");
-			$this->db->trans_complete();
-			if ($this->db->trans_status() === FALSE) {
-				return $result = array('error' => 1);
-			} else {
-				return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
-			}
+		// 	$this->db->query("UPDATE tb_pesanan SET status_pekerjaan = $status_pekerjaan, jam_mulai = $time WHERE id_pesanan = $id_pesanan");
+		// 	$this->db->trans_complete();
+		// 	if ($this->db->trans_status() === FALSE) {
+		// 		return $result = array('error' => 1);
+		// 	} else {
+		// 		return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
+		// 	}
+		// } else {
+		// 	$this->db->query("UPDATE tb_pesanan SET status_pekerjaan = $status_pekerjaan, jam_selesai = $time WHERE id_pesanan = $id_pesanan");
+		// 	$this->db->trans_complete();
+		// 	if ($this->db->trans_status() === FALSE) {
+		// 		return $result = array('error' => 1);
+		// 	} else {
+		// 		return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
+		// 	}
+		// }
+		$this->db->where('id_pesanan', $data['id_pesanan']);
+		$this->db->update('tb_pesanan', $data);
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0, 'id_pesanan' => $data['id_pesanan']);
 		} else {
-			$this->db->query("UPDATE tb_pesanan SET status_pekerjaan = $status_pekerjaan, jam_selesai = $time WHERE id_pesanan = $id_pesanan");
-			$this->db->trans_complete();
-			if ($this->db->trans_status() === FALSE) {
-				return $result = array('error' => 1);
-			} else {
-				return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
-			}
+			return $result = array('error' => 1,);
+		}
+	}
+
+	public function selesai($data)
+	{
+		$this->db->where('id_pesanan', $data['id_pesanan']);
+		$this->db->update('tb_pesanan', array(
+			'gambar_pekerjaan' => $data['gambar_pekerjaan'],
+			'status_pekerjaan' => "1",
+			'jam_selesai' => $data['jam_selesai']
+		));
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0, 'id_pesanan' => $data['id_pesanan']);
+		} else {
+			return $result = array('error' => 1,);
 		}
 	}
 }

@@ -106,11 +106,17 @@ class Dashboard extends CI_Controller
 	{
 		$id_pesanan = $this->input->post('id_pesanan');
 		$status_pekerjaan = $this->input->post('status_pekerjaan');
-		date_default_timezone_set("America/New_York");
-		$time=date("h");
+		date_default_timezone_set("Asia/Jakarta");
+		$time = date("h:i:sa");
 		// die();
 
-		$update = $this->m->statuspekerjaan($id_pesanan, $status_pekerjaan, $time);
+		$data = array(
+			'id_pesanan' => $id_pesanan,
+			'status_pekerjaan' => $status_pekerjaan,
+			'jam_mulai' => $time
+		);
+
+		$update = $this->m->statuspekerjaan($data);
 
 		// print_r($time);
 		// die();
@@ -130,5 +136,61 @@ class Dashboard extends CI_Controller
 		// 	print_r($result);
 		// 	die();
 		echo json_encode($result);
+	}
+
+	public function selesai()
+	{
+		$id_pesanan = $this->input->post('id_pesanan');
+		$status_pekerjaan = $this->input->post('status_pekerjaan');
+		date_default_timezone_set("Asia/Jakarta");
+		$time = date("h:i:sa");
+		// print_r($id_pesanan);
+		// die;
+		$gambar_pekerjaan = $this->input->post('gambar_pekerjaan');
+
+		$config['upload_path']   = './gambar/';
+		$config['allowed_types'] = 'gif|jpg|png';
+		$config['max_size']      = 1024;
+		$config['max_width']     = 1024;
+		$config['max_height']    = 1200;
+		$this->load->library('upload', $config);
+
+		if ($this->upload->do_upload('gambar_pekerjaan')) {
+			$dataUpload = array('upload_data' => $this->upload->data());
+		} else {
+			$error = $this->upload->display_errors();
+			// $this->load->view('upload_form', $error);
+			$result = array(
+				'error' => 1,
+				'data' => $error
+			);
+			echo json_encode($result);
+			exit;
+		}
+
+		$data = array(
+			'id_pesanan' => $id_pesanan,
+			'gambar_pekerjaan' => $dataUpload['upload_data']['file_name'],
+			'jam_selesai' => $time
+		);
+		// print_r($data);
+		// die();
+
+		$insert = $this->m->selesai($data, 'tb_pesanan');
+		if ($insert['error'] == 0) {
+			$result = array(
+				'error' => 0,
+				'data' => $data
+			);
+			echo json_encode($result);
+		} else {
+			$result = array(
+				'error' => 1,
+				'data' => $data
+			);
+			echo json_encode($result);
+		}
+
+
 	}
 }
