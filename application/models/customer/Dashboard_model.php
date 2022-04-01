@@ -12,8 +12,8 @@ class Dashboard_model extends CI_Model
 		$query = $this->db->select('tp.*,tk.nama_keluhan')
 			->from('tb_pesanan tp')
 			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
-			->where('id_user', $id_user)
-			// ->where('status', null)
+			->where('tp.id_user', $id_user)
+			// ->where('tp.bukti_pembayaran', null)
 			// ->where('status', '1')
 			->get();
 		$exist = $this->db->affected_rows();
@@ -103,15 +103,43 @@ class Dashboard_model extends CI_Model
 		$this->db->delete($table);
 	}
 
-	public function verifikasi($id_pesanan, $status)
+	// public function verifikasi($id_pesanan, $status)
+	// {
+	// 	$this->db->where('id_pesanan', $id_pesanan);
+	// 	$this->db->update('tb_pesanan', array('status' => $status));
+	// 	$exist = $this->db->affected_rows();
+	// 	if ($exist > 0) {
+	// 		return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
+	// 	} else {
+	// 		return $result = array('error' => 1,);
+	// 	}
+	// }
+
+	public function verifikasiSelesai($id_pesanan,$teknisi,$verifikasi_selesai)
 	{
-		$this->db->where('id_pesanan', $id_pesanan);
-		$this->db->update('tb_pesanan', array('status' => $status));
+		$this->db->trans_start();
+
+		$this->db->query("UPDATE tb_pesanan SET verifikasi_selesai = $verifikasi_selesai WHERE id_pesanan = $id_pesanan");
+		$this->db->query("UPDATE user set status = '1' where id_user = $teknisi");
+		$this->db->trans_complete();
+		if ($this->db->trans_status() === FALSE) {
+			return $result = array('error' => 1);
+		} else {
+			return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
+		}
+
+	}
+
+	public function uploadBukti($data)
+	{
+		$this->db->where('id_pesanan',$data['id_pesanan']);
+		$this->db->update('tb_pesanan', $data);
 		$exist = $this->db->affected_rows();
 		if ($exist > 0) {
-			return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
+			return $result = array('error' => 0, 'id_pesanan' => $data['id_pesanan']);
 		} else {
 			return $result = array('error' => 1,);
 		}
+		
 	}
 }

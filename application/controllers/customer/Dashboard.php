@@ -74,6 +74,7 @@ class Dashboard extends CI_Controller
 				'harga' => $data['result']->harga,
 				'gambar' => $data['result']->gambar,
 				'status' => $data['result']->status,
+				'teknisi' => $data['result']->teknisi,
 				'status_pekerjaan' => $data['result']->status_pekerjaan,
 			);
 		} else {
@@ -120,6 +121,8 @@ class Dashboard extends CI_Controller
 				'harga' => $key->harga,
 				'gambar' => $key->gambar,
 				'status' => $status,
+				'bukti_pembayaran' => $key->bukti_pembayaran,
+
 
 			);
 		}
@@ -209,6 +212,83 @@ class Dashboard extends CI_Controller
 			}
 		}
 		// echo json_encode($data);
+
+	}
+
+	public function verifikasi()
+	{
+		$id_pesanan = $this->input->post('id_pesanan');
+		$teknisi = $this->input->post('teknisi');
+		// echo $teknisi;
+		// die();
+
+		$verifikasi_selesai = $this->input->post('verifikasi_selesai');
+
+		
+
+		$update = $this->m->verifikasiSelesai($id_pesanan,$teknisi,$verifikasi_selesai);
+
+		if ($update['error'] == 0) {
+			$result = array(
+				'error' => 0,
+				'data' =>'berhasil'
+			);
+		}else{
+			$result = array(
+				'error' => 1,
+				'data' =>'Data Gagal Di verifikasi'
+			);
+		}
+
+		echo json_encode($result);
+	}
+
+	public function uploadBukti()
+	{
+		$id_pesanan = $this->input->post('id_pesanan');
+
+		$config['upload_path']   = './gambar/';
+		$config['allowed_types'] = 'gif|jpg|png|pdf';
+		$config['max_size']      = 9000;
+		$config['max_width']     = 9000;
+		$config['max_height']    = 9000;
+		$this->load->library('upload', $config);
+
+		if (!$this->upload->do_upload('bukti_pembayaran')) {
+			$error = $this->upload->display_errors();
+			// $this->load->view('upload_form', $error);
+			$result = array(
+				'error' => 1,
+				'data' => $error
+			);
+			echo json_encode($result);
+			exit;
+		} else {
+			$dataUpload = array('upload_data' => $this->upload->data());
+			// $image = $dataUpload['upload_data']['file_name'];
+		}
+
+		$data = array(
+			'id_pesanan' => $id_pesanan,
+			'bukti_pembayaran' => $dataUpload['upload_data']['file_name']
+		);
+
+		$upload = $this->m->uploadBukti($data);
+
+		if ($upload['error'] == 0) {
+			$result = array(
+				'error' => 0,
+				'data' =>'Berhasil Di Upload Harap menunggu Konfirmasi'
+			);
+		}else{
+			$result = array(
+				'error' => 1,
+				'data' =>'Data Gagal Di Upload'
+			);
+		}
+
+		echo json_encode($result);
+
 
 	}
 

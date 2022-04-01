@@ -95,6 +95,8 @@
 			<div class="modal-body">
 				<form action="#" id="forms" class="form-horizontal" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="id_pesanan" id="id_pesanan" />
+					<input type="hidden" name="teknisi" id="teknisi" />
+
 
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Keluhan</label>
@@ -133,7 +135,41 @@
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				<button type="button" id="btnSelesai" value="1" onclick="verifikasi(this.value)" class="btn btn-success waves-effect waves-light">Verifikasi selesai</button>
-				<button type="button" id="btnBayar" onclick="bayar()" class="btn btn-info waves-effect waves-light">Pembayaran </button>
+				<button type="button" id="btnBayar" href="#pembayaran_forms" data-toggle="modal" class="btn btn-info waves-effect waves-light">Pembayaran </button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="pembayaran_forms" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Upload Pembayaran</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="#" id="forms_upload" class="form-horizontal" method="POST" enctype="multipart/form-data">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Upload Gambar</label>
+						<div class="col-sm-10">
+							<input type="file" name="bukti_pembayaran" id="bukti_pembayaran" onchange="loadFile1(event)" class="form-control">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Gambar Barang</label>
+						<div class="col-sm-10" id="preview1">
+							<div class="tampil-gambar" accept="image/*"><img id="output1" src="" style="height: 100px; "></div>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" id="btnBayar" onclick="bayar()" class="btn btn-info waves-effect waves-light">Upload</button>
 			</div>
 		</div>
 	</div>
@@ -147,6 +183,15 @@
 		var reader = new FileReader();
 		reader.onload = function() {
 			var output = document.getElementById('output');
+			output.src = reader.result;
+		};
+		reader.readAsDataURL(event.target.files[0]);
+	}
+
+	var loadFile1 = function(event) {
+		var reader = new FileReader();
+		reader.onload = function() {
+			var output = document.getElementById('output1');
 			output.src = reader.result;
 		};
 		reader.readAsDataURL(event.target.files[0]);
@@ -205,6 +250,43 @@
 		});
 	}
 
+	function bayar() {
+		var form = $('#forms_upload')[0];
+
+		var data = new FormData();
+		data.append('id_pesanan', $("[name='id_pesanan']").val());
+		data.append('teknisi', $("[name='teknisi']").val());
+		data.append('bukti_pembayaran', $('#bukti_pembayaran').prop('files')[0]);
+
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() . 'customer/dashboard/uploadBukti' ?>',
+			data: data,
+			contentType: false,
+			cache: false,
+			processData: false,
+			success: function(hasil) {
+				var json = $.parseJSON(hasil)
+				console.log(json.error);
+
+				if (json.error == 0) {
+					alert(json.data);
+					$('#detail_forms').hide();
+					$('#pembayaran_forms').hide();
+					location.reload()
+
+
+				} else {
+					alert(json.data);
+					$('#detail_forms').hide();
+					$('#pembayaran_forms').hide();
+					location.reload()
+
+				}
+			}
+		});
+	}
+
 	function selectKeluhan(id) {
 		var x = $('#keluhan');
 		if (id !== undefined) {
@@ -245,8 +327,8 @@
 			url: '<?= base_url() . "customer/dashboard/ambilData" ?>',
 			dataType: 'json',
 			success: function(data) {
-				console.log(data);
-				if (data.length < 1) {
+				console.log(data.length);
+				if (data.length <1 ) {
 					
 				} else {
 					$('#btnTambah').hide();
@@ -262,6 +344,7 @@
 					}
 					$('#target').html(baris);
 				}
+
 			}
 		});
 	}
@@ -285,11 +368,16 @@
 				} else {
 					var sp = 'Selesai';
 					$('#btnSelesai').show();
-					$('#btnBayar').hide();
+					$('#btnBayar').show();
 				}
+				// if (data['verifikasi_selesai'] == 1) {
+				// 	$('#btnSelesai').hide();
+				// 	$('#btnBayar').show();
+				// }
 
 
 				$('#id_pesanan').val(data['id_pesanan']);
+				$('#teknisi').val(data['teknisi']);
 				$('[name="detail_keluhan"]').val(data['keluhan']);
 				$('[name="detail_keluhan_detail"]').val(data['detail_keluhan']);
 				$('[name="harga_detail"]').val(data['harga']);
@@ -301,10 +389,24 @@
 		});
 	}
 
-	function verifikasi(x){
+	function verifikasi(x) {
+		var id_pesanan = $('#id_pesanan').val()
+		var teknisi = $('#teknisi').val()
+
+		// console.log(id_pesanan)
+
 		$.ajax({
 			type: 'post',
-			url : '<?= base_url() . "customer/dashboard/verifikasi"?>'
+			url: '<?= base_url() . "customer/dashboard/verifikasi" ?>',
+			dataType: 'json',
+			data: {
+				'id_pesanan': id_pesanan,
+				'teknisi': teknisi,
+				'verifikasi_selesai': x,
+			},
+			success: function(data) {
+				console.log(data)
+			}
 		});
 	}
 </script>
