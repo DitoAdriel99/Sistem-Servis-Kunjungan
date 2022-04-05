@@ -104,29 +104,29 @@ class Dashboard extends CI_Controller
 		// print_r($id_user);
 		// die();
 
-		$i = 0;
-		foreach ($queryGetData['result'] as $key) {
-			if ($key->status === '0') {
-				$status = 'Ditolak';
-			} else if ($key->status === '1') {
-				$status = 'Diterima';
-			} else {
-				$status = 'Menunggu';
-			}
+		// $i = 0;
+		// foreach ($queryGetData['result'] as $key) {
+		// 	if ($key->status === '0') {
+		// 		$status = 'Ditolak';
+		// 	} else if ($key->status === '1') {
+		// 		$status = 'Diterima';
+		// 	} else {
+		// 		$status = 'Menunggu';
+		// 	}
 
 
-			$result[$i++] = array(
-				'id_pesanan' => $key->id_pesanan,
-				'keluhan' => $key->nama_keluhan,
-				'harga' => $key->harga,
-				'gambar' => $key->gambar,
-				'status' => $status,
-				'bukti_pembayaran' => $key->bukti_pembayaran,
+		// 	$result[$i++] = array(
+		// 		'id_pesanan' => $key->id_pesanan,
+		// 		'keluhan' => $key->nama_keluhan,
+		// 		'harga' => $key->harga,
+		// 		'gambar' => $key->gambar,
+		// 		'status' => $status,
+		// 		'bukti_pembayaran' => $key->bukti_pembayaran,
 
 
-			);
-		}
-		echo json_encode($result);
+		// 	);
+		// }
+		echo json_encode($queryGetData);
 	}
 
 	public function tambahData()

@@ -40,7 +40,7 @@ class Login extends CI_Controller {
 				redirect('customer/Dashboard');
 			}
 		}else{
-			$data['pesan'] = "cek";
+			$data['pesan'] = "Harap Periksa Kembali Username & Password!";
 			$this->load->view('viewLogin',$data);
 		}
 	}

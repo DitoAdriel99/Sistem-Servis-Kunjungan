@@ -13,15 +13,10 @@ class Dashboard_model extends CI_Model
 			->from('tb_pesanan tp')
 			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
 			->where('tp.id_user', $id_user)
-			// ->where('tp.bukti_pembayaran', null)
+			->where('tp.bukti_pembayaran', null)
 			// ->where('status', '1')
 			->get();
-		$exist = $this->db->affected_rows();
-		if ($exist > 0) {
-			return $result = array('error' => 0, 'result' => $query->result());
-		} else {
-			return $result = array('error' => 1);
-		}
+			return $query->result();
 	}
 
 	public function getId($where)

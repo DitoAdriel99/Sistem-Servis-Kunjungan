@@ -329,14 +329,14 @@
 			success: function(data) {
 				console.log(data.length);
 				if (data.length <1 ) {
-					
+					alert('tidak ada pesanan')
 				} else {
 					$('#btnTambah').hide();
 					var baris = '';
 					for (var i = 0; i < data.length; i++) {
 						baris += '<tr>' +
 							'<td>' + (i + 1) + '</td>' +
-							'<td class="txt-oflo">' + data[i].keluhan + '</td>' +
+							'<td class="txt-oflo">' + data[i].nama_keluhan + '</td>' +
 							'<td class="txt-oflo"><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + data[i].gambar + '></td>' +
 							'<td class="txt-oflo">' + data[i].status + '</td>' +
 							'<td class="txt-oflo"><button class="btn waves-effect waves-light btn-info" href="#detail_forms" data-toggle="modal" data-target=".bd-example-modal-lg" onclick="detail_pesanan(' + data[i].id_pesanan + ')"><i class="icofont icofont-info-square">cek Detail</i></button></td>'
