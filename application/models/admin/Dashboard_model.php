@@ -37,6 +37,17 @@ class Dashboard_model extends CI_Model
 		}
 	}
 
+	public function insertTeknisi($data, $table)
+	{
+		$this->db->insert($table,$data);
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0);
+		} else {
+			return $result = array('error' => 1);
+		}
+	}
+
 	public function cekHarga($id = null)
 	{
 		if ($id != null) {

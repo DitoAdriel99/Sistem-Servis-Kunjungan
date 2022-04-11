@@ -30,6 +30,7 @@ class Login extends CI_Controller {
 			$this->session->set_userdata('username', $row->username);
 			$this->session->set_userdata('no_hp', $row->no_hp);
 			$this->session->set_userdata('alamat', $row->alamat);
+			$this->session->set_userdata('foto', $row->foto);
 			$this->session->set_userdata('level', $row->level);
 
 			if ($this->session->userdata('level')==('1')) {

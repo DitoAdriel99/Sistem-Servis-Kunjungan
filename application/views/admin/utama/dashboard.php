@@ -93,8 +93,7 @@
 	<div class="panel panel-default ">
 		<div class="panel-heading">
 			List Teknisi
-			<!-- <a href="#form" data-toggle="modal" onclick="submit('tambah')" class="btn btn-md btn-primary">Tambah data</a>
-			<a href="<?= base_url() . 'admin/dashboard/viewTambah' ?>" data-toggle="modal" class="btn btn-md btn-primary">view</a> -->
+			<a href="#formteknisi" data-toggle="modal" class="btn btn-md btn-primary">Tambah data</a>
 			<ul class="pull-right panel-settings panel-button-tab-right">
 				<li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
 						<em class="fa fa-cogs"></em>
@@ -318,7 +317,76 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div>
-
+<!-- Bootstrap modal -->
+<div class="modal fade" id="formteknisi" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="modal-title">Tambah Teknisi</h3>
+				<div class="alert alert-danger print-error-msg" style="display:none">
+			</div>
+			<div class="modal-body form">
+				<form action="#" id="formsteknisi" class="form-horizontal" method="POST" enctype="multipart/form-data">
+					<input type="hidden" value="" name="id_pesanan" />
+					<div class="form-body">
+						<div class="form-group">
+							<label class="control-label col-md-3">Nama Teknisi</label>
+							<div class="col-md-9">
+								<input class="form-control" placeholder="Nama Teknisi" name="username" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Email</label>
+							<div class="col-md-9">
+								<input type="email" class="form-control" placeholder="Email" name="email" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">No Handphone</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" placeholder="No Handphone" name="no_hp" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Grup</label>
+							<div class="col-md-9">
+								<select name="grup" class="form-control">
+									<option value="A">A</option>
+									<option value="B">B</option>
+									<option value="C">C</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Password</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" placeholder="Masukan Password" name="password" required>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Masukan Gambar</label>
+							<div class="col-md-9">
+								<input type="file" name="foto" id="foto" onchange="loadFile1(event)">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Foto Teknisi</label>
+							<div class="col-md-9" id="preview1">
+								<div class="tampil-gambar" accept="image/*"><img id="output1" src="" style="height: 100px; "></div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="btnSave" onclick="tambahTeknisi()" class="btn btn-primary">Save</button>
+				<button type="button" id="btnEdit" onclick="editData()" class="btn btn-warning">Edit</button>
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
 <script>
 	ambilData();
 	ambilTeknisi()
@@ -336,14 +404,65 @@
 		reader.readAsDataURL(event.target.files[0]);
 	}
 
-	function selectTeknisi(x){
+	var loadFile1 = function(event) {
+		var reader = new FileReader();
+		reader.onload = function() {
+			var output = document.getElementById('output1');
+			output.src = reader.result;
+		};
+		reader.readAsDataURL(event.target.files[0]);
+	}
+
+	function tambahTeknisi() {
+		//stop submit the form, we will post it manually.
+		// event.preventDefault();
+
+		// Get form
+		var form = $('#formsteknisi')[0];
+
+
+		var data = new FormData();
+
+		// If you want to add an extra field for the FormData
+		data.append('foto', $('#foto').prop('files')[0]);
+		data.append('username', $("[name='username']").val());
+		data.append('email', $("[name='email']").val());
+		data.append('no_hp', $("[name='no_hp']").val());
+		data.append('grup', $("[name='grup']").val());
+		data.append('password', $("[name='password']").val());
+
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() . 'admin/dashboard/tambahTeknisi' ?>',
+			data: data,
+			contentType: false,
+			cache: false,
+			processData: false,
+			success: function(hasil) {
+				var json = $.parseJSON(hasil)
+				console.log(json);
+				if(json.error == 0){
+					alert('data berhasil dimasukan')
+					$('#formteknisi').modal('hide');
+					ambilTeknisi();
+					listOrderan();
+				}else{
+					alert('data gagal dimasukan ')
+				}
+				
+							
+			}
+		});
+	}
+
+	function selectTeknisi(x) {
 
 		// console.log(x);
 		var option = '<option value="" selected>--Select Data--</option>';
 		$.ajax({
 			url: '<?= base_url() ?>admin/dashboard/selectTeknisi/' + x,
 			type: 'json',
-			success: function(result){
+			success: function(result) {
 				// console.log(hasil)
 				result = $.parseJSON(result)
 
@@ -410,30 +529,30 @@
 		});
 	}
 
-	function ambilTeknisi(){
+	function ambilTeknisi() {
 		$.ajax({
 			type: 'POST',
-			url : '<?= base_url() . "admin/dashboard/ambilTeknisi" ?>',
+			url: '<?= base_url() . "admin/dashboard/ambilTeknisi" ?>',
 			dataType: 'json',
 			success: function(data) {
 				console.log(data);
 
-				if(data['status'] == 1){
+				if (data['status'] == 1) {
 					var ket = 'Tersedia';
-				}else{
+				} else {
 					var ket = 'Tidak Tersedia';
 				}
 
 				var baris = '';
-					for (var i = 0; i < data.length; i++) {
-						baris += '<tr>' +
-							'<td>' + (i + 1) + '</td>' +
-							'<td>' + data[i].username + '</td>' +
-							'<td>' + data[i].grup + '</td>' +
-							'<td>' + data[i].status + '</td>' +
-							'<tr>';
-					}
-					$('#target-teknisi').html(baris);
+				for (var i = 0; i < data.length; i++) {
+					baris += '<tr>' +
+						'<td>' + (i + 1) + '</td>' +
+						'<td>' + data[i].username + '</td>' +
+						'<td>' + data[i].grup + '</td>' +
+						'<td>' + data[i].status + '</td>' +
+						'<tr>';
+				}
+				$('#target-teknisi').html(baris);
 			}
 		})
 	}

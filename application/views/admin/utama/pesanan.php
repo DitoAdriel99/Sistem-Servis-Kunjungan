@@ -110,7 +110,7 @@
 			dataType: 'json',
 			success: function(hasil){
 				console.log(hasil);
-				alert("Terimakasih Verifikasi Berhasil Dilakukan?");
+				alert("Terimakasih Verifikasi Berhasil Dilakukan");
 			}
 		});
         } else {

@@ -147,6 +147,7 @@ class Dashboard extends CI_Controller
 		$detail_keluhan = $this->input->post('detail_keluhan');
 		$harga = $this->input->post('harga');
 		$teknisi = $this->input->post('teknisi');
+		$tanggal = format_indo(date('Y-m-d'));
 
 
 		$this->form_validation->set_error_delimiters('<div class="alert bg-danger" role="alert">', '</div>');
@@ -190,6 +191,7 @@ class Dashboard extends CI_Controller
 				'gambar' => $dataUpload['upload_data']['file_name'],
 				'harga' => $harga,
 				'teknisi' => $teknisi,
+				'tanggal_pesanan' => $tanggal
 			);
 
 

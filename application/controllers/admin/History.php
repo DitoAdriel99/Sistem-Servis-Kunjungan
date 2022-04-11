@@ -19,11 +19,16 @@ class History extends CI_Controller
 
 	public function index()
 	{
+		$queryGetHistory = $this->m->getHistory();
+		// print_r($queryGetHistory);
+		// die();
+		
 		$data = array(
 			'title' => 'Dashboard',
+			'history' => $queryGetHistory
 		);
 		$this->load->view('templates/header', $data);
-		$this->load->view('admin/utama/history');
+		$this->load->view('admin/utama/history', $data);
 		$this->load->view('templates/footer');
 	}
 

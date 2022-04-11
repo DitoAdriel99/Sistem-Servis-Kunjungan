@@ -43,7 +43,7 @@ class Dashboard extends CI_Controller
 	public function ambilTeknisi()
 	{
 		$queryGetDataTeknisi = $this->m->getDataTeknisi();
-		
+
 
 		echo json_encode($queryGetDataTeknisi);
 	}
@@ -365,6 +365,82 @@ class Dashboard extends CI_Controller
 		}
 
 		echo json_encode($result);
+	}
+
+	public function tambahTeknisi()
+	{
+		$this->form_validation->set_rules('username', 'Username', 'required');
+		$this->form_validation->set_rules('email', 'Email', 'required');
+		$this->form_validation->set_rules('no_hp', 'No Handphone', 'required');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('grup', 'Grup', 'required');
+
+		if ($this->form_validation->run() == FALSE) {
+			$error = array(
+				'error' => 1,
+				'data' => $this->form_validation->error_array(),
+			);
+			echo json_encode($error);
+		} else {
+			// echo json_encode(['success' => 'Record added successfully.']);
+			$username = $this->input->post('username');
+			$email = $this->input->post('email');
+			$no_hp = $this->input->post('no_hp');
+			$password = $this->input->post('password');
+			$grup = $this->input->post('grup');
+			$status = 1;
+
+			$config['upload_path']   = './gambar/';
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['max_size']      = 1024;
+			$config['max_width']     = 1024;
+			$config['max_height']    = 1200;
+			$this->load->library('upload', $config);
+
+			if (!$this->upload->do_upload('foto')) {
+				$error = $this->upload->display_errors();
+				// $this->load->view('upload_form', $error);
+				$result = array(
+					'error' => 1,
+					'data' => $error
+				);
+				echo json_encode($result);
+				exit;
+			} else {
+				$dataUpload = array('upload_data' => $this->upload->data());
+				// $image = $dataUpload['upload_data']['file_name'];
+			}
+
+			$data = array(
+				'username' => $username,
+				'email' => $email,
+				'no_hp' => $no_hp,
+				'password' => $password,
+				'grup' => $grup,
+				'level' => 2,
+				'status' => $status,
+				'foto' => $dataUpload['upload_data']['file_name'],
+			);
+
+			// print_r($data);
+			// die;
+
+			$insert = $this->m->insertTeknisi($data, 'user');
+
+			if ($insert['error'] == 0) {
+				$result = array(
+					'error' => 0,
+					'data' => 'Berhasil'
+				);
+			} else {
+				$result = array(
+					'error' => 1,
+					'data' => 'Data Gagal dimasukan'
+				);
+			}
+
+			echo json_encode($result);
+		}
 	}
 
 	public function sessions()
