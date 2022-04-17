@@ -468,7 +468,7 @@
 
 				for (let i = 0; i < result.length; i++) {
 					option += '<option value="' + result[i].id_user + '" data-id="' + result[i].id_user + '" >' + result[i].username + '</option>'
-				}
+				}  
 				$('#teknisi').html(option)
 			}
 		});
@@ -608,6 +608,8 @@
 						'success'
 					);
 					$('#detail_pesanan').modal('hide');
+					$('#form_teknisi').modal('hide');
+
 					ambilData();
 				} else {
 					Swal.fire(

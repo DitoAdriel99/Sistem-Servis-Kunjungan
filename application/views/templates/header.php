@@ -93,10 +93,10 @@
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<div class="profile-sidebar">
 			<div class="profile-userpic">
-				<img src="<?= base_url('gambar/'.$this->session->userdata('foto')) ?>" class="img-responsive" alt="">
+				<img src="<?= base_url('gambar/' . $this->session->userdata('foto')) ?>" class="img-responsive" alt="">
 			</div>
 			<div class="profile-usertitle">
-				<div class="profile-usertitle-name"><?= $this->session->userdata('username');?></div>
+				<div class="profile-usertitle-name"><?= $this->session->userdata('username'); ?></div>
 				<div class="profile-usertitle-status"><span class="indicator label-success"></span>Online</div>
 			</div>
 			<div class="clear"></div>
@@ -108,9 +108,18 @@
 			</div>
 		</form>
 		<ul class="nav menu">
-			<li><a href="<?= base_url() . 'admin/Dashboard'?>"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-			<li><a href="<?= base_url() . 'admin/Pesanan'?>"><em class="fa fa-calendar">&nbsp;</em> Pesanan</a></li>
-			<li><a href="<?= base_url() . 'admin/History'?>"><em class="fa fa-bar-chart">&nbsp;</em> History</a></li>
+			<?php if ($this->session->userdata('level') == 1) { ?>
+				<li><a href="<?= base_url() . 'admin/Dashboard' ?>"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+				<li><a href="<?= base_url() . 'admin/Pesanan' ?>"><em class="fa fa-calendar">&nbsp;</em> Pesanan</a></li>
+				<li><a href="<?= base_url() . 'admin/History' ?>"><em class="fa fa-bar-chart">&nbsp;</em> History</a></li>
+			<?php } elseif ($this->session->userdata('level') == 2) { ?>
+				<li><a href="<?= base_url() . 'teknisi/Dashboard' ?>"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+
+			<?php } else { ?>
+				<li><a href="<?= base_url() . 'customer/Dashboard' ?>"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+				<li><a href="<?= base_url() . 'customer/History' ?>"><em class="fa fa-dashboard">&nbsp;</em> History Pesanan</a></li>
+			<?php } ?>
+
 			<!-- <li><a href="elements.html"><em class="fa fa-toggle-off">&nbsp;</em> UI Elements</a></li>
 			<li><a href="panels.html"><em class="fa fa-clone">&nbsp;</em> Alerts &amp; Panels</a></li>
 			<li class="parent "><a data-toggle="collapse" href="#sub-item-1">
@@ -128,7 +137,7 @@
 						</a></li>
 				</ul>
 			</li> -->
-			<li><a href="<?=base_url() . 'login/logout' ?>"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
+			<li><a href="<?= base_url() . 'login/logout' ?>"><em class="fa fa-power-off">&nbsp;</em> Logout</a></li>
 		</ul>
 	</div>
 	<!--/.sidebar-->

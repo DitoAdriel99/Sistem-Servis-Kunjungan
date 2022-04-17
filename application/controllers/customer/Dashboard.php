@@ -34,9 +34,9 @@ class Dashboard extends CI_Controller
 			'keluhan' => $queryGetDataKeluhan
 
 		);
-		$this->load->view('templates_customer/header', $data);
+		$this->load->view('templates/header', $data);
 		$this->load->view('customer/dashboard', $data);
-		$this->load->view('templates_customer/footer');
+		$this->load->view('templates/footer');
 	}
 	public function selectKeluhan()
 	{

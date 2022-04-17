@@ -390,7 +390,7 @@ class Dashboard extends CI_Controller
 			$grup = $this->input->post('grup');
 			$status = 1;
 
-			$config['upload_path']   = './gambar/';
+			$config['upload_path']   = './profile/';
 			$config['allowed_types'] = 'gif|jpg|png';
 			$config['max_size']      = 1024;
 			$config['max_width']     = 1024;
