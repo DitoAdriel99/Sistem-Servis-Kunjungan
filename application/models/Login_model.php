@@ -24,4 +24,15 @@ class Login_model extends CI_Model
 		}
 
 	}
+
+	public function insertCustomer($data, $table)
+	{
+		$this->db->insert($table,$data);
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0);
+		} else {
+			return $result = array('error' => 1);
+		}
+	}
 }
