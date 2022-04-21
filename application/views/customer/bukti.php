@@ -146,7 +146,14 @@
 	<div class="invoice-box">
 		<table>
 			<tr class="top">
-			<span class="stamp is-approved">LUNAS</span>
+				<?php if($data['0']->verifikasi_pembayaran == null){ ?>
+
+					<span class="stamp">Menunggu Konfirmasi</span>
+
+					<?php }else{ ?>
+
+						<span class="stamp is-approved">LUNAS</span>
+					<?php } ?>
 
 				<td colspan="2">
 					<table>
@@ -183,6 +190,7 @@
 					</table>
 				</td>
 			</tr>
+			
 
 			<!-- <tr class="heading">
 					<td>Payment Method</td>
@@ -195,6 +203,17 @@
 
 					<td>1000</td>
 				</tr> -->
+
+			<tr class="heading">
+				<td>Bukti Barang Selesai</td>
+
+				<td></td>
+			</tr>
+
+			<tr class="item">
+				<td><img src="<?= base_url('gambar/' . $data['0']->gambar_pekerjaan ) ?>" alt=""></td>
+
+			</tr>
 
 			<tr class="heading">
 				<td>Perbaikan</td>

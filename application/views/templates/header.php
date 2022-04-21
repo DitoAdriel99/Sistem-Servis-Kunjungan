@@ -21,15 +21,15 @@
 </head>
 
 <body>
-	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation" style="background: #fe0000;">
 		<div class="container-fluid">
 			<div class="navbar-header">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse"><span class="sr-only">Toggle navigation</span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-				<a class="navbar-brand" href="#"><span>Lumino</span>Admin</a>
-				<ul class="nav navbar-top-links navbar-right">
+				<a class="navbar-brand"><span style="color: #ffff00;">PT.</span>QHM</a>
+				<!-- <ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
 							<em class="fa fa-envelope"></em><span class="label label-danger">15</span>
 						</a>
@@ -86,7 +86,7 @@
 								</a></li>
 						</ul>
 					</li>
-				</ul>
+				</ul> -->
 			</div>
 		</div><!-- /.container-fluid -->
 	</nav>

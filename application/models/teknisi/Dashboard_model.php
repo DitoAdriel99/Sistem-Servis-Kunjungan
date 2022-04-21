@@ -13,6 +13,7 @@ class Dashboard_model extends CI_Model
 			->from('tb_pesanan tp')
 			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
 			->where('tp.teknisi', $id_teknisi)
+			->where('tp.verifikasi_pembayaran', null)
 			->get();
 		return $query->result();
 	}
