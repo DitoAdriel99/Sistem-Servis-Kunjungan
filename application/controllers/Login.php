@@ -32,6 +32,7 @@ class Login extends CI_Controller
 			$this->session->set_userdata('no_hp', $row->no_hp);
 			$this->session->set_userdata('alamat', $row->alamat);
 			$this->session->set_userdata('foto', $row->foto);
+			$this->session->set_userdata('email', $row->email);
 			$this->session->set_userdata('level', $row->level);
 
 			if ($this->session->userdata('level') == ('1')) {
@@ -59,6 +60,7 @@ class Login extends CI_Controller
 				'email' => $this->input->post('email'),
 				'no_hp' => $this->input->post('no_hp'),
 				'password' => $this->input->post('password'),
+				'level' => 2,
 			);
 
 			$insert = $this->m->insertCustomer($data,'user');

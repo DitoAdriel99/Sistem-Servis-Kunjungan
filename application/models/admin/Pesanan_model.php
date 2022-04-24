@@ -30,6 +30,15 @@ class Pesanan_model extends CI_Model
 		return $query->result();
 	}
 
+	public function getIdPesanan($id_pesanan)
+	{
+		$query = $this->db->select('*')
+			->from('tb_pesanan')
+			->where('id_pesanan', $id_pesanan)
+			->get();
+		return $query->row()->email;
+	}
+
 	public function verifikasi($data)
 	{
 		$this->db->where('id_pesanan',$data['id_pesanan']);
@@ -40,6 +49,17 @@ class Pesanan_model extends CI_Model
 		} else {
 			return $result = array('error' => 1,);
 		}
+	}
+
+	public function getBukti($id_pesanan)
+	{
+		$query = $this->db->select('tp.*,tk.nama_keluhan,tu.username')
+			->from('tb_pesanan tp')
+			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
+			->join('user tu', 'tu.id_user = tp.teknisi')
+			->where('tp.id_pesanan', $id_pesanan)
+			->get();
+		return $query->result();
 	}
 
 }

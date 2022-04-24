@@ -185,6 +185,28 @@ class Dashboard extends CI_Controller
 		}
 	}
 
+	public function hapusDataTeknisi()
+	{
+		$id_user = $this->input->post('id_user');
+		$tabel_teknisi = $this->m->cekIdTeknisi($id_user);;
+		// print_r($tabel_teknisi);
+		// die;
+		// $id_teknisi = $this->input->post('id_user');
+
+		if ($tabel_teknisi['0']->foto) {
+			if (file_exists("./profile/" . $tabel_teknisi['0']->foto)) {
+				unlink("./profile/" . $tabel_teknisi['0']->foto);
+				$where = array('id_user' => $id_user);
+				$this->m->deleteData($where, 'user');
+			}else{
+				$where = array('id_user' => $id_user);
+				$this->m->deleteData($where, 'user');
+			}
+		}else{
+			echo "tidak ada id";
+		}
+	}
+
 	public function ambilId()
 	{
 		$id_pesanan = $this->input->post('id_pesanan');

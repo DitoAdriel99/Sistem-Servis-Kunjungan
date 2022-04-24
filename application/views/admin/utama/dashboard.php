@@ -550,6 +550,8 @@
 						'<td>' + data[i].username + '</td>' +
 						'<td>' + data[i].grup + '</td>' +
 						'<td>' + data[i].status + '</td>' +
+						'<td><a onclick="hapusDataTeknisi(' + data[i].id_user + ')" class="btn btn-md btn-danger"><i class="fa fa-trash"></i></td>' +
+
 						'<tr>';
 				}
 				$('#target-teknisi').html(baris);
@@ -820,6 +822,27 @@
 				}
 			}
 		});
+	}
+
+	function hapusDataTeknisi(x){
+		// alert(x);
+		// die;
+		let confirmAction = confirm("Apakah Anda Yakin Menghapus?");
+
+		if (confirmAction) {
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url() .  "admin/Dashboard/HapusDataTeknisi"?> ',
+				data: 'id_user=' + x,
+				success: function() {
+					ambilTeknisi()
+					alert('mantap')
+				}
+			});
+		}else{
+			alert('Gagal');
+		}
+		
 	}
 
 	function hapusData(id_pesanan) {

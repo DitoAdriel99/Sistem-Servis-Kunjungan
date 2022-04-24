@@ -141,6 +141,7 @@ class Dashboard extends CI_Controller
 		$id_pesanan = $this->input->post('id_pesanan');
 		$id_user = $this->session->userdata('id_user');
 		$nama_customer = $this->session->userdata('username');
+		$email = $this->session->userdata('email');
 		$alamat = $this->session->userdata('alamat');
 		$no_hp = $this->session->userdata('no_hp');
 		$keluhan = $this->input->post('keluhan');
@@ -161,9 +162,9 @@ class Dashboard extends CI_Controller
 		} else {
 			$config['upload_path']   = './gambar/';
 			$config['allowed_types'] = 'gif|jpg|png';
-			$config['max_size']      = 1024;
-			$config['max_width']     = 1024;
-			$config['max_height']    = 1200;
+			$config['max_size']      = 9999;
+			$config['max_width']     = 9999;
+			$config['max_height']    = 9999;
 			$this->load->library('upload', $config);
 
 			if (!$this->upload->do_upload('gambar')) {
@@ -190,6 +191,7 @@ class Dashboard extends CI_Controller
 				'detail_keluhan' => $detail_keluhan,
 				'gambar' => $dataUpload['upload_data']['file_name'],
 				'harga' => $harga,
+				'email' => $email,
 				'teknisi' => $teknisi,
 				'tanggal_pesanan' => $tanggal
 			);

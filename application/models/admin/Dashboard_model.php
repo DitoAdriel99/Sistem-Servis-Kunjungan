@@ -90,6 +90,12 @@ class Dashboard_model extends CI_Model
 		return $query->result();
 	}
 
+	public function cekIdTeknisi($id_user)
+	{
+		$query = $this->db->get_where('user', ['id_user' => $id_user]);
+		return $query->result();
+	}
+
 	public function ambilId($where)
 	{
 		$query = $this->db->select('tp.*, tk.nama_keluhan')
@@ -110,6 +116,12 @@ class Dashboard_model extends CI_Model
 	public function deleteData($where, $table)
 	{
 		//   return $this->db->delete('tb_pesanan',['id_pesanan'=>$id_pesanan]);
+		$this->db->where($where);
+		$this->db->delete($table);
+	}
+
+	public function deleteDataTeknisi($where, $table)
+	{
 		$this->db->where($where);
 		$this->db->delete($table);
 	}

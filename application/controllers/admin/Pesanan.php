@@ -44,11 +44,12 @@ class Pesanan extends CI_Controller
 		$id_pesanan = $this->input->post('id_pesanan');
 		$verifikasi = 1;
 
+		//verifikasi pesanan
 		$data = array(
 			'id_pesanan' => $id_pesanan,
 			'verifikasi_pembayaran' => $verifikasi,
 		);
-		
+
 		$update = $this->m->verifikasi($data);
 
 		if ($update['error'] == 0) {
@@ -64,6 +65,52 @@ class Pesanan extends CI_Controller
 		}
 
 		echo json_encode($result);
+
+		//start config
+		$config['protocol']  = 'smtp';
+		$config['smtp_host'] = 'ssl://smtp.googlemail.com';
+		$config['smtp_user'] = 'skripsidito@gmail.com';
+		$config['smtp_pass'] = 'pastilulus';
+		$config['smtp_port'] = 465;
+		$config['charset']   = 'utf-8';
+		$config['mailtype']  = 'html';
+		$config['newline']   = "\r\n";
+
+		$this->load->library('email', $config);
+		$this->email->initialize($config);
+		//end config
+
+		$bukti['data'] = $this->m->getBukti($id_pesanan);
+
+
+		$this->email->from('skripsidito@gmail.com','qhome');
+		$this->email->to($this->m->getIdPesanan($id_pesanan));
+		$this->email->subject('Terimakasih! Kode Pesanan.'.$id_pesanan.'Sudah Selesai');
+		$this->email->message($this->load->view('customer/bukti', $bukti, true));
+
+		if ($this->email->send()) {
+			echo "berhasil";
+		} else {
+			echo "gagal";
+		}
+	}
+
+	public function send_mail()
+	{
+		$from_email = "email@example.com";
+		$to_email = $this->input->post('email');
+		//Load email library
+		$this->load->library('email');
+		$this->email->from($from_email, 'Identification');
+		$this->email->to($to_email);
+		$this->email->subject('Send Email Codeigniter');
+		$this->email->message('The email send using codeigniter library');
+		//Send mail
+		if ($this->email->send())
+			$this->session->set_flashdata("email_sent", "Congragulation Email Send Successfully.");
+		else
+			$this->session->set_flashdata("email_sent", "You have encountered an error");
+		$this->load->view('contact_email_form');
 	}
 
 	public function sessions()
