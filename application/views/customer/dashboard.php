@@ -390,6 +390,8 @@
 	}
 
 	function verifikasi(x) {
+		let confirmAction = confirm("Apakah Anda Yakin Memverifikasi Pekerjaan ini?");
+        if (confirmAction) {
 		var id_pesanan = $('#id_pesanan').val()
 		var teknisi = $('#teknisi').val()
 
@@ -405,8 +407,11 @@
 				'verifikasi_selesai': x,
 			},
 			success: function(data) {
-				console.log(data)
+				alert('Pesanan Berhasil DI verfikasi')
 			}
 		});
+		}else{
+			alert('pesanan gagal diverifikasi')
+		}
 	}
 </script>

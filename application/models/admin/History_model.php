@@ -14,6 +14,7 @@ class History_model extends CI_Model
 			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
 			->join('user tu', 'tu.id_user = tp.teknisi')
 			->where('verifikasi_pembayaran',1)
+			->order_by('tp.tanggal_pesanan', 'desc')
 			->get();
 		return $query->result();
 	}

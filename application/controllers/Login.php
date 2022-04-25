@@ -60,7 +60,7 @@ class Login extends CI_Controller
 				'email' => $this->input->post('email'),
 				'no_hp' => $this->input->post('no_hp'),
 				'password' => $this->input->post('password'),
-				'level' => 2,
+				'level' => 3,
 			);
 
 			$insert = $this->m->insertCustomer($data,'user');

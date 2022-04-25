@@ -6,18 +6,25 @@ class Pdfview extends CI_Controller {
     {
         // panggil library yang kita buat sebelumnya yang bernama pdfgenerator
         $this->load->library('pdfgenerator');
+
+		$this->load->model('admin/History_model', 'm');
+
+		$getData = $this->m->getHistory();
+
+		$data = array(
+			'title_pdf' => 'Laporan Servis Qhm',
+			'history' => $getData
+		);
         
-        // title dari pdf
-        $this->data['title_pdf'] = 'Laporan Penjualan Toko Kita';
         
         // filename dari pdf ketika didownload
-        $file_pdf = 'laporan_penjualan_toko_kita';
+        $file_pdf = 'Laporan_Servis_Qhm';
         // setting paper
         $paper = 'A4';
         //orientasi paper potrait / landscape
         $orientation = "portrait";
         
-		$html = $this->load->view('admin/utama/laporan',$this->data, true);	    
+		$html = $this->load->view('admin/utama/laporan',$data, true);	    
         
         // run dompdf
         $this->pdfgenerator->generate($html, $file_pdf,$paper,$orientation);
