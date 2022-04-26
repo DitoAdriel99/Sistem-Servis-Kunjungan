@@ -114,6 +114,7 @@
 					$('#contact').attr('disabled', 'disabled');
 				},
 				success: function(data) {
+					console.log(data)
 					if (data.error) {
 						if (data.username_error != '') {
 							$('#username_error').html(data.username_error);

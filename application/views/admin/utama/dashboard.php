@@ -286,6 +286,7 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div>
+
 <div class="modal fade" id="form_teknisi" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
