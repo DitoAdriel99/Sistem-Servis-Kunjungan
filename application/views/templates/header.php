@@ -93,7 +93,13 @@
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<div class="profile-sidebar">
 			<div class="profile-userpic">
-				<img src="<?= base_url('gambar/' . $this->session->userdata('foto')) ?>" class="img-responsive" alt="">
+				<?php if($this->session->userdata('foto') == null){ ?>
+					<img src="<?= base_url('profile/pakaiini.jpg') ?>" class="img-responsive" alt="">
+
+				<?php }else{?>
+
+					<img src="<?= base_url('profile/' . $this->session->userdata('foto')) ?>" class="img-responsive" alt="">
+				<?php }?>
 			</div>
 			<div class="profile-usertitle">
 				<div class="profile-usertitle-name"><?= $this->session->userdata('username'); ?></div>

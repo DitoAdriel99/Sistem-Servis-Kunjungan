@@ -24,10 +24,10 @@
 					<form role="form">
 						<fieldset>
 							<div class="form-group">
-								<input class="form-control" placeholder="USername" name="username" type="text" autofocus="">
+								<input class="form-control" placeholder="Masukan Username" name="username" type="text" autofocus="">
 							</div>
 							<div class="form-group">
-								<input class="form-control" placeholder="Password" name="password" type="password" value="">
+								<input class="form-control" placeholder="Masukan Password" name="password" type="password" value="">
 								<?php if (isset($pesan)) {
 									echo $pesan;
 								}	?>
@@ -75,7 +75,11 @@
 							<span id="no_hp_error" class="text-danger"></span>
 						</div>
 						<div class="form-group">
-							<input type="text" name="password" id="password" class="form-control" placeholder="password">
+							<input type="text" name="alamat" id="alamat" class="form-control" placeholder="alamat">
+							<span id="alamat_error" class="text-danger"></span>
+						</div>
+						<div class="form-group">
+							<input type="password" name="password" id="password" class="form-control" placeholder="password">
 							<span id="password_error" class="text-danger"></span>
 						</div>
 						<div class="form-group">
@@ -110,9 +114,9 @@
 				method: "POST",
 				data: $(this).serialize(),
 				dataType: "json",
-				beforeSend: function() {
-					$('#contact').attr('disabled', 'disabled');
-				},
+				// beforeSend: function() {
+				// 	$('#contact').attr('disabled', 'disabled');
+				// },
 				success: function(data) {
 					console.log(data)
 					if (data.error) {
@@ -136,6 +140,11 @@
 						} else {
 							$('#no_hp_error').html('');
 						}
+						if (data.alamat_error != '') {
+							$('#alamat_error').html(data.alamat_error);
+						} else {
+							$('#alamat_error').html('');
+						}
 					}
 					if (data.error == 0) {
 						alert('Terimakasih Sudah daftar Silahkan Login!')
@@ -143,12 +152,13 @@
 						$('#email_error').html('');
 						$('#password_error').html('');
 						$('#no_hp_error').html('');
+						$('#alamat_error').html('');
 						$('#contact_form')[0].reset();
 						$('#formRegister').modal('hide');
 
 						
 					}
-					$('#contact').attr('disabled', false);
+					// $('#contact').attr('disabled', false);
 				}
 			})
 		});

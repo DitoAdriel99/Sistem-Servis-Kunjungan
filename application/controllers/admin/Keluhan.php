@@ -39,11 +39,13 @@ class Keluhan extends CI_Controller
 		$this->form_validation->set_rules('grup', 'Grup', 'required');
 		$this->form_validation->set_rules('harga_keluhan', 'Harga Keluhan', 'required');
 
+		$harga_keluhan = $this->input->post('harga_keluhan');
+		
 		if ($this->form_validation->run() == true) {
 			$data = array(
 				'nama_keluhan' => $this->input->post('nama_keluhan'),
 				'grup' => $this->input->post('grup'),
-				'harga_keluhan' => $this->input->post('harga_keluhan'),
+				'harga_keluhan' => number_format($harga_keluhan,2,".",","),
 			);
 			$insert = $this->m->insertData($data,'tb_keluhan');
 			if ($insert['error'] == 0) {
@@ -75,7 +77,6 @@ class Keluhan extends CI_Controller
 	public function destroy()
 	{
 		$id_keluhan = $this->input->post('id_keluhan');
-		// print_r($id_keluhan);
 
 
 		$delete = $this->m->delete($id_keluhan);

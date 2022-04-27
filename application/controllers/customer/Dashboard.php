@@ -101,7 +101,7 @@ class Dashboard extends CI_Controller
 		$id_user = $this->session->userdata('id_user');
 		$queryGetData = $this->m->getData($id_user);
 		// $id_user = $this->session->userdata('id_user');
-		// print_r($id_user);
+		// print_r($queryGetData);
 		// die();
 
 		// $i = 0;

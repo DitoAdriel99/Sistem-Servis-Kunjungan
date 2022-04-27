@@ -2,8 +2,7 @@
 	<div class="col-sm-12">
 		<div class="card">
 			<div class="card-header">
-				<h5>Pesanan Anda</h5>
-				<span>use class <code>table-hover</code> inside table element</span>
+				<h1>Pesanan Anda</h1>
 				<div class="card-header-right">
 					<button class="btn waves-effect waves-light btn-primary" id="btnTambah" data-target="#forms" data-toggle="modal">Tambah Pesanan</button>
 				</div>
@@ -327,9 +326,15 @@
 			url: '<?= base_url() . "customer/dashboard/ambilData" ?>',
 			dataType: 'json',
 			success: function(data) {
-				console.log(data.length);
-				if (data.length <1 ) {
-					alert('tidak ada pesanan')
+				console.log(data);
+
+				if (data.length < 1) {
+					var baris = '';
+					baris += '<tr>' +
+					'<td colspan="5" class="text-center"> Tidak Ada Pesanan</td>' +
+
+					'<tr>';
+					$('#target').html(baris);
 				} else {
 					$('#btnTambah').hide();
 					var baris = '';
@@ -391,26 +396,26 @@
 
 	function verifikasi(x) {
 		let confirmAction = confirm("Apakah Anda Yakin Memverifikasi Pekerjaan ini?");
-        if (confirmAction) {
-		var id_pesanan = $('#id_pesanan').val()
-		var teknisi = $('#teknisi').val()
+		if (confirmAction) {
+			var id_pesanan = $('#id_pesanan').val()
+			var teknisi = $('#teknisi').val()
 
-		// console.log(id_pesanan)
+			// console.log(id_pesanan)
 
-		$.ajax({
-			type: 'post',
-			url: '<?= base_url() . "customer/dashboard/verifikasi" ?>',
-			dataType: 'json',
-			data: {
-				'id_pesanan': id_pesanan,
-				'teknisi': teknisi,
-				'verifikasi_selesai': x,
-			},
-			success: function(data) {
-				alert('Pesanan Berhasil DI verfikasi')
-			}
-		});
-		}else{
+			$.ajax({
+				type: 'post',
+				url: '<?= base_url() . "customer/dashboard/verifikasi" ?>',
+				dataType: 'json',
+				data: {
+					'id_pesanan': id_pesanan,
+					'teknisi': teknisi,
+					'verifikasi_selesai': x,
+				},
+				success: function(data) {
+					alert('Pesanan Berhasil DI verfikasi')
+				}
+			});
+		} else {
 			alert('pesanan gagal diverifikasi')
 		}
 	}

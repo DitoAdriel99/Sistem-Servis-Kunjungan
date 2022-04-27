@@ -189,8 +189,8 @@ class Dashboard extends CI_Controller
 	{
 		$id_user = $this->input->post('id_user');
 		$tabel_teknisi = $this->m->cekIdTeknisi($id_user);;
-		// print_r($tabel_teknisi);
-		// die;
+		print_r($tabel_teknisi);
+		die;
 		// $id_teknisi = $this->input->post('id_user');
 
 		if ($tabel_teknisi['0']->foto) {
@@ -227,7 +227,7 @@ class Dashboard extends CI_Controller
 				'detail_keluhan' => $data['result']->detail_keluhan,
 				'gambar' => $data['result']->gambar,
 				'harga' => $data['result']->harga,
-				'status' => ($data['result']->status == 1) ? 'Diterima' : 'Ditolak',
+				'status' => ($data['result']->status == 1) ? 'Diterima' : 'Menunggu',
 				'id_keluhan' => $data['result']->keluhan,
 			);
 		} else {
@@ -392,7 +392,6 @@ class Dashboard extends CI_Controller
 	public function tambahTeknisi()
 	{
 		$this->form_validation->set_rules('username', 'Username', 'required');
-		$this->form_validation->set_rules('email', 'Email', 'required');
 		$this->form_validation->set_rules('no_hp', 'No Handphone', 'required');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 		$this->form_validation->set_rules('grup', 'Grup', 'required');
@@ -406,7 +405,6 @@ class Dashboard extends CI_Controller
 		} else {
 			// echo json_encode(['success' => 'Record added successfully.']);
 			$username = $this->input->post('username');
-			$email = $this->input->post('email');
 			$no_hp = $this->input->post('no_hp');
 			$password = $this->input->post('password');
 			$grup = $this->input->post('grup');
@@ -414,9 +412,9 @@ class Dashboard extends CI_Controller
 
 			$config['upload_path']   = './profile/';
 			$config['allowed_types'] = 'gif|jpg|png';
-			$config['max_size']      = 1024;
-			$config['max_width']     = 1024;
-			$config['max_height']    = 1200;
+			$config['max_size']      = 9999;
+			$config['max_width']     = 9999;
+			$config['max_height']    = 9999;
 			$this->load->library('upload', $config);
 
 			if (!$this->upload->do_upload('foto')) {
@@ -435,7 +433,6 @@ class Dashboard extends CI_Controller
 
 			$data = array(
 				'username' => $username,
-				'email' => $email,
 				'no_hp' => $no_hp,
 				'password' => $password,
 				'grup' => $grup,

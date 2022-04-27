@@ -88,7 +88,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">Harga</label>
 							<div class="col-md-9">
-								<input class="form-control" placeholder="Masukan Harga" id="harga_keluhan" name="harga_keluhan" required>
+								<input type="number" class="form-control" placeholder="Masukan Harga" id="harga_keluhan" name="harga_keluhan" required>
 								<span id="harga_keluhan_error" class="text-danger"></span>
 
 							</div>
@@ -122,7 +122,7 @@
 						'<td>' + (i + 1) + '</td>' +
 						'<td>' + data[i].nama_keluhan + '</td>' +
 						'<td>' + data[i].grup + '</td>' +
-						'<td>' + data[i].harga_keluhan + '</td>' +
+						'<td>' +"Rp. "+ data[i].harga_keluhan + '</td>' +
 						'<td><a onclick="destroy(' + data[i].id_keluhan + ')" class="btn btn-md btn-danger"><i class="fa fa-trash"></i></td>' +
 						'<tr>';
 				}
