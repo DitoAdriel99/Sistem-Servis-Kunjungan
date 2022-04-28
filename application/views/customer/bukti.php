@@ -159,13 +159,14 @@
 					<table>
 						<tr>
 							<td class="title">
-								<img src='<?= base_url() . "/logo/logoQhome.png" ?>' alt="Company logo" style="width: 100%; max-width: 300px" />
-							</td>
-
-							<td>
-								Invoice #: <?= $data['0']->id_pesanan ?><br />
+							Invoice #: <?= $data['0']->id_pesanan ?><br />
 								Dibuat: <?= $data['0']->tanggal_pesanan ?><br />
 							</td>
+
+							<!-- <td>
+								Invoice #: <?= $data['0']->id_pesanan ?><br />
+								Dibuat: <?= $data['0']->tanggal_pesanan ?><br />
+							</td> -->
 						</tr>
 					</table>
 				</td>
@@ -204,16 +205,6 @@
 					<td>1000</td>
 				</tr> -->
 
-			<tr class="heading">
-				<td>Bukti Barang Selesai</td>
-
-				<td></td>
-			</tr>
-
-			<tr class="item">
-				<td><img src="<?= base_url('gambar/' . $data['0']->gambar_pekerjaan ) ?>" alt=""></td>
-
-			</tr>
 
 			<tr class="heading">
 				<td>Perbaikan</td>

@@ -250,6 +250,11 @@ class Dashboard extends CI_Controller
 	public function uploadBukti()
 	{
 		$id_pesanan = $this->input->post('id_pesanan');
+		$teknisi = $this->input->post('teknisi');
+		$verifikasi_selesai = 1;
+
+		// print_r($verifikasi_selesai);
+		// die;
 
 		$config['upload_path']   = './gambar/';
 		$config['allowed_types'] = 'gif|jpg|png|pdf';
@@ -278,6 +283,8 @@ class Dashboard extends CI_Controller
 		);
 
 		$upload = $this->m->uploadBukti($data);
+
+		$this->m->verifikasiSelesai($id_pesanan,$teknisi,$verifikasi_selesai);
 
 		if ($upload['error'] == 0) {
 			$result = array(

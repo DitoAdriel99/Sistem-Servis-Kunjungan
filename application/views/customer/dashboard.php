@@ -133,7 +133,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" id="btnSelesai" value="1" onclick="verifikasi(this.value)" class="btn btn-success waves-effect waves-light">Verifikasi selesai</button>
+				<!-- <button type="button" id="btnSelesai" value="1" onclick="verifikasi(this.value)" class="btn btn-success waves-effect waves-light">Verifikasi selesai</button> -->
 				<button type="button" id="btnBayar" href="#pembayaran_forms" data-toggle="modal" class="btn btn-info waves-effect waves-light">Pembayaran </button>
 			</div>
 		</div>
@@ -266,7 +266,7 @@
 			processData: false,
 			success: function(hasil) {
 				var json = $.parseJSON(hasil)
-				console.log(json.error);
+				console.log(json);
 
 				if (json.error == 0) {
 					alert(json.data);
@@ -372,6 +372,11 @@
 					$('#btnBayar').hide();
 				} else {
 					var sp = 'Selesai';
+					$('#btnSelesai').show();
+					$('#btnBayar').show();
+				}
+
+				if (data['verifikasi_selesai'] == 1) {
 					$('#btnSelesai').show();
 					$('#btnBayar').show();
 				}
