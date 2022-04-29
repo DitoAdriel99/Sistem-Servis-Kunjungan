@@ -79,7 +79,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" id="btn_mulai" value="0" onclick="statuspekerjaan(this.value)" class="btn btn-primary">Mulai Kerja</button>
-						<button type="button" id="btn_modal"href="#selesai" data-toggle="modal" class="btn btn-success"> Selesai</button>
+						<button type="button" id="btn_modal" href="#selesai" data-toggle="modal" class="btn btn-success"> Selesai</button>
 						<!-- <button type="button" id="btn_selesai" value="1" onclick="statuspekerjaan(this.value)" class="btn btn-success">Pekerjaan Selesai</button> -->
 						<button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
 					</div>
@@ -140,19 +140,28 @@
 			dataType: 'json',
 			success: function(data) {
 				console.log(data.length)
-				var baris = '';
-				for (var i = 0; i < data.length; i++) {
+				if (data.length < 1) {
 					baris += '<tr>' +
-						'<td>' + (i + 1) + '</td>' +
-						'<td>' + data[i].nama_customer + '</td>' +
-						'<td>' + data[i].alamat + '</td>' +
-						'<td>' + data[i].nama_keluhan + '</td>' +
-						'<td>' + data[i].detail_keluhan + '</td>' +
-						'<td><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + data[i].gambar + '></td>' +
-						'<td><a href="#detail_pesanan" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')" class="btn btn-md btn-success"><i class="fa fa-list"></i></td>' +
+						'<td colspan="6" class="text-center"> Tidak Ada Data Perbaikan</td>' +
+
 						'<tr>';
+					$('#target').html(baris);
+				} else {
+
+					var baris = '';
+					for (var i = 0; i < data.length; i++) {
+						baris += '<tr>' +
+							'<td>' + (i + 1) + '</td>' +
+							'<td>' + data[i].nama_customer + '</td>' +
+							'<td>' + data[i].alamat + '</td>' +
+							'<td>' + data[i].nama_keluhan + '</td>' +
+							'<td>' + data[i].detail_keluhan + '</td>' +
+							'<td><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + data[i].gambar + '></td>' +
+							'<td><a href="#detail_pesanan" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')" class="btn btn-md btn-success"><i class="fa fa-list"></i></td>' +
+							'<tr>';
+					}
+					$('#target').html(baris);
 				}
-				$('#target').html(baris);
 			}
 		})
 	}
@@ -180,7 +189,7 @@
 					$('#btn_mulai').hide();
 					$('#btn_selesai').hide();
 					$('#btn_modal').hide();
-					
+
 				}
 
 				if (data['jam_mulai'] == null) {
@@ -257,7 +266,7 @@
 		var data = new FormData();
 
 		// If you want to add an extra field for the FormData
-		data.append('id_pesanan',$('#id_pesanan').val());
+		data.append('id_pesanan', $('#id_pesanan').val());
 		data.append('gambar_pekerjaan', $('#gambar_pekerjaan').prop('files')[0]);
 
 		$.ajax({
@@ -274,7 +283,7 @@
 				$('#detail_pesanan').modal('hide');
 				$('#selesai').modal('hide');
 				alert('Harap Menunggu Verifikasi Dari Customer')
-				
+
 			}
 		});
 	}
