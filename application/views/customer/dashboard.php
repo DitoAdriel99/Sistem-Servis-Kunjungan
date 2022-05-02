@@ -151,6 +151,11 @@
 			</div>
 			<div class="modal-body">
 				<form action="#" id="forms_upload" class="form-horizontal" method="POST" enctype="multipart/form-data">
+				<div class="form-group row">
+				<label class="col-sm-12 col-form-label">
+				Harap Melakukan Pembayaran Ke Rekening XXXXXXXX a/n PT.QHM 
+				</label>
+					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Upload Gambar</label>
 						<div class="col-sm-10">
@@ -393,6 +398,7 @@
 				$('[name="harga_detail"]').val(data['harga']);
 				$('[name="status_pekerjaan_detail"]').val(sp);
 				$('[name="jam_mulai_detail"]').val(data['jam_mulai']);
+				
 
 				$('#output_detail').attr('src', '<?= base_url() ?>gambar/' + data['gambar']);
 			}

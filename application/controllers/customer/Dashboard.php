@@ -131,8 +131,6 @@ class Dashboard extends CI_Controller
 
 	public function tambahData()
 	{
-		// $this->form_validation->set_rules('nama_customer', 'Nama Customer', 'required');
-		// $this->form_validation->set_rules('alamat', 'Alamat', 'required');
 		$this->form_validation->set_rules('keluhan', 'Keluhan', 'required');
 		$this->form_validation->set_rules('detail_keluhan', 'Detail Keluhan', 'required');
 		if (empty($_FILES)) {
@@ -169,7 +167,6 @@ class Dashboard extends CI_Controller
 
 			if (!$this->upload->do_upload('gambar')) {
 				$error = $this->upload->display_errors();
-				// $this->load->view('upload_form', $error);
 				$result = array(
 					'error' => 1,
 					'data' => $error
@@ -178,7 +175,6 @@ class Dashboard extends CI_Controller
 				exit;
 			} else {
 				$dataUpload = array('upload_data' => $this->upload->data());
-				// $image = $dataUpload['upload_data']['file_name'];
 			}
 
 			$data = array(
@@ -196,10 +192,6 @@ class Dashboard extends CI_Controller
 				'tanggal_pesanan' => $tanggal
 			);
 
-
-			// echo json_encode($data);
-			// die();
-
 			$insert = $this->m->insertData($data, 'tb_pesanan');
 			if ($insert['error'] == 0) {
 				$result = array(
@@ -215,8 +207,6 @@ class Dashboard extends CI_Controller
 				echo json_encode($result);
 			}
 		}
-		// echo json_encode($data);
-
 	}
 
 	public function verifikasi()
@@ -253,9 +243,6 @@ class Dashboard extends CI_Controller
 		$teknisi = $this->input->post('teknisi');
 		$verifikasi_selesai = 1;
 
-		// print_r($verifikasi_selesai);
-		// die;
-
 		$config['upload_path']   = './gambar/';
 		$config['allowed_types'] = 'gif|jpg|png|pdf';
 		$config['max_size']      = 9000;
@@ -265,7 +252,6 @@ class Dashboard extends CI_Controller
 
 		if (!$this->upload->do_upload('bukti_pembayaran')) {
 			$error = $this->upload->display_errors();
-			// $this->load->view('upload_form', $error);
 			$result = array(
 				'error' => 1,
 				'data' => $error
@@ -274,7 +260,6 @@ class Dashboard extends CI_Controller
 			exit;
 		} else {
 			$dataUpload = array('upload_data' => $this->upload->data());
-			// $image = $dataUpload['upload_data']['file_name'];
 		}
 
 		$data = array(
@@ -297,10 +282,7 @@ class Dashboard extends CI_Controller
 				'data' =>'Data Gagal Di Upload'
 			);
 		}
-
 		echo json_encode($result);
-
-
 	}
 
 

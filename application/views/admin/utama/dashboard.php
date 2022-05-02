@@ -41,8 +41,6 @@
 	<div class="panel panel-default ">
 		<div class="panel-heading">
 			List Pesanan
-			<!-- <a href="#form" data-toggle="modal" onclick="submit('tambah')" class="btn btn-md btn-primary">Tambah data</a>
-			<a href="<?= base_url() . 'admin/dashboard/viewTambah' ?>" data-toggle="modal" class="btn btn-md btn-primary">view</a> -->
 			<ul class="pull-right panel-settings panel-button-tab-right">
 				<li class="dropdown"><a class="pull-right dropdown-toggle" data-toggle="dropdown" href="#">
 						<em class="fa fa-cogs"></em>
@@ -514,7 +512,7 @@
 								'<td>' + data[i].nama_customer + '</td>' +
 								'<td>' + data[i].nama_keluhan + '</td>' +
 								'<td><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + data[i].gambar + '></td>' +
-								'<td><a href="#form" data-toggle="modal" onclick="submit(' + data[i].id_pesanan + ')" class="btn btn-md btn-warning"><i class="fa fa-pencil"></i><a href="#detail_pesanan" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')" class="btn btn-md btn-success"><i class="fa fa-list"></i><a onclick="hapusData(' + data[i].id_pesanan + ')" class="btn btn-md btn-danger"><i class="fa fa-trash"></i></td>' +
+								'<td><a href="#detail_pesanan" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')" class="btn btn-md btn-success"><i class="fa fa-list"></i><a onclick="hapusData(' + data[i].id_pesanan + ')" class="btn btn-md btn-danger"><i class="fa fa-trash"></i></td>' +
 								'<tr>';
 						}
 						$('#target').html(baris);
@@ -756,73 +754,6 @@
 					}
 				});
 			}
-		}
-
-
-
-		function editData() {
-
-			//stop submit the form, we will post it manually.
-			// event.preventDefault();
-
-			// Get form
-			var form = $('#forms')[0];
-
-
-			var data = new FormData();
-
-			// If you want to add an extra field for the FormData
-			// data.append('gambar', $('#gambar').prop('files')[0]);
-			// data.append('gambar', $('#gambar_lama').prop('files')[0]);
-			data.append('nama_customer', $("[name='nama_customer']").val());
-			data.append('alamat', $("[name='alamat']").val());
-			data.append('keluhan', $("[name='keluhan']").val());
-			data.append('detail_keluhan', $("[name='detail_keluhan']").val());
-			data.append('harga', $("[name='harga']").val());
-
-			// alert(gambar);
-			console.log(data);
-			return;
-
-
-			$.ajax({
-				type: 'POST',
-				url: '<?= base_url() . 'admin/dashboard/editData' ?>',
-				data: data,
-				contentType: false,
-				cache: false,
-				processData: false,
-				success: function(hasil) {
-					alert(hasil);
-					// $( ".form-group" ).removeClass('has-error');
-					// // $( ".form-group" ).after('')
-
-					var json = $.parseJSON(hasil)
-					// console.log(json.data);
-					if (json.error == 0) {
-						console.log('berhasil');
-						$('#form').modal('hide');
-						ambilData();
-						$("[name='nama_customer']").val('')
-						$("[name='alamat']").val('')
-						$("[name='keluhan']").val('')
-						$("[name='detail_keluhan']").val('')
-						$("[name='harga']").val('')
-						$("[name='gambar']").val('')
-
-
-
-					} else {
-						for (let index = 0; index < Object.keys(json.data).length; index++) {
-							$('[name="' + Object.keys(json.data)[index] + '"]').closest(".form-group").addClass('has-error')
-							// $('[name="'+Object.keys(json.data)[index]+'"]').after("<span class='help-block'>"+Object.values(json.data)[index]+"</span>")
-						}
-						console.log(Object.keys(json.data)[0]);
-						alert(json.data);
-						ambilData();
-					}
-				}
-			});
 		}
 
 		function hapusDataTeknisi(x) {
