@@ -77,7 +77,7 @@ class Login extends CI_Controller
 					'username' => $this->input->post('username'),
 					'email' => $email,
 					'no_hp' => $this->input->post('no_hp'),
-					'alamat' => $this->input->post('no_hp'),
+					'alamat' => $this->input->post('alamat'),
 					'password' => $this->input->post('password'),
 					'level' => 3,
 				);

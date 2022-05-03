@@ -125,6 +125,7 @@
 			<?php } else { ?>
 				<li><a href="<?= base_url() . 'customer/Dashboard' ?>"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 				<li><a href="<?= base_url() . 'customer/History' ?>"><em class="fa fa-dashboard">&nbsp;</em> History Pesanan</a></li>
+				<li><a href="<?= base_url() . 'customer/Profile' ?>"><em class="fa fa-dashboard">&nbsp;</em> Profile</a></li>
 			<?php } ?>
 
 			<!-- <li><a href="elements.html"><em class="fa fa-toggle-off">&nbsp;</em> UI Elements</a></li>
