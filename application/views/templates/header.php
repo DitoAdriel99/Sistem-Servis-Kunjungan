@@ -121,7 +121,7 @@
 				<li><a href="<?= base_url() . 'admin/Keluhan' ?>"><em class="fa fa-bar-chart">&nbsp;</em> Keluhan</a></li>
 			<?php } elseif ($this->session->userdata('level') == 2) { ?>
 				<li><a href="<?= base_url() . 'teknisi/Dashboard' ?>"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-
+				<li><a href="<?= base_url() . 'teknisi/Profile' ?>"><em class="fa fa-dashboard">&nbsp;</em> Profile</a></li>
 			<?php } else { ?>
 				<li><a href="<?= base_url() . 'customer/Dashboard' ?>"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
 				<li><a href="<?= base_url() . 'customer/History' ?>"><em class="fa fa-dashboard">&nbsp;</em> History Pesanan</a></li>
