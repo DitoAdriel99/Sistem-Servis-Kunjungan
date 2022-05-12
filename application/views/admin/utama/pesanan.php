@@ -66,12 +66,9 @@
 					var baris = '';
 					baris += '<tr>' +
 						'<td colspan="5" class="text-center"> Data Tidak Ditemukan</td>' +
-
 						'<tr>';
 					$('#ongoing').html(baris);
-
 				} else {
-
 					var baris = '';
 					for (var i = 0; i < hasil.length; i++) {
 						baris += '<tr>' +
@@ -134,13 +131,10 @@
 				},
 				success: function(hasil) {
 					console.log(hasil);
-					
 				}
 			});
 		} else {
 			alert("Verifikasi Di batalkan");
 		}
-
-
 	}
 </script>

@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Lumino - Login</title>
+	<title>PT.QHM</title>
 	<link href="<?= base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet">
 	<link href="<?= base_url() ?>assets/css/datepicker3.css" rel="stylesheet">
 	<link href="<?= base_url() ?>assets/css/styles.css" rel="stylesheet">
@@ -14,11 +14,11 @@
 	<![endif]-->
 </head>
 
-<body style="background-image: url('LOGINQHMH.jpg');">
+<body>
 	<div class="row">
 		<div class="col-xs-10 col-xs-offset-1 col-sm-8 col-sm-offset-2 col-md-4 col-md-offset-4">
 			<div class="login-panel panel panel-default">
-				<div class="panel-heading">Log in</div>
+				<div class="panel-heading">Selamat Datang Silahkan Log in</div>
 				<div class="panel-body">
 					<?php echo form_open(base_url() . 'login/proses_login') ?>
 					<form role="form">
@@ -75,10 +75,6 @@
 							<span id="no_hp_error" class="text-danger"></span>
 						</div>
 						<div class="form-group">
-							<input type="text" name="alamat" id="alamat" class="form-control" placeholder="alamat">
-							<span id="alamat_error" class="text-danger"></span>
-						</div>
-						<div class="form-group">
 							<input type="password" name="password" id="password" class="form-control" placeholder="password">
 							<span id="password_error" class="text-danger"></span>
 						</div>
@@ -106,7 +102,6 @@
 
 
 	$(document).ready(function() {
-
 		$('#contact_form').on('submit', function(event) {
 			event.preventDefault();
 			$.ajax({
@@ -114,9 +109,6 @@
 				method: "POST",
 				data: $(this).serialize(),
 				dataType: "json",
-				// beforeSend: function() {
-				// 	$('#contact').attr('disabled', 'disabled');
-				// },
 				success: function(data) {
 					console.log(data)
 					if (data.error) {
@@ -140,11 +132,6 @@
 						} else {
 							$('#no_hp_error').html('');
 						}
-						if (data.alamat_error != '') {
-							$('#alamat_error').html(data.alamat_error);
-						} else {
-							$('#alamat_error').html('');
-						}
 					}
 					if (data.error == 0) {
 						alert('Terimakasih Sudah daftar Silahkan Login!')
@@ -152,13 +139,9 @@
 						$('#email_error').html('');
 						$('#password_error').html('');
 						$('#no_hp_error').html('');
-						$('#alamat_error').html('');
 						$('#contact_form')[0].reset();
 						$('#formRegister').modal('hide');
-
-						
 					}
-					// $('#contact').attr('disabled', false);
 				}
 			})
 		});

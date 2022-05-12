@@ -44,10 +44,11 @@
 		<thead>
 			<tr>
 				<th>No.</th>
+				<th>Tanggal Pesanan</th>
 				<th>Tanggal Perbaikan</th>
 				<th>Nama Customer</th>
-				<th>Keluhan</th>
-				<th>teknisi</th>
+				<th>Barang</th>
+				<th>Teknisi</th>
 				<th>Harga</th>
 				<th>Mulai</th>
 				<th>selesai</th>
@@ -58,6 +59,7 @@
 				<tr>
 					<td scope="row"><?= $val->id_pesanan ?></td>
 					<td><?= $val->tanggal_pesanan ?></td>
+					<td><?= $val->tanggal_perbaikan ?></td>
 					<td><?= $val->nama_customer ?></td>
 					<td><?= $val->nama_keluhan ?></td>
 					<td><?= $val->username ?></td>

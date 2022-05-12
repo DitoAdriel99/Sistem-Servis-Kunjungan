@@ -6,34 +6,35 @@
 			<div class="panel panel-teal panel-widget border-right">
 				<div class="row no-padding"><em class="fa fa-xl fa-shopping-cart color-blue"></em>
 					<div id="orderan" class="large"></div>
-					<div class="text-muted">New Orders</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-			<div class="panel panel-blue panel-widget border-right">
-				<div class="row no-padding"><em class="fa fa-xl fa-comments color-orange"></em>
-					<div class="large">52</div>
-					<div class="text-muted">Comments</div>
-				</div>
-			</div>
-		</div>
-		<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
-			<div class="panel panel-orange panel-widget border-right">
-				<div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
-					<div class="large">24</div>
-					<div class="text-muted">New Users</div>
+					<div class="text-muted">Pesanan Masuk</div>
 				</div>
 			</div>
 		</div>
 		<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
 			<div class="panel panel-red panel-widget ">
 				<div class="row no-padding"><em class="fa fa-xl fa-search color-red"></em>
-					<div class="large">25.2k</div>
-					<div class="text-muted">Page Views</div>
+					<div id="og" class="large"></div>
+					<div class="text-muted">Pesanan Proses</div>
 				</div>
 			</div>
 		</div>
+		<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+			<div class="panel panel-blue panel-widget border-right">
+				<div class="row no-padding"><em class="fa fa-xl fa-comments color-orange"></em>
+					<div id="lps" class="large"></div>
+					<div class="text-muted">Pesanan Selesai</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+			<div class="panel panel-orange panel-widget border-right">
+				<div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
+					<div id="lt" class="large">24</div>
+					<div class="text-muted">Teknisi</div>
+				</div>
+			</div>
+		</div>
+
 	</div>
 	<!--/.row-->
 </div>
@@ -385,6 +386,8 @@
 	ambilData();
 	ambilTeknisi()
 	listOrderan();
+	listPesananSelesai();
+	onGoing();
 	selectKeluhan();
 	selectTeknisi();
 	// location.reload();
@@ -437,10 +440,18 @@
 				if (json.error == 0) {
 					alert('data berhasil dimasukan')
 					$('#formteknisi').modal('hide');
-					ambilTeknisi();
+					ambilData();
+					ambilTeknisi()
 					listOrderan();
+					listPesananSelesai();
+					onGoing();
 				} else {
 					alert('data gagal dimasukan ')
+					ambilData();
+					ambilTeknisi()
+					listOrderan();
+					listPesananSelesai();
+					onGoing();
 				}
 
 
@@ -492,7 +503,6 @@
 	}
 
 	function ambilData() {
-
 		$.ajax({
 			type: 'POST',
 			url: '<?= base_url() . "admin/dashboard/ambilData" ?>',
@@ -502,7 +512,6 @@
 				if (data.length < 1) {
 					baris += '<tr>' +
 						'<td colspan="5" class="text-center"> Data Tidak Ditemukan</td>' +
-
 						'<tr>';
 					$('#target').html(baris);
 				} else {
@@ -529,7 +538,7 @@
 			dataType: 'json',
 			success: function(data) {
 				// alert(data.length)
-
+				$('#lt').html(data.length);
 				if (data.length < 1) {
 					var baris = '';
 					baris += '<tr>' +
@@ -591,7 +600,6 @@
 	function verifikasi(sts) {
 		var id_pesanan = $('#id_pesanan').val()
 		var teknisi = $('#teknisi').val()
-
 		$.ajax({
 			type: 'POST',
 			url: '<?= base_url() . 'admin/dashboard/verifikasi' ?>',
@@ -601,26 +609,28 @@
 				'teknisi': teknisi,
 			},
 			dataType: 'json',
+			beforeSend: function() {
+				ambilData();
+			},
 			success: function(hasil) {
 				console.log(hasil);
 				if (hasil.error == 0) {
-					Swal.fire(
-						'Good job!',
-						'Status Berhasil di ubah',
-						'success'
-					);
+					alert('Berhasil')
 					$('#detail_pesanan').modal('hide');
 					$('#form_teknisi').modal('hide');
-
 					ambilData();
+					ambilTeknisi()
+					listOrderan();
+					listPesananSelesai();
+					onGoing();
 				} else {
-					Swal.fire(
-						'Gagal Verifikasi',
-						'Status gagal diubah',
-						'error'
-					);
+					alert('Data gagal di input')
 					$('#detail_pesanan').modal('hide');
 					ambilData();
+					ambilTeknisi()
+					listOrderan();
+					listPesananSelesai();
+					onGoing();
 				}
 			}
 		});
@@ -640,12 +650,37 @@
 		});
 	}
 
+	function listPesananSelesai() {
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() . "admin/dashboard/pesananselesai" ?>',
+			dataType: 'json',
+			success: function(data) {
+				// alert(data.length)
+				$('#lps').html(data.length)
+			}
+		});
+	}
+
+
 	function harga_keluhan() {
 		var x = document.getElementById('keluhan').value;
 		$.ajax({
 			url: '<?= base_url() ?>admin/dashboard/cekHarga/' + x,
 			success: function(result) {
 				document.getElementById('harga').value = result;
+			}
+		});
+	}
+
+	function onGoing() {
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() ?>admin/pesanan/onGoing/',
+			dataType: 'json',
+			success: function(hasil) {
+				console.log(hasil);
+				$('#og').html(hasil.length);
 			}
 		});
 	}
@@ -691,7 +726,10 @@
 					$('#form').modal('hide');
 					$('#form_teknisi').modal('hide');
 					ambilData();
-					listOrderan()
+					ambilTeknisi()
+					listOrderan();
+					listPesananSelesai();
+					onGoing();
 					$("[name='nama_customer']").val('')
 					$("[name='alamat']").val('')
 					$("[name='keluhan']").val('')
@@ -768,7 +806,11 @@
 				url: '<?= base_url() .  "admin/Dashboard/HapusDataTeknisi" ?> ',
 				data: 'id_user=' + x,
 				success: function() {
+					ambilData();
 					ambilTeknisi()
+					listOrderan();
+					listPesananSelesai();
+					onGoing();
 					alert('mantap')
 				}
 			});
@@ -802,7 +844,10 @@
 							'success'
 						)
 						ambilData();
-						listOrderan()
+						ambilTeknisi()
+						listOrderan();
+						listPesananSelesai();
+						onGoing();
 					}
 				});
 			}

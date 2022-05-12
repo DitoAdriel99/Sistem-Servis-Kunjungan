@@ -70,10 +70,9 @@ class Dashboard extends CI_Controller
 				'detail_keluhan' => $data['result']->detail_keluhan,
 				'jam_mulai' => $data['result']->jam_mulai,
 				'jam_selesai' => $data['result']->jam_selesai,
-				'status_pekerjaan' => $data['result']->status_pekerjaan,
 				'harga' => $data['result']->harga,
 				'gambar' => $data['result']->gambar,
-				'status' => $data['result']->status,
+				'status' => ($data['result']->status == null) ? 'Menunggu' : 'Diterima' ,
 				'teknisi' => $data['result']->teknisi,
 				'status_pekerjaan' => $data['result']->status_pekerjaan,
 			);
@@ -100,33 +99,28 @@ class Dashboard extends CI_Controller
 	{
 		$id_user = $this->session->userdata('id_user');
 		$queryGetData = $this->m->getData($id_user);
-		// $id_user = $this->session->userdata('id_user');
-		// print_r($queryGetData);
-		// die();
 
-		// $i = 0;
-		// foreach ($queryGetData['result'] as $key) {
-		// 	if ($key->status === '0') {
-		// 		$status = 'Ditolak';
-		// 	} else if ($key->status === '1') {
-		// 		$status = 'Diterima';
-		// 	} else {
-		// 		$status = 'Menunggu';
-		// 	}
+		$i = 0;
+		foreach ($queryGetData['result'] as $key) {
+			if ($key->status === '1') {
+				$status = 'Diterima';
+			} else {
+				$status = 'Menunggu';
+			}
 
 
-		// 	$result[$i++] = array(
-		// 		'id_pesanan' => $key->id_pesanan,
-		// 		'keluhan' => $key->nama_keluhan,
-		// 		'harga' => $key->harga,
-		// 		'gambar' => $key->gambar,
-		// 		'status' => $status,
-		// 		'bukti_pembayaran' => $key->bukti_pembayaran,
+			$result[$i++] = array(
+				'id_pesanan' => $key->id_pesanan,
+				'nama_keluhan' => $key->nama_keluhan,
+				'harga' => $key->harga,
+				'gambar' => $key->gambar,
+				'status' => $status,
+				'bukti_pembayaran' => $key->bukti_pembayaran,
 
 
-		// 	);
-		// }
-		echo json_encode($queryGetData);
+			);
+		}
+		echo json_encode($result);
 	}
 
 	public function tambahData()
@@ -137,10 +131,10 @@ class Dashboard extends CI_Controller
 			$this->form_validation->set_rules('gambar', 'Gambar', 'required');
 		}
 		$id_pesanan = $this->input->post('id_pesanan');
+		$alamat = $this->input->post('alamat');
 		$id_user = $this->session->userdata('id_user');
 		$nama_customer = $this->session->userdata('username');
 		$email = $this->session->userdata('email');
-		$alamat = $this->session->userdata('alamat');
 		$no_hp = $this->session->userdata('no_hp');
 		$keluhan = $this->input->post('keluhan');
 		$detail_keluhan = $this->input->post('detail_keluhan');
@@ -207,6 +201,68 @@ class Dashboard extends CI_Controller
 				echo json_encode($result);
 			}
 		}
+
+		
+	}
+
+	public function kedatangan()
+	{
+		$id_pesanan = $this->input->post('id_pesanan');
+		$tanggal = format_indo(date('Y-m-d'));
+		date_default_timezone_set("Asia/Jakarta");
+		$time = date("h:i:sa");
+		
+		$data = array(
+			'id_pesanan' => $id_pesanan,
+			'tanggal_perbaikan' => $tanggal,
+			'jam_mulai' => $time,
+			'status_pekerjaan' => 0
+		);
+
+		$update = $this->m->updateKedatangan($data,'tb_pesanan');
+
+		if ($update['error'] == 0) {
+			$result = array(
+				'error' => 0,
+				'data' => 'Data berhasil diubah',
+			);
+		}else{
+			$result = array(
+				'error' => 1,
+				'data' => 'Data gagal diubah',
+			);
+		}
+
+		echo json_encode($result);
+	}
+
+	public function selesai()
+	{
+		$id_pesanan = $this->input->post('id_pesanan');
+		date_default_timezone_set("Asia/Jakarta");
+		$time = date("h:i:sa");
+		
+		$data = array(
+			'id_pesanan' => $id_pesanan,
+			'jam_selesai' => $time,
+			'status_pekerjaan' => 1
+		);
+
+		$update = $this->m->updateSelesai($data,'tb_pesanan');
+
+		if ($update['error'] == 0) {
+			$result = array(
+				'error' => 0,
+				'data' => 'Data berhasil diubah',
+			);
+		}else{
+			$result = array(
+				'error' => 1,
+				'data' => 'Data gagal diubah',
+			);
+		}
+
+		echo json_encode($result);
 	}
 
 	public function verifikasi()

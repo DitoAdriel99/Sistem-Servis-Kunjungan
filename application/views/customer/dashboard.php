@@ -41,16 +41,22 @@
 			<div class="modal-body">
 				<form action="#" id="forms" class="form-horizontal" method="POST" enctype="multipart/form-data">
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Keluhan</label>
+						<label class="col-sm-2 col-form-label">Barang</label>
 						<div class="col-sm-10">
 							<select name="keluhan" id="keluhan" onchange="harga_keluhan()" class="form-control fill">
 							</select>
 						</div>
 					</div>
 					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Detail Keluhan</label>
+						<label class="col-sm-2 col-form-label">Keluhan</label>
 						<div class="col-sm-10">
 							<textarea rows="5" cols="5" class="form-control" name="detail_keluhan" placeholder="Default textarea"></textarea>
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Alamat</label>
+						<div class="col-sm-10">
+							<textarea rows="5" cols="5" class="form-control" name="alamat" placeholder="Default textarea"></textarea>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -133,7 +139,8 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<!-- <button type="button" id="btnSelesai" value="1" onclick="verifikasi(this.value)" class="btn btn-success waves-effect waves-light">Verifikasi selesai</button> -->
+				<button type="button" id="btnKedatangan" value="0" onclick="kedatangan(this.value)" class="btn btn-success waves-effect waves-light">Verifikasi Kedatangan</button>
+				<button type="button" id="btnSelesai" value="1" onclick="selesai(this.value)" class="btn btn-success waves-effect waves-light">Verifikasi Selesai</button>
 				<button type="button" id="btnBayar" href="#pembayaran_forms" data-toggle="modal" class="btn btn-info waves-effect waves-light">Pembayaran </button>
 			</div>
 		</div>
@@ -219,6 +226,7 @@
 		data.append('keluhan', $("[name='keluhan']").val());
 		data.append('detail_keluhan', $("[name='detail_keluhan']").val());
 		data.append('harga', $("[name='harga']").val());
+		data.append('alamat', $("[name='alamat']").val());
 
 		$.ajax({
 			type: 'POST',
@@ -239,6 +247,7 @@
 					$("[name='keluhan']").val('')
 					$("[name='detail_keluhan']").val('')
 					$("[name='harga']").val('')
+					$("[name='alamat']").val('')
 					$("[name='gambar']").val('')
 
 
@@ -367,29 +376,25 @@
 			data: 'id_pesanan=' + x,
 			success: function(data) {
 				console.log(data)
+				
+				if (data['status'] == 'Menunggu') {
+					$('#btnKedatangan').hide();
+				} else {
+					$('#btnKedatangan').show();
+				}
 				if (data['status_pekerjaan'] == null) {
-					var sp = 'Menuju Lokasi'
-					$('#btnSelesai').hide();
+					var sp = 'Harap Menunggu'
 					$('#btnBayar').hide();
 				} else if (data['status_pekerjaan'] == 0) {
 					var sp = 'Mulai Pekerjaan';
-					$('#btnSelesai').hide();
+					$('#btnKedatangan').hide();
 					$('#btnBayar').hide();
 				} else {
 					var sp = 'Selesai';
-					$('#btnSelesai').show();
+					$('#btnKedatangan').hide();
+					$('#btnSelesai').hide();
 					$('#btnBayar').show();
 				}
-
-				if (data['verifikasi_selesai'] == 1) {
-					$('#btnSelesai').show();
-					$('#btnBayar').show();
-				}
-				// if (data['verifikasi_selesai'] == 1) {
-				// 	$('#btnSelesai').hide();
-				// 	$('#btnBayar').show();
-				// }
-
 
 				$('#id_pesanan').val(data['id_pesanan']);
 				$('#teknisi').val(data['teknisi']);
@@ -405,14 +410,53 @@
 		});
 	}
 
+	function kedatangan(){
+		let confirmAction = confirm("Apakah Teknisi Anda Sudah Datang? ")
+		if (confirmAction) {
+			var id_pesanan = $('#id_pesanan').val()
+			$.ajax({
+				type: 'POST',
+				url : '<?= base_url() . "customer/dashboard/kedatangan" ?>',
+				dataType : 'JSON',
+				data : {
+					'id_pesanan': id_pesanan,
+				},
+				success: function(data) {
+					$('#detail_forms').modal('hide');
+					alert('Terimakasih Telah melakukan verifikasi kedatangan Teknisi')
+				}
+			});
+		}else{
+			alert('Batal')
+		}
+	}
+
+	function selesai(){
+		let confirmAction = confirm("Apakah Teknisi Anda Sudah Selesai? ")
+		if (confirmAction) {
+			var id_pesanan = $('#id_pesanan').val()
+			$.ajax({
+				type: 'POST',
+				url : '<?= base_url() . "customer/dashboard/selesai" ?>',
+				dataType : 'JSON',
+				data : {
+					'id_pesanan': id_pesanan,
+				},
+				success: function(data) {
+					$('#detail_forms').modal('hide');
+					alert('Terimakasih Telah melakukan verifikasi pekerjaan Teknisi')
+				}
+			});
+		}else{
+			alert('Batal')
+		}
+	}
+
 	function verifikasi(x) {
 		let confirmAction = confirm("Apakah Anda Yakin Memverifikasi Pekerjaan ini?");
 		if (confirmAction) {
 			var id_pesanan = $('#id_pesanan').val()
 			var teknisi = $('#teknisi').val()
-
-			// console.log(id_pesanan)
-
 			$.ajax({
 				type: 'post',
 				url: '<?= base_url() . "customer/dashboard/verifikasi" ?>',

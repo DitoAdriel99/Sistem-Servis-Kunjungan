@@ -30,7 +30,28 @@ class Pesanan extends CI_Controller
 	public function onGoing()
 	{
 		$queryOnGoing = $this->m->getOnGoing();
-		echo json_encode($queryOnGoing);
+
+		$i = 0;
+		foreach ($queryOnGoing['result'] as $key) {
+			if ($key->status === '1') {
+				$status = 'Proses';
+			} else {
+				$status = 'Menunggu';
+			}
+
+			$result[$i++] = array(
+				'id_pesanan' => $key->id_pesanan,
+				'nama_customer' => $key->nama_customer,
+				'nama_keluhan' => $key->nama_keluhan,
+				'harga' => $key->harga,
+				'gambar' => $key->gambar,
+				'status' => $status,
+				'bukti_pembayaran' => $key->bukti_pembayaran,
+
+
+			);
+		}
+		echo json_encode($result);
 	}
 
 	public function dataPembayaran()

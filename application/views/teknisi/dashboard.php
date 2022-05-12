@@ -79,7 +79,7 @@
 					</div>
 					<div class="modal-footer">
 						<button type="button" id="btn_mulai" value="0" onclick="statuspekerjaan(this.value)" class="btn btn-primary">Mulai Kerja</button>
-						<button type="button" id="btn_modal" href="#selesai" data-toggle="modal" class="btn btn-success"> Selesai</button>
+						<button type="button" id="btn_modal" href="#selesai" data-toggle="modal" class="btn btn-success">Upload Bukti Pekerjaan</button>
 						<!-- <button type="button" id="btn_selesai" value="1" onclick="statuspekerjaan(this.value)" class="btn btn-success">Pekerjaan Selesai</button> -->
 						<button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
 					</div>
@@ -173,12 +173,9 @@
 			data: 'id_pesanan=' + x,
 			dataType: 'json',
 			success: function(data) {
-				console.log(data['status_pekerjaan']);
-				alert(data['status_pekerjaan'])
-
 				if (data['status_pekerjaan'] == null) {
 					var sp = 'Menuju Lokasi'
-					$('#btn_mulai').show();
+					$('#btn_mulai').hide();
 					$('#btn_modal').hide();
 				} else if (data['status_pekerjaan'] == 0) {
 					var sp = 'Mulai Pekerjaan';
@@ -189,21 +186,17 @@
 					$('#btn_mulai').hide();
 					$('#btn_selesai').hide();
 					$('#btn_modal').hide();
-
 				}
-
 				if (data['jam_mulai'] == null) {
 					var jm = 'Belum Mulai Kerja'
 				} else {
 					var jm = data['jam_mulai']
 				}
-
 				if (data['jam_selesai'] == null) {
 					var js = 'Belum Selesai'
 				} else {
 					var js = data['jam_selesai']
 				}
-
 				$('#id_pesanan').val(data['id_pesanan']);
 				$('[name="nama_customer_detail"]').text(data['nama_customer']);
 				$('[name="alamat_detail"]').text(data['alamat']);
@@ -213,20 +206,13 @@
 				$('[name="status_pekerjaan_detail"]').text(sp);
 				$('[name="jam_mulai_detail"]').text(jm);
 				$('[name="jam_selesai_detail"]').text(js);
-
-
 				$('#output_detail').attr('src', '<?= base_url() ?>gambar/' + data['gambar']);
-
 			}
 		})
 	}
 
 	function statuspekerjaan(x) {
-
 		var id_pesanan = $('#id_pesanan').val();
-
-		// alert(status_pekerjaan)
-
 		$.ajax({
 			type: 'post',
 			url: '<?= base_url() . 'teknisi/dashboard/statusPekerjaan' ?>',

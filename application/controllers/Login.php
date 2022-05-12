@@ -53,7 +53,6 @@ class Login extends CI_Controller
 		$this->form_validation->set_rules('username', 'username', 'required');
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 		$this->form_validation->set_rules('no_hp', 'No Hp', 'required');
-		$this->form_validation->set_rules('alamat', 'Alamat', 'required');
 		$this->form_validation->set_rules('password', 'password', 'required');
 
 		$email = $this->input->post('email');
@@ -66,7 +65,6 @@ class Login extends CI_Controller
 					'error'   => true,
 					'email_error' => 'Email Sudah Terpakai Harap di ganti',
 					'username_error' => form_error('username'),
-					'alamat_error' => form_error('alamat'),
 					'no_hp_error' => form_error('no_hp'),
 					'password_error' => form_error('password')
 				);
@@ -77,7 +75,6 @@ class Login extends CI_Controller
 					'username' => $this->input->post('username'),
 					'email' => $email,
 					'no_hp' => $this->input->post('no_hp'),
-					'alamat' => $this->input->post('alamat'),
 					'password' => $this->input->post('password'),
 					'level' => 3,
 				);
@@ -103,7 +100,6 @@ class Login extends CI_Controller
 				'error'   => true,
 				'username_error' => form_error('username'),
 				'email_error' => form_error('email'),
-				'alamat_error' => form_error('alamat'),
 				'no_hp_error' => form_error('no_hp'),
 				'password_error' => form_error('password')
 			);

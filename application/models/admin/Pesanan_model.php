@@ -15,7 +15,12 @@ class Pesanan_model extends CI_Model
 			->where('tp.bukti_pembayaran', null)
 			->where('tp.status', 1)
 			->get();
-		return $query->result();
+		$exist = $this->db->affected_rows();
+		if ($exist > 0 ) {
+			return $result = array('error' => 0, 'result' => $query->result());
+		}else{
+			return $result = array('error' => 1, 'result' => 'Data tidak ada');
+		}
 	}
 
 	public function getDataPembayaran()

@@ -43,9 +43,26 @@ class Dashboard extends CI_Controller
 	public function ambilTeknisi()
 	{
 		$queryGetDataTeknisi = $this->m->getDataTeknisi();
+		// print_r($queryGetDataTeknisi);
+		// die;
+		
+		$i = 0;
+		foreach($queryGetDataTeknisi['result'] as $key){
+			if ($key->status == 0) {
+				$status = 'Sedang Tugas';
+			}else{
+				$status = 'Tersedia';
+			}
 
+			$result[$i++] = array(
+				'id_user' => $key->id_user,
+				'username' => $key->username,
+				'grup' => $key->grup,
+				'status' => $status
+			);
+		}
 
-		echo json_encode($queryGetDataTeknisi);
+		echo json_encode($result);
 	}
 
 	public function viewTambah()
@@ -69,6 +86,12 @@ class Dashboard extends CI_Controller
 	public function selectKeluhan()
 	{
 		$data = $this->m->cekHarga();
+		echo json_encode($data);
+	}
+
+	public function pesananSelesai()
+	{
+		$data = $this->m->getPesananSelesai();
 		echo json_encode($data);
 	}
 
@@ -256,6 +279,26 @@ class Dashboard extends CI_Controller
 		}
 
 		echo json_encode($result);
+
+		//start config
+		$config['protocol']  = 'smtp';
+		$config['smtp_host'] = 'ssl://smtp.googlemail.com';
+		$config['smtp_user'] = 'skripsidito@gmail.com';
+		$config['smtp_pass'] = 'pastilulus';
+		$config['smtp_port'] = 465;
+		$config['charset']   = 'utf-8';
+		$config['mailtype']  = 'html';
+		$config['newline']   = "\r\n";
+
+		$this->load->library('email', $config);
+		$this->email->initialize($config);
+		//end config
+
+		$this->email->from('skripsidito@gmail.com','qhome');
+		$this->email->to($this->m->getEmail($id_pesanan));
+		$this->email->subject('Terimakasih! Kode Pesanan.'.$id_pesanan.'Teknisi Sudah menuju lokasi');
+		$this->email->message('Harap Menunggu ditempat dan memverifikasi kedatangan teknisi jika sudah sampai.');
+		$this->email->send();
 	}
 
 	public function tambahTeknisi()

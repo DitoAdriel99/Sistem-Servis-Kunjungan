@@ -142,8 +142,6 @@ class Dashboard extends CI_Controller
 	{
 		$id_pesanan = $this->input->post('id_pesanan');
 		$status_pekerjaan = $this->input->post('status_pekerjaan');
-		date_default_timezone_set("Asia/Jakarta");
-		$time = date("h:i:sa");
 		// print_r($id_pesanan);
 		// die;
 		$gambar_pekerjaan = $this->input->post('gambar_pekerjaan');
@@ -171,7 +169,6 @@ class Dashboard extends CI_Controller
 		$data = array(
 			'id_pesanan' => $id_pesanan,
 			'gambar_pekerjaan' => $dataUpload['upload_data']['file_name'],
-			'jam_selesai' => $time
 		);
 		// print_r($data);
 		// die();

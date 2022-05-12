@@ -14,9 +14,14 @@ class Dashboard_model extends CI_Model
 			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
 			->where('tp.id_user', $id_user)
 			->where('tp.bukti_pembayaran', null)
-			// ->where('status', '1')
+			// ->where('status is', )
 			->get();
-			return $query->result();
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0, 'result' => $query->result());
+		} else {
+			return $result = array('error' => 1, 'result' => 'data tidak ditemukan');
+		}
 	}
 
 	public function getId($where)
@@ -29,7 +34,7 @@ class Dashboard_model extends CI_Model
 		$exist = $this->db->affected_rows();
 		if ($exist > 0) {
 			return $result = array('error' => 0, 'result' => $query->row());
-		}else{
+		} else {
 			return $result = array('error' => 1, 'result' => 'data tidak ditemukan');
 		}
 	}
@@ -41,6 +46,30 @@ class Dashboard_model extends CI_Model
 		if ($exist > 0) {
 			return $result = array('error' => 0);
 		} else {
+			return $result = array('error' => 1);
+		}
+	}
+
+	public function updateKedatangan($data,$table)
+	{
+		$this->db->where('id_pesanan', $data['id_pesanan']);
+		$this->db->update($table,$data);
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0, 'id_pesanan' => $data['id_pesanan']);
+		}else{
+			return $result = array('error' => 1);
+		}
+	}
+
+	public function updateSelesai($data,$table)
+	{
+		$this->db->where('id_pesanan', $data['id_pesanan']);
+		$this->db->update($table,$data);
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0, 'id_pesanan' => $data['id_pesanan']);
+		}else{
 			return $result = array('error' => 1);
 		}
 	}
@@ -110,7 +139,7 @@ class Dashboard_model extends CI_Model
 	// 	}
 	// }
 
-	public function verifikasiSelesai($id_pesanan,$teknisi,$verifikasi_selesai)
+	public function verifikasiSelesai($id_pesanan, $teknisi, $verifikasi_selesai)
 	{
 		$this->db->trans_start();
 
@@ -122,12 +151,11 @@ class Dashboard_model extends CI_Model
 		} else {
 			return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
 		}
-
 	}
 
 	public function uploadBukti($data)
 	{
-		$this->db->where('id_pesanan',$data['id_pesanan']);
+		$this->db->where('id_pesanan', $data['id_pesanan']);
 		$this->db->update('tb_pesanan', $data);
 		$exist = $this->db->affected_rows();
 		if ($exist > 0) {
@@ -135,6 +163,5 @@ class Dashboard_model extends CI_Model
 		} else {
 			return $result = array('error' => 1,);
 		}
-		
 	}
 }

@@ -17,13 +17,27 @@ class Dashboard_model extends CI_Model
 		return $query->result();
 	}
 
+	public function getPesananSelesai()
+	{
+		$query = $this->db->select('*')
+			->from('tb_pesanan')
+			->where('verifikasi_pembayaran', 1)
+			->get();
+		return $query->result();
+	}
+
 	public function getDataTeknisi()
 	{
 		$query = $this->db->select('*')
 			->from('user')
 			->where('level', 2)
 			->get();
-		return $query->result();
+			$exist = $this->db->affected_rows();
+			if ($exist > 0) {
+				return $result = array('error' => 0, 'result' => $query->result());
+			} else {
+				return $result = array('error' => 1, 'result' => 'data tidak ditemukan');
+			}
 	}
 
 	public function insertData($data, $table)
@@ -151,6 +165,15 @@ class Dashboard_model extends CI_Model
 			}
 		}
 		
+	}
+
+	public function getEmail($id_pesanan)
+	{
+		$query = $this->db->select('*')
+			->from('tb_pesanan')
+			->where('id_pesanan', $id_pesanan)
+			->get();
+		return $query->row()->email;
 	}
 
 	public function updateStatusTeknisi($id_user, $status)

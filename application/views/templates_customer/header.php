@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Material Able bootstrap admin template by Codedthemes</title>
+	<title>PT.QHM</title>
 	<!-- HTML5 Shim and Respond.js IE10 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 	<!--[if lt IE 10]>

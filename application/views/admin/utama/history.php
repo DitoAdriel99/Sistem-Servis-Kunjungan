@@ -41,21 +41,22 @@
 
 <body>
 	<div style="text-align:center">
-		<h3> Laporan Perbaikan di QhomeService</h3>
+		<h3> Laporan Perbaikan di QhmService</h3>
 	</div>
 
 	<a onclick="cetak()">Cetak PDF</a>
 	<table id="table">
 		<thead>
 			<tr>
-				<th>No.</th>
-				<th>Tanggal Perbaikan</th>
-				<th>Nama Customer</th>
-				<th>Keluhan</th>
-				<th>teknisi</th>
-				<th>Harga</th>
-				<th>Mulai</th>
-				<th>selesai</th>
+				<th width="10px">No.</th>
+				<th width="150px">Tanggal Pesanan</th>
+				<th width="150px">Tanggal Perbaikan</th>
+				<th width="150px">Nama Customer</th>
+				<th width="150px">Barang Perbaikan</th>
+				<th width="150px">Teknisi</th>
+				<th width="100px">Harga</th>
+				<th width="100px">Mulai</th>
+				<th width="100px">selesai</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -63,6 +64,7 @@
 				<tr>
 					<td scope="row"><?= $val->id_pesanan ?></td>
 					<td><?= $val->tanggal_pesanan ?></td>
+					<td><?= $val->tanggal_perbaikan ?></td>
 					<td><?= $val->nama_customer ?></td>
 					<td><?= $val->nama_keluhan ?></td>
 					<td><?= $val->username ?></td>

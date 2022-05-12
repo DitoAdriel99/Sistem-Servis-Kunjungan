@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Lumino - Dashboard</title>
+	<title>PT.QHM</title>
 	<script src="<?= base_url() ?>assets/js/jquery-1.11.1.min.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<link href="<?= base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet">
