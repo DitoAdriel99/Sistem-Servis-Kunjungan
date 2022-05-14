@@ -18,25 +18,7 @@ class Dashboard extends CI_Controller
 
 	public function index()
 	{
-		// $data = $this->session->username;
-		// print_r($data);
-		// die;
-		$id_user = $this->session->userdata('id_user');
-
-
-		// $queryGetData = $this->m->getData($id_user);
-
-		$queryGetDataKeluhan = $this->m->cekHarga();
-		$queryGetData = $this->m->getData($id_user);
-		$data = array(
-			'data' => $queryGetData,
-			'title' => 'Dashboard',
-			'keluhan' => $queryGetDataKeluhan
-
-		);
-		$this->load->view('templates/header', $data);
-		$this->load->view('customer/dashboard', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('customer/dashboard');
 	}
 	public function selectKeluhan()
 	{

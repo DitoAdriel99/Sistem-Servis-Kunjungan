@@ -115,17 +115,17 @@
 		</form>
 		<ul class="nav menu">
 			<?php if ($this->session->userdata('level') == 1) { ?>
-				<li><a class="button" id="" href="javascript:void()" onclick="dashboardAdmin()"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
+				<li><a class="button" id="" href="javascript:void()" onclick="dashboardAdmin()"><em class="fa fa-dashboard">&nbsp;</em> Halaman Utama</a></li>
 				<li><a class="button" id="" href="javascript:void()" onclick="pesananAdmin()"><em class="fa fa-calendar">&nbsp;</em> Pesanan</a></li>
 				<li><a class="button" id=""	href="javascript:void()" onclick="historyAdmin()"><em class="fa fa-bar-chart">&nbsp;</em> History</a></li>
 				<li><a class="button" id="" href="javascript:void()" onclick="keluhanAdmin()"><em class="fa fa-bar-chart">&nbsp;</em> Keluhan</a></li>
 			<?php } elseif ($this->session->userdata('level') == 2) { ?>
-				<li><a class="button" id="" href="<?= base_url() . 'teknisi/Dashboard' ?>"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-				<li><a class="button" id="" href="<?= base_url() . 'teknisi/Profile' ?>"><em class="fa fa-dashboard">&nbsp;</em> Profile</a></li>
+				<li><a class="button" id="" href="javascript:void()" onclick="dashboardTeknisi()"><em class="fa fa-dashboard">&nbsp;</em> Halaman Utama</a></li>
+				<li><a class="button" id="" href="javascript:void()" onclick="profileTeknisi()"><em class="fa fa-dashboard">&nbsp;</em> Profile</a></li>
 			<?php } else { ?>
-				<li><a class="button" id="" href="<?= base_url() . 'customer/Dashboard' ?>"><em class="fa fa-dashboard">&nbsp;</em> Dashboard</a></li>
-				<li><a class="button" id="" href="<?= base_url() . 'customer/History' ?>"><em class="fa fa-dashboard">&nbsp;</em> History Pesanan</a></li>
-				<li><a class="button" id="" href="<?= base_url() . 'customer/Profile' ?>"><em class="fa fa-dashboard">&nbsp;</em> Profile</a></li>
+				<li><a class="button" id="" href="javascript:void()" onclick="dashboardCustomer()"><em class="fa fa-dashboard">&nbsp;</em> Halaman Utama</a></li>
+				<li><a class="button" id="" href="javascript:void()" onclick="historyCustomer()"><em class="fa fa-dashboard">&nbsp;</em> History Pesanan</a></li>
+				<li><a class="button" id="" href="javascript:void()" onclick="profileCustomer()"><em class="fa fa-dashboard">&nbsp;</em> Profile</a></li>
 			<?php } ?>
 
 			<!-- <li><a href="elements.html"><em class="fa fa-toggle-off">&nbsp;</em> UI Elements</a></li>
@@ -150,16 +150,9 @@
 	</div>
 	<!--/.sidebar-->
 	<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">
-		<div class="row">
-			<ol class="breadcrumb">
-				<li><a href="#">
-						<em class="fa fa-home"></em>
-					</a></li>
-				<li class="active"><?= $title ?></li>
-			</ol>
-		</div>
+		
 		<div id="content">
-				<h1>Ts</h1>
+				<h1>Selamat Datang</h1>
 		</div>
 
 	</div>
@@ -207,6 +200,34 @@
 
 	function keluhanAdmin(){
 		$.get("<?= base_url() . 'admin/keluhan' ?>", function(data) {
+			$("#content").html(data);
+		});
+	}
+
+	function dashboardCustomer(){
+		$.get("<?= base_url() . 'customer/dashboard' ?>", function(data) {
+			$("#content").html(data);
+		});
+	}
+
+	function historyCustomer(){
+		$.get("<?= base_url() . 'customer/history' ?>", function(data) {
+			$("#content").html(data);
+		});
+	}
+	function profileCustomer(){
+		$.get("<?= base_url() . 'customer/profile' ?>", function(data) {
+			$("#content").html(data);
+		});
+	}
+
+	function dashboardTeknisi(){
+		$.get("<?= base_url() . 'teknisi/dashboard' ?>", function(data) {
+			$("#content").html(data);
+		});
+	}
+	function profileTeknisi(){
+		$.get("<?= base_url() . 'teknisi/profile' ?>", function(data) {
 			$("#content").html(data);
 		});
 	}

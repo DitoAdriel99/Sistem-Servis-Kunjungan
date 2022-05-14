@@ -59,8 +59,8 @@
 				<th width="100px">selesai</th>
 			</tr>
 		</thead>
-		<tbody>
-			<?php foreach ($history as $val) : ?>
+		<tbody id="target">
+			<!-- <?php foreach ($history as $val) : ?>
 				<tr>
 					<td scope="row"><?= $val->id_pesanan ?></td>
 					<td><?= $val->tanggal_pesanan ?></td>
@@ -73,7 +73,7 @@
 					<td><?= $val->jam_selesai ?></td>
 
 				</tr>
-			<?php endforeach ?>
+			<?php endforeach ?> -->
 		</tbody>
 	</table>
 </body>
@@ -81,6 +81,7 @@
 </html>
 
 <script>
+	ambilData()
 	function cetak() {
 		$.ajax({
 			type: 'post',
@@ -89,5 +90,39 @@
 				console.log(result)
 			}
 		});
+	}
+
+	function ambilData(){
+		$.ajax({
+			type: 'get',
+			url: '<?= base_url() . '/admin/history/laporan' ?>',
+			dataType: 'json',
+			success: function(data){
+				console.log(data)
+				if (data.length < 1) {
+					var baris = '';
+					baris += '<tr>' +
+						'<td colspan="9" class="text-center"> Data Tidak Ada</td>' +
+						'<tr>';
+					$('#target').html(baris);
+				} else {
+					var baris = '';
+					for (var i = 0; i < data.length; i++) {
+						baris += '<tr>' +
+							'<td scope="row">' + (i + 1) + '</td>' +
+							'<td>' + data[i].tanggal_pesanan + '</td>' +
+							'<td>' + data[i].tanggal_perbaikan + '</td>' +
+							'<td>' + data[i].nama_customer + '</td>' +
+							'<td>' + data[i].nama_keluhan + '</td>' +
+							'<td>' + data[i].username + '</td>' +
+							'<td>' + data[i].harga + '</td>' +
+							'<td>' + data[i].jam_mulai + '</td>' +
+							'<td>' + data[i].jam_selesai + '</td>' +		
+							'<tr>';
+					}
+					$('#target').html(baris);
+				}
+			}
+		})
 	}
 </script>

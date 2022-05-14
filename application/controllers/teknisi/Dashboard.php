@@ -18,32 +18,7 @@ class Dashboard extends CI_Controller
 
 	public function index()
 	{
-		// $id_teknisi = $this->session->userdata('id_user');
-
-		// $queryGetDataKeluhan = $this->m->cekHarga();
-		// $queryGetData = $this->m->getData($id_teknisi);
-		// // print_r($queryGetData['result']);
-		// // die();
-
-		// if ($queryGetData['error'] == 0) {
-		// 	// $queryGetData['result'];
-		// 	$data['data'] = $queryGetData['result'];
-
-		// 	// print_r($queryGetData['result'][0]->nama_customer);
-		// }else{
-		// 	echo 'data erro';
-		// }
-		$data['title'] = 'Dashboard';
-		// die();
-		// $data = array(
-		// 	'data' => $queryGetData,
-		// 	'title' => 'Dashboard',
-		// 	'keluhan' => $queryGetDataKeluhan
-
-		// );
-		$this->load->view('templates/header', $data);
-		$this->load->view('teknisi/dashboard', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('teknisi/dashboard');
 	}
 
 	public function ambilData()

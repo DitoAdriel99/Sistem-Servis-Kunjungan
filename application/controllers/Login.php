@@ -36,11 +36,11 @@ class Login extends CI_Controller
 			$this->session->set_userdata('level', $row->level);
 
 			if ($this->session->userdata('level') == ('1')) {
-				redirect('admin/Dashboard');
+				redirect('ajax');
 			} elseif ($this->session->userdata('level') == ('2')) {
-				redirect('teknisi/Dashboard');
+				redirect('ajaxTeknisi');
 			} elseif ($this->session->userdata('level') == ('3')) {
-				redirect('customer/Dashboard');
+				redirect('ajaxCustomer');
 			}
 		} else {
 			$data['pesan'] = "Harap Periksa Kembali Username & Password!";

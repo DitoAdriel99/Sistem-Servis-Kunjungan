@@ -179,7 +179,7 @@
 				}
 				if (hasil.error == 0) {
 					alert('Data sudah masuk!');
-					location.reload();
+					ambilKeluhan()
 					$('#nama_keluhan_error').html('');
 					$('#grup_error').html('');
 					$('#harga_keluhan_error').html('');

@@ -19,19 +19,7 @@ class Dashboard extends CI_Controller
 
 	public function index()
 	{
-		$queryGetDataKeluhan = $this->m->cekHarga();
-		$queryGetDataTeknisi = $this->m->getDataTeknisi();
-		$queryGetData = $this->m->getData();
-		$data = array(
-			'data' => $queryGetData,
-			'teknisi' => $queryGetDataTeknisi,
-			'title' => 'Dashboard',
-			'keluhan' => $queryGetDataKeluhan
-
-		);
-		$this->load->view('templates/header', $data);
-		$this->load->view('admin/utama/dashboard', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('admin/utama/dashboard');
 	}
 
 	public function ambilData()

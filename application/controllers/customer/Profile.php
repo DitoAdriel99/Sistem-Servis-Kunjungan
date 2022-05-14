@@ -18,13 +18,7 @@ class Profile extends CI_Controller
 
 	public function index()
 	{
-		$data = array(
-			'title' => 'Profile',
-
-		);
-		$this->load->view('templates/header', $data);
-		$this->load->view('customer/profile', $data);
-		$this->load->view('templates/footer');
+		$this->load->view('customer/profile');
 	}
 
 	public function ambilData()

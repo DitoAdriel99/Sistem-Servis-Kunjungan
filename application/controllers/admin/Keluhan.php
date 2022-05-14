@@ -18,13 +18,8 @@ class Keluhan extends CI_Controller
 	}
 
 	public function index()
-	{	
-		$data = array(
-			'title' => 'Keluhan',
-		);
-		$this->load->view('templates/header', $data);
-		$this->load->view('admin/utama/keluhan', $data);
-		$this->load->view('templates/footer');
+	{
+		$this->load->view('admin/utama/keluhan');
 	}
 
 	public function ambilKeluhan()

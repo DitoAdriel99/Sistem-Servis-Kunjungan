@@ -18,10 +18,7 @@ class Profile extends CI_Controller
 
 	public function index()
 	{
-		
-		$data['title'] = 'Profile Teknisi';
-		$this->load->view('templates/header', $data);
-		$this->load->view('teknisi/profile', $data);
+		$this->load->view('teknisi/profile');
 		$this->load->view('templates/footer');
 	}
 

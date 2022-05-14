@@ -19,12 +19,7 @@ class Pesanan extends CI_Controller
 
 	public function index()
 	{
-		$data = array(
-			'title' => 'Dashboard',
-		);
-		$this->load->view('templates/header', $data);
 		$this->load->view('admin/utama/pesanan');
-		$this->load->view('templates/footer');
 	}
 
 	public function onGoing()

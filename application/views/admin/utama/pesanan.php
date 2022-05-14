@@ -1,52 +1,55 @@
-<h1>List Pesanan</h1>
-<div class="col-md-6">
-	<div class="panel panel-default ">
-		<div class="panel-heading">
-			On Going
-			<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
-		</div>
-		<div class="panel-body timeline-container" style="display: block;">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Nama Customer</th>
-						<th scope="col">Keluhan</th>
-						<th scope="col">Gambar</th>
-						<th scope="col">Status</th>
-					</tr>
-				</thead>
-				<tbody id="ongoing">
+<div id="box">
 
-				</tbody>
-			</table>
-
+	<h1>List Pesanan</h1>
+	<div class="col-md-6">
+		<div class="panel panel-default ">
+			<div class="panel-heading">
+				On Going
+				<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+			</div>
+			<div class="panel-body timeline-container" style="display: block;">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Nama Customer</th>
+							<th scope="col">Keluhan</th>
+							<th scope="col">Gambar</th>
+							<th scope="col">Status</th>
+						</tr>
+					</thead>
+					<tbody id="ongoing">
+	
+					</tbody>
+				</table>
+	
+			</div>
 		</div>
 	</div>
-</div>
-<div class="col-md-6">
-	<div class="panel panel-default ">
-		<div class="panel-heading">
-			Verifikasi Pembayaran
-			<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
-		</div>
-		<div class="panel-body timeline-container" style="display: block;">
-			<table class="table">
-				<thead>
-					<tr>
-						<th scope="col">#</th>
-						<th scope="col">Nama Customer</th>
-						<th scope="col">Keluhan</th>
-						<th scope="col">Gambar</th>
-						<th scope="col">Bukti Selesai</th>
-						<th scope="col">Aksi</th>
-					</tr>
-				</thead>
-				<tbody id="data-pembayaran">
-
-				</tbody>
-			</table>
-
+	<div class="col-md-6">
+		<div class="panel panel-default ">
+			<div class="panel-heading">
+				Verifikasi Pembayaran
+				<span class="pull-right clickable panel-toggle panel-button-tab-left"><em class="fa fa-toggle-up"></em></span>
+			</div>
+			<div class="panel-body timeline-container" style="display: block;">
+				<table class="table">
+					<thead>
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Nama Customer</th>
+							<th scope="col">Keluhan</th>
+							<th scope="col">Gambar</th>
+							<th scope="col">Bukti Selesai</th>
+							<th scope="col">Aksi</th>
+						</tr>
+					</thead>
+					<tbody id="data-pembayaran">
+	
+					</tbody>
+				</table>
+	
+			</div>
 		</div>
 	</div>
 </div>

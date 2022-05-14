@@ -24,9 +24,7 @@ class History extends CI_Controller
 			'title' => 'History',
 			'history' => $history
 		);
-		$this->load->view('templates/header', $data);
 		$this->load->view('customer/History', $data);
-		$this->load->view('templates/footer');
 	}
 
 	public function getHistory()
