@@ -53,7 +53,6 @@
 		<h1 id="username"></h1>
 		<p class="title" id="email">CEO & Founder, Example</p>
 		<p id="no_hp">Harvard University</p>
-		<p id="alamat">Harvard University</p>
 		<div style="margin: 24px 0;">
 			<a href="#"><i class="fa fa-dribbble"></i></a>
 			<a href="#"><i class="fa fa-twitter"></i></a>
@@ -90,10 +89,6 @@
 						<label for="exampleInputEmail1">nomor Hp</label>
 						<input type="text" class="form-control" id="no_hp_modal" aria-describedby="emailHelp" placeholder="Enter email">
 					</div>
-					<div class="form-group">
-						<label for="exampleInputEmail1">Alamat</label>
-						<input type="text" class="form-control" id="alamat_modal" aria-describedby="emailHelp" placeholder="Enter email">
-					</div>
 				</div>
 				<div class="modal-footer">
 					<a type="button" class="btn btn-secondary" data-dismiss="modal">Close</a>
@@ -119,7 +114,6 @@
 				$('#username').text(hasil['username']);
 				$('#email').text(hasil['email']);
 				$('#no_hp').text(hasil['no_hp']);
-				$('#alamat').text(hasil['alamat']);
 				if (hasil.foto == null) {
 					$('#profile').attr('src', '<?= base_url() ?>person.jpg');
 				} else {
