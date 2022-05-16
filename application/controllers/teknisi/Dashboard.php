@@ -44,6 +44,13 @@ class Dashboard extends CI_Controller
 
 		if ($data['error'] == 0) {
 			$data['result'];
+
+			$string_harga = intval(preg_replace('/[^\d.]/', '', $data['result']->harga));
+			$string_tambahan = intval(preg_replace('/[^\d.]/', '', $data['result']->biaya_tambahan));
+
+			$proses = $string_harga + $string_tambahan;
+			$hasil = number_format($proses,2,".",",");
+
 			$dt = array(
 				'id_pesanan' => $data['result']->id_pesanan,
 				'nama_customer' => $data['result']->nama_customer,
@@ -56,6 +63,7 @@ class Dashboard extends CI_Controller
 				'harga' => $data['result']->harga,
 				'gambar' => $data['result']->gambar,
 				'status' => $data['result']->status,
+				'biaya_tambahan' => $hasil
 			);
 		} else {
 			$dt = array(
@@ -120,6 +128,9 @@ class Dashboard extends CI_Controller
 		// print_r($id_pesanan);
 		// die;
 		$gambar_pekerjaan = $this->input->post('gambar_pekerjaan');
+		$barang_tambahan = $this->input->post('barang_tambahan');
+		$biaya_tambahan = $this->input->post('biaya_tambahan');
+
 
 		$config['upload_path']   = './gambar/';
 		$config['allowed_types'] = 'gif|jpg|png';
@@ -144,6 +155,9 @@ class Dashboard extends CI_Controller
 		$data = array(
 			'id_pesanan' => $id_pesanan,
 			'gambar_pekerjaan' => $dataUpload['upload_data']['file_name'],
+			'barang_tambahan' => $barang_tambahan,
+			'biaya_tambahan' => number_format($biaya_tambahan,2,".",","),
+
 		);
 		// print_r($data);
 		// die();

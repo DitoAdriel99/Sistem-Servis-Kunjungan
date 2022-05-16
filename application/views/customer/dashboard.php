@@ -1,9 +1,9 @@
-<h1>Halaman Utama</h1>
+
 <div class="row">
 	<div class="col-sm-12">
 		<div class="card">
 			<div class="card-header">
-				<h1>Pesanan Anda</h1>
+				<h1>Halaman Utama</h1>
 				<div class="card-header-right">
 					<button class="btn waves-effect waves-light btn-primary" id="btnTambah" data-target="#forms" data-toggle="modal">Tambah Pesanan</button>
 				</div>
@@ -126,7 +126,7 @@
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Harga</label>
 						<div class="col-sm-10">
-							<input type="text" class="form-control" name="harga_detail" id="harga" value="0" placeholder="Disabled text" readonly>
+							<input type="text" class="form-control" name="proses" id="proses" value="0" placeholder="Disabled text" readonly>
 						</div>
 					</div>
 					<div class="form-group row">
@@ -341,7 +341,7 @@
 			url: '<?= base_url() . "customer/dashboard/ambilData" ?>',
 			dataType: 'json',
 			success: function(data) {
-				console.log(data);
+				alert(data.length);
 
 				if (data.length < 1) {
 					var baris = '';
@@ -378,10 +378,13 @@
 			success: function(data) {
 				console.log(data)
 				
-				if (data['status'] == 'Menunggu') {
-					$('#btnKedatangan').hide();
-				} else {
+				if (data['status'] == 'Diterima') {
 					$('#btnKedatangan').show();
+					$('#btnSelesai').hide();
+				} else {
+					$('#btnKedatangan').hide();
+					// $('#btnSelesai').hide();
+
 				}
 				if (data['status_pekerjaan'] == null) {
 					var sp = 'Harap Menunggu'
@@ -390,6 +393,8 @@
 					var sp = 'Mulai Pekerjaan';
 					$('#btnKedatangan').hide();
 					$('#btnBayar').hide();
+					$('#btnSelesai').show();
+
 				} else {
 					var sp = 'Selesai';
 					$('#btnKedatangan').hide();
@@ -401,7 +406,7 @@
 				$('#teknisi').val(data['teknisi']);
 				$('[name="detail_keluhan"]').val(data['keluhan']);
 				$('[name="detail_keluhan_detail"]').val(data['detail_keluhan']);
-				$('[name="harga_detail"]').val(data['harga']);
+				$('[name="proses"]').val(data['biaya_tambahan']);
 				$('[name="status_pekerjaan_detail"]').val(sp);
 				$('[name="jam_mulai_detail"]').val(data['jam_mulai']);
 				

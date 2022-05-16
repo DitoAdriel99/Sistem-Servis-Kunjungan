@@ -42,8 +42,24 @@ class Dashboard extends CI_Controller
 		// print_r($data);
 		// die();
 
+		// echo json_encode($data['result']->harga);
+		// die;
+
 		if ($data['error'] == 0) {
 			$data['result'];
+			
+			// echo json_encode($data['result']->harga);
+			// echo json_encode($data['result']->biaya_tambahan);
+
+			$string_harga = intval(preg_replace('/[^\d.]/', '', $data['result']->harga));
+			$string_tambahan = intval(preg_replace('/[^\d.]/', '', $data['result']->biaya_tambahan));
+
+			$proses = $string_harga + $string_tambahan;
+			$hasil = number_format($proses,2,".",",");
+			// echo json_encode($hasil);
+			// die;
+
+
 			$dt = array(
 				'id_pesanan' => $data['result']->id_pesanan,
 				'nama_customer' => $data['result']->nama_customer,
@@ -57,6 +73,7 @@ class Dashboard extends CI_Controller
 				'status' => ($data['result']->status == null) ? 'Menunggu' : 'Diterima' ,
 				'teknisi' => $data['result']->teknisi,
 				'status_pekerjaan' => $data['result']->status_pekerjaan,
+				'biaya_tambahan' => $hasil,
 			);
 		} else {
 			$dt = array(

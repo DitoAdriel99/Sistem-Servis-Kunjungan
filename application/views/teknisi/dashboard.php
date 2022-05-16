@@ -20,7 +20,6 @@
 </div>
 
 <!-- Bootstrap modal Detail -->
-
 <div class="modal fade" id="detail_pesanan" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -98,6 +97,18 @@
 			</div>
 			<div class="modal-body">
 				<form action="#" id="forms" class="form-horizontal" method="POST" enctype="multipart/form-data">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Barang Tambahan</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="barang_tambahan" placeholder="Masukan Barang Tambahan Jika Ada">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Biaya Tambahan</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="biaya_tambahan" placeholder="Masukan Biaya Tambahan Jika Ada">
+						</div>
+					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Upload Gambar</label>
 						<div class="col-sm-10">
@@ -183,9 +194,6 @@
 					$('#btn_selesai').show();
 				} else if (data['status_pekerjaan'] == 1) {
 					var sp = 'Selesai';
-					$('#btn_mulai').hide();
-					$('#btn_selesai').hide();
-					$('#btn_modal').hide();
 				}
 				if (data['jam_mulai'] == null) {
 					var jm = 'Belum Mulai Kerja'
@@ -202,7 +210,7 @@
 				$('[name="alamat_detail"]').text(data['alamat']);
 				$('[name="keluhan_detail"]').text(data['keluhan']);
 				$('[name="detail_keluhan_detail"]').text(data['detail_keluhan']);
-				$('[name="harga_detail"]').text(data['harga']);
+				$('[name="harga_detail"]').text(data['biaya_tambahan']);
 				$('[name="status_pekerjaan_detail"]').text(sp);
 				$('[name="jam_mulai_detail"]').text(jm);
 				$('[name="jam_selesai_detail"]').text(js);
@@ -254,6 +262,9 @@
 		// If you want to add an extra field for the FormData
 		data.append('id_pesanan', $('#id_pesanan').val());
 		data.append('gambar_pekerjaan', $('#gambar_pekerjaan').prop('files')[0]);
+		data.append('barang_tambahan', $("[name='barang_tambahan']").val());
+		data.append('biaya_tambahan', $("[name='biaya_tambahan']").val());
+
 
 		$.ajax({
 			type: 'POST',

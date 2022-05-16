@@ -52,8 +52,9 @@
 				<th width="150px">Tanggal Pesanan</th>
 				<th width="150px">Tanggal Perbaikan</th>
 				<th width="150px">Nama Customer</th>
+				<th width="150px">Teknisi</th>	
 				<th width="150px">Barang Perbaikan</th>
-				<th width="150px">Teknisi</th>
+				<th width="150px">Barang Tambahan</th>
 				<th width="100px">Harga</th>
 				<th width="100px">Mulai</th>
 				<th width="100px">selesai</th>
@@ -113,8 +114,9 @@
 							'<td>' + data[i].tanggal_pesanan + '</td>' +
 							'<td>' + data[i].tanggal_perbaikan + '</td>' +
 							'<td>' + data[i].nama_customer + '</td>' +
-							'<td>' + data[i].nama_keluhan + '</td>' +
 							'<td>' + data[i].username + '</td>' +
+							'<td>' + data[i].nama_keluhan + '</td>' +
+							'<td>' + data[i].barang_tambahan + '</td>' +
 							'<td>' + data[i].harga + '</td>' +
 							'<td>' + data[i].jam_mulai + '</td>' +
 							'<td>' + data[i].jam_selesai + '</td>' +		
