@@ -38,28 +38,12 @@ class Dashboard extends CI_Controller
 		$id_pesanan = $this->input->post('id_pesanan');
 		$where = array('id_pesanan' => $id_pesanan);
 		$data = $this->m->getId($id_pesanan);
-
-		// print_r($data);
-		// die();
-
-		// echo json_encode($data['result']->harga);
-		// die;
-
 		if ($data['error'] == 0) {
 			$data['result'];
-			
-			// echo json_encode($data['result']->harga);
-			// echo json_encode($data['result']->biaya_tambahan);
-
 			$string_harga = intval(preg_replace('/[^\d.]/', '', $data['result']->harga));
 			$string_tambahan = intval(preg_replace('/[^\d.]/', '', $data['result']->biaya_tambahan));
-
 			$proses = $string_harga + $string_tambahan;
 			$hasil = number_format($proses,2,".",",");
-			// echo json_encode($hasil);
-			// die;
-
-
 			$dt = array(
 				'id_pesanan' => $data['result']->id_pesanan,
 				'nama_customer' => $data['result']->nama_customer,
@@ -106,8 +90,6 @@ class Dashboard extends CI_Controller
 			} else {
 				$status = 'Menunggu';
 			}
-
-
 			$result[$i++] = array(
 				'id_pesanan' => $key->id_pesanan,
 				'nama_keluhan' => $key->nama_keluhan,
@@ -115,8 +97,6 @@ class Dashboard extends CI_Controller
 				'gambar' => $key->gambar,
 				'status' => $status,
 				'bukti_pembayaran' => $key->bukti_pembayaran,
-
-
 			);
 		}
 		echo json_encode($result);

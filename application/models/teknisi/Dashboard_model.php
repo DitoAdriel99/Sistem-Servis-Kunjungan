@@ -59,11 +59,7 @@ class Dashboard_model extends CI_Model
 	public function selesai($data)
 	{
 		$this->db->where('id_pesanan', $data['id_pesanan']);
-		$this->db->update('tb_pesanan', array(
-			'gambar_pekerjaan' => $data['gambar_pekerjaan'],
-			'barang_tambahan' => $data['barang_tambahan'],
-			'biaya_tambahan' => $data['biaya_tambahan'],
-		));
+		$this->db->update('tb_pesanan', $data);
 		$exist = $this->db->affected_rows();
 		if ($exist > 0) {
 			return $result = array('error' => 0, 'id_pesanan' => $data['id_pesanan']);

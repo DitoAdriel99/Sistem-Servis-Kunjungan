@@ -1,4 +1,3 @@
-
 <div class="row">
 	<div class="col-sm-12">
 		<div class="card">
@@ -159,10 +158,10 @@
 			</div>
 			<div class="modal-body">
 				<form action="#" id="forms_upload" class="form-horizontal" method="POST" enctype="multipart/form-data">
-				<div class="form-group row">
-				<label class="col-sm-12 col-form-label">
-				Harap Melakukan Pembayaran Ke Rekening XXXXXXXX a/n PT.QHM 
-				</label>
+					<div class="form-group row">
+						<label class="col-sm-12 col-form-label">
+							Harap Melakukan Pembayaran Ke Rekening XXXXXXXX a/n PT.QHM
+						</label>
 					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Upload Gambar</label>
@@ -284,17 +283,16 @@
 				console.log(json);
 
 				if (json.error == 0) {
-					alert(json.data);
+					ambilData();
 					$('#detail_forms').hide();
 					$('#pembayaran_forms').hide();
-					location.reload()
+
 
 
 				} else {
-					alert(json.data);
+					ambilData();
 					$('#detail_forms').hide();
 					$('#pembayaran_forms').hide();
-					location.reload()
 
 				}
 			}
@@ -346,9 +344,9 @@
 				if (data.length < 1) {
 					var baris = '';
 					baris += '<tr>' +
-					'<td colspan="5" class="text-center"> Tidak Ada Pesanan</td>' +
+						'<td colspan="5" class="text-center"> Tidak Ada Pesanan</td>' +
 
-					'<tr>';
+						'<tr>';
 					$('#target').html(baris);
 				} else {
 					$('#btnTambah').hide();
@@ -377,7 +375,7 @@
 			data: 'id_pesanan=' + x,
 			success: function(data) {
 				console.log(data)
-				
+
 				if (data['status'] == 'Diterima') {
 					$('#btnKedatangan').show();
 					$('#btnSelesai').hide();
@@ -409,22 +407,22 @@
 				$('[name="proses"]').val(data['biaya_tambahan']);
 				$('[name="status_pekerjaan_detail"]').val(sp);
 				$('[name="jam_mulai_detail"]').val(data['jam_mulai']);
-				
+
 
 				$('#output_detail').attr('src', '<?= base_url() ?>gambar/' + data['gambar']);
 			}
 		});
 	}
 
-	function kedatangan(){
+	function kedatangan() {
 		let confirmAction = confirm("Apakah Teknisi Anda Sudah Datang? ")
 		if (confirmAction) {
 			var id_pesanan = $('#id_pesanan').val()
 			$.ajax({
 				type: 'POST',
-				url : '<?= base_url() . "customer/dashboard/kedatangan" ?>',
-				dataType : 'JSON',
-				data : {
+				url: '<?= base_url() . "customer/dashboard/kedatangan" ?>',
+				dataType: 'JSON',
+				data: {
 					'id_pesanan': id_pesanan,
 				},
 				success: function(data) {
@@ -432,20 +430,20 @@
 					alert('Terimakasih Telah melakukan verifikasi kedatangan Teknisi')
 				}
 			});
-		}else{
+		} else {
 			alert('Batal')
 		}
 	}
 
-	function selesai(){
+	function selesai() {
 		let confirmAction = confirm("Apakah Teknisi Anda Sudah Selesai? ")
 		if (confirmAction) {
 			var id_pesanan = $('#id_pesanan').val()
 			$.ajax({
 				type: 'POST',
-				url : '<?= base_url() . "customer/dashboard/selesai" ?>',
-				dataType : 'JSON',
-				data : {
+				url: '<?= base_url() . "customer/dashboard/selesai" ?>',
+				dataType: 'JSON',
+				data: {
 					'id_pesanan': id_pesanan,
 				},
 				success: function(data) {
@@ -453,7 +451,7 @@
 					alert('Terimakasih Telah melakukan verifikasi pekerjaan Teknisi')
 				}
 			});
-		}else{
+		} else {
 			alert('Batal')
 		}
 	}

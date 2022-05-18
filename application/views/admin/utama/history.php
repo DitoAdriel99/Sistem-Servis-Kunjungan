@@ -117,7 +117,7 @@
 							'<td>' + data[i].username + '</td>' +
 							'<td>' + data[i].nama_keluhan + '</td>' +
 							'<td>' + data[i].barang_tambahan + '</td>' +
-							'<td>' + data[i].harga + '</td>' +
+							'<td>' + data[i].total + '</td>' +
 							'<td>' + data[i].jam_mulai + '</td>' +
 							'<td>' + data[i].jam_selesai + '</td>' +		
 							'<tr>';

@@ -26,7 +26,39 @@ class History extends CI_Controller
 	{
 		$queryGetHistory = $this->m->getHistory();
 
-		echo json_encode($queryGetHistory);
+		$i = 0;
+		foreach ($queryGetHistory['result'] as $key){
+			$string_harga = intval(preg_replace('/[^\d.]/', '', $key->harga));
+			$string_tambahan = intval(preg_replace('/[^\d.]/', '', $key->biaya_tambahan));
+
+			$proses = $string_harga + $string_tambahan;
+			$hasil = number_format($proses,2,".",",");
+
+			if ($key->barang_tambahan == null) {
+				$pesan = 'Tidak ada';
+			}else{
+				$pesan = $key->barang_tambahan;
+			}
+
+			$result[$i++] = array(
+				'id_pesanan' => $key->id_pesanan,
+				'nama_customer' => $key->nama_customer,
+				'tanggal_pesanan' => $key->tanggal_pesanan,
+				'tanggal_perbaikan' => $key->tanggal_perbaikan,
+				'alamat' => $key->alamat,
+				'nama_keluhan' => $key->nama_keluhan,
+				'barang_tambahan' => $pesan,
+				'jam_mulai' => $key->jam_mulai,
+				'jam_selesai' => $key->jam_selesai,
+				'harga' => $key->harga,
+				'username' => $key->username,
+				'status_pekerjaan' => $key->status_pekerjaan,
+				'total' => $hasil,
+			);
+
+		}
+		
+		echo json_encode($result);
 	}
 
 	public function sessions()

@@ -16,9 +16,9 @@ class Pesanan_model extends CI_Model
 			->where('tp.status', 1)
 			->get();
 		$exist = $this->db->affected_rows();
-		if ($exist > 0 ) {
+		if ($exist > 0) {
 			return $result = array('error' => 0, 'result' => $query->result());
-		}else{
+		} else {
 			return $result = array('error' => 1, 'result' => 'Data tidak ada');
 		}
 	}
@@ -32,7 +32,12 @@ class Pesanan_model extends CI_Model
 			->where('tp.status', 1)
 			->where('tp.verifikasi_pembayaran', null)
 			->get();
-		return $query->result();
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0, 'result' => $query->result());
+		} else {
+			return $result = array('error' => 1, 'result' => 'Data tidak ada');
+		}
 	}
 
 	public function getIdPesanan($id_pesanan)
@@ -46,8 +51,8 @@ class Pesanan_model extends CI_Model
 
 	public function verifikasi($data)
 	{
-		$this->db->where('id_pesanan',$data['id_pesanan']);
-		$this->db->update('tb_pesanan',$data);
+		$this->db->where('id_pesanan', $data['id_pesanan']);
+		$this->db->update('tb_pesanan', $data);
 		$exist = $this->db->affected_rows();
 		if ($exist > 0) {
 			return $result = array('error' => 0, 'id_pesanan' => $data['id_pesanan']);
@@ -66,5 +71,4 @@ class Pesanan_model extends CI_Model
 			->get();
 		return $query->result();
 	}
-
 }

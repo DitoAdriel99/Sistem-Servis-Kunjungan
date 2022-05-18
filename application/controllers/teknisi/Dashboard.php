@@ -152,30 +152,53 @@ class Dashboard extends CI_Controller
 			exit;
 		}
 
-		$data = array(
-			'id_pesanan' => $id_pesanan,
-			'gambar_pekerjaan' => $dataUpload['upload_data']['file_name'],
-			'barang_tambahan' => $barang_tambahan,
-			'biaya_tambahan' => number_format($biaya_tambahan,2,".",","),
-
-		);
-		// print_r($data);
-		// die();
-
-		$insert = $this->m->selesai($data, 'tb_pesanan');
-		if ($insert['error'] == 0) {
-			$result = array(
-				'error' => 0,
-				'data' => $data
+		if ($barang_tambahan != null) {
+			$data = array(
+				'id_pesanan' => $id_pesanan,
+				'gambar_pekerjaan' => $dataUpload['upload_data']['file_name'],
+				'barang_tambahan' => $barang_tambahan,
+				'biaya_tambahan' => number_format($biaya_tambahan,2,".",","),
+	
 			);
-			echo json_encode($result);
-		} else {
-			$result = array(
-				'error' => 1,
-				'data' => $data
+	
+			$insert = $this->m->selesai($data, 'tb_pesanan');
+			if ($insert['error'] == 0) {
+				$result = array(
+					'error' => 0,
+					'data' => $data
+				);
+				echo json_encode($result);
+			} else {
+				$result = array(
+					'error' => 1,
+					'data' => $data
+				);
+				echo json_encode($result);
+			}
+		}else{
+			$data = array(
+				'id_pesanan' => $id_pesanan,
+				'gambar_pekerjaan' => $dataUpload['upload_data']['file_name'],
+	
 			);
-			echo json_encode($result);
+	
+			$insert = $this->m->selesai($data, 'tb_pesanan');
+			if ($insert['error'] == 0) {
+				$result = array(
+					'error' => 0,
+					'data' => $data
+				);
+				echo json_encode($result);
+			} else {
+				$result = array(
+					'error' => 1,
+					'data' => $data
+				);
+				echo json_encode($result);
+			}
 		}
+
+		
 
 
 	}

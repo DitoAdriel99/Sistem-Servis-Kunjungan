@@ -146,27 +146,13 @@
 	<div class="invoice-box">
 		<table>
 			<tr class="top">
-				<?php if($data['0']->verifikasi_pembayaran == null){ ?>
-
-					<span class="stamp">Menunggu Konfirmasi</span>
-
-					<?php }else{ ?>
-
-						<span class="stamp is-approved">LUNAS</span>
-					<?php } ?>
-
 				<td colspan="2">
 					<table>
 						<tr>
 							<td class="title">
-							Invoice #: <?= $data['0']->id_pesanan ?><br />
-								Dibuat: <?= $data['0']->tanggal_pesanan ?><br />
+								Invoice #: <?= $id_pesanan ?><br />
+								Dibuat: <?= $tanggal_perbaikan ?><br />
 							</td>
-
-							<!-- <td>
-								Invoice #: <?= $data['0']->id_pesanan ?><br />
-								Dibuat: <?= $data['0']->tanggal_pesanan ?><br />
-							</td> -->
 						</tr>
 					</table>
 				</td>
@@ -177,34 +163,20 @@
 					<table>
 						<tr>
 							<td>
-								PT.Bangunan Jaya Mandiri<br />
+								PT.Qhm<br />
 								Jln xxxxxxxx<br />
 								No, TX 12345
 							</td>
 
 							<td>
-								Nama Customer: <?= $data['0']->nama_customer ?><br />
-								Alamat: <?= $data['0']->alamat ?><br />
-								No Hp : <?= $data['0']->no_hp ?>
+								Nama Customer: <?= $nama_customer ?><br />
+								Alamat: <?= $alamat ?><br />
+								No Hp : <?= $no_hp ?>
 							</td>
 						</tr>
 					</table>
 				</td>
 			</tr>
-			
-
-			<!-- <tr class="heading">
-					<td>Payment Method</td>
-
-					<td>Check #</td>
-				</tr>
-
-				<tr class="details">
-					<td>Check</td>
-
-					<td>1000</td>
-				</tr> -->
-
 
 			<tr class="heading">
 				<td>Perbaikan</td>
@@ -213,15 +185,30 @@
 			</tr>
 
 			<tr class="item">
-				<td><?= $data['0']->nama_keluhan ?></td>
+				<td><?= $nama_keluhan ?></td>
 
-				<td>Rp.<?= $data['0']->harga ?></td>
+				<td>Rp. <?= $harga ?></td>
 			</tr>
+
+			<?php if ($barang_tambahan != null) { ?>
+			<tr class="heading">
+				<td>Barang Tambahan</td>
+
+				<td>Price</td>
+			</tr>
+				<tr class="item">
+					<td><?= $barang_tambahan ?></td>
+
+					<td>Rp. <?= $biaya_tambahan ?></td>
+				</tr>
+			<?php } else { ?>
+				
+			<?php } ?>
 
 			<tr class="total">
 				<td></td>
 
-				<td>Total: Rp.<?= $data['0']->harga ?></td>
+				<td>Total: Rp.<?= $total ?></td>
 			</tr>
 		</table>
 	</div>

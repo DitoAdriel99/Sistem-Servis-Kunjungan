@@ -19,10 +19,10 @@
 						</tr>
 					</thead>
 					<tbody id="ongoing">
-	
+
 					</tbody>
 				</table>
-	
+
 			</div>
 		</div>
 	</div>
@@ -40,15 +40,16 @@
 							<th scope="col">Nama Customer</th>
 							<th scope="col">Keluhan</th>
 							<th scope="col">Gambar</th>
+							<th scope="col">harga</th>
 							<th scope="col">Bukti Selesai</th>
 							<th scope="col">Aksi</th>
 						</tr>
 					</thead>
 					<tbody id="data-pembayaran">
-	
+
 					</tbody>
 				</table>
-	
+
 			</div>
 		</div>
 	</div>
@@ -56,7 +57,7 @@
 
 <script>
 	onGoing();
-	dataPembayaran()
+	dataPembayaran();
 
 	function onGoing() {
 		$.ajax({
@@ -110,6 +111,7 @@
 							'<td>' + hasil[i].nama_customer + '</td>' +
 							'<td>' + hasil[i].nama_keluhan + '</td>' +
 							'<td><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + hasil[i].gambar + '></td>' +
+							'<td>' + hasil[i].total + '</td>' +
 							'<td><a href="<?= base_url('gambar/') ?>' + hasil[i].bukti_pembayaran + '" class="link" target="_blank">Card link</a></td>' +
 							'<td><a onclick="verifikasi(' + hasil[i].id_pesanan + ')" class="btn btn-md btn-success"><i class="fa fa-handshake-o"></i></td>' +
 							'<tr>';
@@ -128,12 +130,14 @@
 				url: '<?= base_url() ?>admin/pesanan/verifikasi',
 				data: 'id_pesanan=' + x,
 				dataType: 'json',
-				beforeSend: function(){
-					location.reload();
+				beforeSend: function() {
 					alert("Terimakasih Verifikasi Berhasil Dilakukan");
 				},
 				success: function(hasil) {
 					console.log(hasil);
+					onGoing();
+					dataPembayaran();
+
 				}
 			});
 		} else {

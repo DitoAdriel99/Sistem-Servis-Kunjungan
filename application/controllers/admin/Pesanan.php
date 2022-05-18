@@ -52,7 +52,33 @@ class Pesanan extends CI_Controller
 	public function dataPembayaran()
 	{
 		$queryDataPembayaran = $this->m->getDataPembayaran();
-		echo json_encode($queryDataPembayaran);
+
+		$i = 0;
+		foreach ($queryDataPembayaran['result'] as $key) {
+
+			$string_harga = intval(preg_replace('/[^\d.]/', '', $key->harga));
+			$string_tambahan = intval(preg_replace('/[^\d.]/', '', $key->biaya_tambahan));
+
+			$proses = $string_harga + $string_tambahan;
+			$hasil = number_format($proses,2,".",",");
+			if ($key->status === '1') {
+				$status = 'Proses';
+			} else {
+				$status = 'Menunggu';
+			}
+
+			$result[$i++] = array(
+				'id_pesanan' => $key->id_pesanan,
+				'nama_customer' => $key->nama_customer,
+				'nama_keluhan' => $key->nama_keluhan,
+				'harga' => $key->harga,
+				'gambar' => $key->gambar,
+				'status' => $status,
+				'bukti_pembayaran' => $key->bukti_pembayaran,
+				'total' => $hasil,
+			);
+		}
+		echo json_encode($result);
 	}
 
 	public function verifikasi()

@@ -191,9 +191,12 @@
 				} else if (data['status_pekerjaan'] == 0) {
 					var sp = 'Mulai Pekerjaan';
 					$('#btn_mulai').hide();
-					$('#btn_selesai').show();
+					$('#btn_selesai').hide();
 				} else if (data['status_pekerjaan'] == 1) {
 					var sp = 'Selesai';
+					$('#btn_selesai').show();
+					$('#btn_mulai').hide();
+
 				}
 				if (data['jam_mulai'] == null) {
 					var jm = 'Belum Mulai Kerja'

@@ -16,7 +16,12 @@ class History_model extends CI_Model
 			->where('verifikasi_pembayaran',1)
 			->order_by('tp.tanggal_pesanan', 'desc')
 			->get();
-		return $query->result();
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0, 'result' => $query->result());
+		}else{
+			return $result = array('error' => 0, 'result' => 'Data tidak ditemukan');
+		}
 	}
 
 }
