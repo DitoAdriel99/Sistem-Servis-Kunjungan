@@ -37,19 +37,15 @@ class History extends CI_Controller
 	public function bukti($x)
 	{
 		$id_pesanan = $x;
-
 		$bukti = $this->m->getBukti($id_pesanan);
-		
-		// print_r($bukti);
-		// die;
-		
-		
 		if ($bukti['error'] == 0) {
 			$bukti['result'];
 			$string_harga = intval(preg_replace('/[^\d.]/', '', $bukti['result']->harga));
-			$string_tambahan = intval(preg_replace('/[^\d.]/', '', $bukti['result']->biaya_tambahan));
-			$proses = $string_harga + $string_tambahan;
-			$hasil = number_format($proses, 2, ".", ",");
+			$string_tambahan1 = intval(preg_replace('/[^\d.]/', '', $bukti['result']->harga_tambahan1));
+			$string_tambahan2 = intval(preg_replace('/[^\d.]/', '', $bukti['result']->harga_tambahan2));
+			$string_tambahan3 = intval(preg_replace('/[^\d.]/', '', $bukti['result']->harga_tambahan3));
+			$proses = $string_harga + $string_tambahan1 + $string_tambahan2 + $string_tambahan3;
+			$hasil = number_format($proses,2,".",",");
 			$dt = array(
 				'id_pesanan' => $bukti['result']->id_pesanan,
 				'tanggal_perbaikan' => $bukti['result']->tanggal_perbaikan,
@@ -58,10 +54,13 @@ class History extends CI_Controller
 				'no_hp' => $bukti['result']->no_hp,
 				'nama_keluhan' => $bukti['result']->nama_keluhan,
 				'harga' => $bukti['result']->harga,
-				'barang_tambahan' => $bukti['result']->barang_tambahan,
-				'biaya_tambahan' => $bukti['result']->biaya_tambahan,
+				'barang_tambahan1' => $bukti['result']->barang_tambahan1,
+				'harga_tambahan1' => $bukti['result']->harga_tambahan1,
+				'barang_tambahan2' => $bukti['result']->barang_tambahan2,
+				'harga_tambahan2' => $bukti['result']->harga_tambahan2,
+				'barang_tambahan3' => $bukti['result']->barang_tambahan3,
+				'harga_tambahan3' => $bukti['result']->harga_tambahan3,
 				'total' => $hasil,
-
 			);
 		} else {
 			$dt = array(
@@ -76,12 +75,7 @@ class History extends CI_Controller
 				'biaya_tambahan' => $bukti['error'],
 			);
 		}
-		// print_r($bukti);
-		// die;
 		$this->load->view('customer/bukti', $dt);
-
-
-		// print_r($bukti);
 	}
 
 	public function sessions()

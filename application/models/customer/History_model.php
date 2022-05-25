@@ -14,6 +14,7 @@ class History_model extends CI_Model
 			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
 			->join('user tu', 'tu.id_user = tp.teknisi')
 			->where('tp.id_user', $id_user)
+			->where('tp.verifikasi_pembayaran', '1')
 			->get();
 		return $query->result();
 	}
@@ -26,11 +27,11 @@ class History_model extends CI_Model
 			->join('user tu', 'tu.id_user = tp.teknisi')
 			->where('tp.id_pesanan', $id_pesanan)
 			->get();
-		
+
 		$exist = $this->db->affected_rows();
 		if ($exist > 0) {
 			return $result = array('error' => 0, 'result' => $query->row());
-		}else{
+		} else {
 			return $result = array('error' => 0, 'result' => 'Data tidak ditemukan');
 		}
 	}

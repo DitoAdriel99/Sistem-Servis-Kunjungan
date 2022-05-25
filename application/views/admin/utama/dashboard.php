@@ -37,7 +37,7 @@
 		<div class="col-xs-6 col-md-3 col-lg-3 no-padding">
 			<div class="panel panel-orange panel-widget border-right">
 				<div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
-					<div id="lt" class="large">24</div>
+					<div id="lt" class="large"></div>
 					<div class="text-muted">Teknisi</div>
 				</div>
 			</div>
@@ -285,7 +285,7 @@
 					<div class="modal-footer">
 
 						<button type="button" href="#form_teknisi" data-toggle="modal" id="btn_terima" class="btn btn-primary">TERIMA</button>
-						<button type="button" id="btn_tolak" value="0" onclick="verifikasi(this.value)" class="btn btn-warning">TOLAK</button>
+						<button type="button" id="btn_tolak" value="0" onclick="tolak(this.value)" class="btn btn-warning">TOLAK</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
 					</div>
 				</form>
@@ -399,6 +399,7 @@
 	selectKeluhan();
 	selectTeknisi();
 	// location.reload();
+
 
 	var loadFile = function(event) {
 		var reader = new FileReader();
@@ -576,6 +577,8 @@
 		})
 	}
 
+
+
 	function detail_pesanan(x) {
 		$.ajax({
 			type: 'post',
@@ -604,6 +607,28 @@
 		});
 	}
 
+	function tolak(x) {
+		var id_pesanan = $('#id_pesanan').val()
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() . 'admin/dashboard/tolak' ?>',
+			data: {
+				'id_pesanan': id_pesanan,
+				'status': x,
+			},
+			success: function(hasil) {
+				alert('Berhasil')
+				$('#detail_pesanan').modal('hide');
+				ambilData();
+				ambilTeknisi()
+				listOrderan();
+				listPesananSelesai();
+				onGoing();
+			}
+		});
+	}
+
+
 
 	function verifikasi(sts) {
 		var id_pesanan = $('#id_pesanan').val()
@@ -623,7 +648,6 @@
 			success: function(hasil) {
 				console.log(hasil);
 				if (hasil.error == 0) {
-					alert('Berhasil')
 					$('#detail_pesanan').modal('hide');
 					$('#form_teknisi').modal('hide');
 					ambilData();
@@ -631,6 +655,7 @@
 					listOrderan();
 					listPesananSelesai();
 					onGoing();
+					alert('Berhasil')
 				} else {
 					alert('Data gagal di input')
 					$('#detail_pesanan').modal('hide');
@@ -684,7 +709,7 @@
 	function onGoing() {
 		$.ajax({
 			type: 'POST',
-			url: '<?= base_url() ?>admin/pesanan/onGoing/',
+			url: '<?= base_url() ?>admin/dashboard/ambilProses/',
 			dataType: 'json',
 			success: function(hasil) {
 				console.log(hasil);

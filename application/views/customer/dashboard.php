@@ -97,51 +97,55 @@
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body form">
 				<form action="#" id="forms" class="form-horizontal" method="POST" enctype="multipart/form-data">
 					<input type="hidden" name="id_pesanan" id="id_pesanan" />
 					<input type="hidden" name="teknisi" id="teknisi" />
 
-
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Keluhan</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="detail_keluhan" placeholder="Disabled text" readonly>
-
-						</div>
+					<div class="form-body">
+						<table class="table table-striped">
+							<tbody>
+								<tr>
+									<td><b>Keluhan</b> </td>
+									<td name="detail_keluhan">John</td>
+								</tr>
+								<tr>
+									<td><b>Detail Keluhan</b></td>
+									<td name="detail_keluhan_detail">John</td>
+								</tr>
+								<tr>
+									<td><b>Gambar Barang</b></td>
+									<td>
+										<div class="col-md-9" id="preview">
+											<div class="tampil-gambar" accept="image/*"><img id="output_detail" src="" style="height: 100px; "></div>
+										</div>
+									</td>
+								</tr>
+								<tr>
+									<td><b>Harga</b></td>
+									<td name="hasil">John</td>
+								</tr>
+								<tr>
+									<td><b>Status Pekerjaan</b></td>
+									<td name="status_pekerjaan_detail">John</td>
+								</tr>
+								<tr>
+									<td><b>Jam MUlai</b></td>
+									<td name="jam_mulai_detail">John</td>
+								</tr>
+								<tr>
+									<td><b>Jam Selesai</b></td>
+									<td name="jam_selesai_detail">John</td>
+								</tr>
+							</tbody>
+						</table>
 					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Detail Keluhan</label>
-						<div class="col-sm-10">
-							<textarea rows="5" cols="5" class="form-control" name="detail_keluhan_detail" placeholder="Default textarea" readonly></textarea>
-						</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="button" id="btnKedatangan" value="0" onclick="kedatangan(this.value)" class="btn btn-success waves-effect waves-light">Verifikasi Kedatangan</button>
+						<button type="button" id="btnSelesai" value="1" onclick="selesai(this.value)" class="btn btn-success waves-effect waves-light">Verifikasi Selesai</button>
+						<button type="button" id="btnBayar" href="#pembayaran_forms" data-toggle="modal" class="btn btn-info waves-effect waves-light">Pembayaran </button>
 					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Gambar Barang</label>
-						<div class="col-sm-10" id="preview">
-							<div class="tampil-gambar" accept="image/*"><img id="output_detail" src="" style="height: 100px; "></div>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Harga</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="proses" id="proses" value="0" placeholder="Disabled text" readonly>
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Status Pekerjaan</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="status_pekerjaan_detail" id="harga" value="0" placeholder="Disabled text" readonly>
-						</div>
-					</div>
-
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" id="btnKedatangan" value="0" onclick="kedatangan(this.value)" class="btn btn-success waves-effect waves-light">Verifikasi Kedatangan</button>
-				<button type="button" id="btnSelesai" value="1" onclick="selesai(this.value)" class="btn btn-success waves-effect waves-light">Verifikasi Selesai</button>
-				<button type="button" id="btnBayar" href="#pembayaran_forms" data-toggle="modal" class="btn btn-info waves-effect waves-light">Pembayaran </button>
 			</div>
 		</div>
 	</div>
@@ -163,24 +167,52 @@
 							Harap Melakukan Pembayaran Ke Rekening XXXXXXXX a/n PT.QHM
 						</label>
 					</div>
+					<table class="table table-striped">
+						<tbody id="target-hasil">
+							<tr>
+								<td><b>Harga Servis</b></td>
+								<td name="hasil">John</td>
+							</tr>
+							<tr>
+								<td><b>Biaya Tambahan</b></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td><b name="barang_tambahan1"></b></td>
+								<td name="harga_tambahan1">John</td>
+							</tr>
+							<tr>
+								<td><b name="barang_tambahan2"></b></td>
+								<td name="harga_tambahan2">John</td>
+							</tr>
+							<tr>
+								<td><b name="barang_tambahan3"></b></td>
+								<td name="harga_tambahan3">John</td>
+							</tr>
+							<tr>
+								<td style="background-color: #D6EEEE;"><b>Total</b></td>
+								<td name="total" style="background-color: #D6EEEE;">John</td>
+							</tr>
+						</tbody>
+					</table>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Upload Gambar</label>
 						<div class="col-sm-10">
-							<input type="file" name="bukti_pembayaran" id="bukti_pembayaran" onchange="loadFile1(event)" class="form-control">
+							<input type="file" name="bukti_pembayaran" id="bukti_pembayaran" onchange="loadFile3(event)" class="form-control">
 						</div>
 					</div>
-					<div class="form-group row">
+					<!-- <div class="form-group row">
 						<label class="col-sm-2 col-form-label">Gambar Barang</label>
 						<div class="col-sm-10" id="preview1">
 							<div class="tampil-gambar" accept="image/*"><img id="output1" src="" style="height: 100px; "></div>
 						</div>
-					</div>
+					</div> -->
 
 				</form>
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" id="btnBayar" onclick="bayar()" class="btn btn-info waves-effect waves-light">Upload</button>
+				<button type="button" id="bayar" onclick="bayar()" class="btn btn-info waves-effect waves-light">Upload</button>
 			</div>
 		</div>
 	</div>
@@ -189,6 +221,7 @@
 <script>
 	ambilData();
 	selectKeluhan();
+	detailBayar();
 
 	var loadFile = function(event) {
 		var reader = new FileReader();
@@ -199,7 +232,7 @@
 		reader.readAsDataURL(event.target.files[0]);
 	}
 
-	var loadFile1 = function(event) {
+	var loadFile3 = function(event) {
 		var reader = new FileReader();
 		reader.onload = function() {
 			var output = document.getElementById('output1');
@@ -255,9 +288,6 @@
 				} else {
 
 					alert('Data Gagal dimasukan')
-					// console.log(Object.keys(json.data)[0]);
-					// alert(json.data);
-					// ambilData();
 				}
 			}
 		});
@@ -281,20 +311,7 @@
 			success: function(hasil) {
 				var json = $.parseJSON(hasil)
 				console.log(json);
-
-				if (json.error == 0) {
-					ambilData();
-					$('#detail_forms').hide();
-					$('#pembayaran_forms').hide();
-
-
-
-				} else {
-					ambilData();
-					$('#detail_forms').hide();
-					$('#pembayaran_forms').hide();
-
-				}
+				location.reload()
 			}
 		});
 	}
@@ -339,7 +356,9 @@
 			url: '<?= base_url() . "customer/dashboard/ambilData" ?>',
 			dataType: 'json',
 			success: function(data) {
-				alert(data.length);
+				// alert(data.length);
+				// console.log(data.status)
+
 
 				if (data.length < 1) {
 					var baris = '';
@@ -357,7 +376,7 @@
 							'<td class="txt-oflo">' + data[i].nama_keluhan + '</td>' +
 							'<td class="txt-oflo"><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + data[i].gambar + '></td>' +
 							'<td class="txt-oflo">' + data[i].status + '</td>' +
-							'<td class="txt-oflo"><button class="btn waves-effect waves-light btn-info" href="#detail_forms" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')"><i class="icofont icofont-info-square">cek Detail</i></button></td>'
+							'<td class="txt-oflo"><button class="btn waves-effect waves-light btn-info" id="btnDetail" href="#detail_forms" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')"><i class="icofont icofont-info-square">cek Detail</i></button></td>'
 						'<tr>';
 					}
 					$('#target').html(baris);
@@ -379,37 +398,85 @@
 				if (data['status'] == 'Diterima') {
 					$('#btnKedatangan').show();
 					$('#btnSelesai').hide();
-				} else {
-					$('#btnKedatangan').hide();
-					// $('#btnSelesai').hide();
-
-				}
+					$('#btnBayar').hide();
+				} 
 				if (data['status_pekerjaan'] == null) {
 					var sp = 'Harap Menunggu'
-					$('#btnBayar').hide();
 				} else if (data['status_pekerjaan'] == 0) {
 					var sp = 'Mulai Pekerjaan';
 					$('#btnKedatangan').hide();
-					$('#btnBayar').hide();
 					$('#btnSelesai').show();
-
 				} else {
 					var sp = 'Selesai';
 					$('#btnKedatangan').hide();
 					$('#btnSelesai').hide();
 					$('#btnBayar').show();
+
+				}
+
+				if (data['jam_mulai'] == null) {
+					var jm = 'Belum Mulai Kerja'
+				} else {
+					var jm = data['jam_mulai']
+				}
+				if (data['jam_selesai'] == null) {
+					var js = 'Belum Selesai'
+				} else {
+					var js = data['jam_selesai']
+				}
+
+				if (data['barang_tambahan1'] == null) {
+					var bt1 = ''
+				} else {
+					var bt1 = data['barang_tambahan1']
+				}
+				if (data['harga_tambahan1'] == null) {
+					var ht1 = ''
+				} else {
+					var ht1 = data['harga_tambahan1']
+				}
+				if (data['barang_tambahan2'] == null) {
+					var bt2 = ''
+				} else {
+					var bt2 = data['barang_tambahan2']
+				}
+				if (data['harga_tambahan2'] < 1) {
+					var ht2 = ''
+				} else {
+					var ht2 = data['harga_tambahan2']
+				}
+				if (data['barang_tambahan3'] == null) {
+					var bt3 = ''
+				} else {
+					var bt3 = data['barang_tambahan3']
+				}
+				if (data['harga_tambahan3'] < 1) {
+					var ht3 = ''
+				} else {
+					var ht3 = data['harga_tambahan3']
 				}
 
 				$('#id_pesanan').val(data['id_pesanan']);
-				$('#teknisi').val(data['teknisi']);
-				$('[name="detail_keluhan"]').val(data['keluhan']);
-				$('[name="detail_keluhan_detail"]').val(data['detail_keluhan']);
-				$('[name="proses"]').val(data['biaya_tambahan']);
-				$('[name="status_pekerjaan_detail"]').val(sp);
-				$('[name="jam_mulai_detail"]').val(data['jam_mulai']);
-
-
+				$('#teknisi').val(data['id_user']);
+				$('[name="detail_keluhan"]').text(data['keluhan']);
+				$('[name="detail_keluhan_detail"]').text(data['detail_keluhan']);
+				$('[name="hasil"]').text(data['harga']);
+				$('[name="status_pekerjaan_detail"]').text(sp);
+				$('[name="jam_mulai_detail"]').text(jm);
+				$('[name="jam_selesai_detail"]').text(js);
+				// $('[name="nama_teknisi_detail"]').text(data['teknisi']);
+				// $('[name="no_hp_teknisi_detail"]').text(data['no_hp']);
 				$('#output_detail').attr('src', '<?= base_url() ?>gambar/' + data['gambar']);
+
+				// Pembayaran Detail
+				$('[name="barang_tambahan1"]').text(bt1);
+				$('[name="harga_tambahan1"]').text(ht1);
+				$('[name="barang_tambahan2"]').text(bt2);
+				$('[name="harga_tambahan2"]').text(ht2);
+				$('[name="barang_tambahan3"]').text(bt3);
+				$('[name="harga_tambahan3"]').text(ht3);
+				$('[name="total"]').text(data['total']);
+
 			}
 		});
 	}
@@ -418,6 +485,7 @@
 		let confirmAction = confirm("Apakah Teknisi Anda Sudah Datang? ")
 		if (confirmAction) {
 			var id_pesanan = $('#id_pesanan').val()
+			alert(id_pesanan)
 			$.ajax({
 				type: 'POST',
 				url: '<?= base_url() . "customer/dashboard/kedatangan" ?>',

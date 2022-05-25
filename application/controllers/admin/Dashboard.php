@@ -28,6 +28,12 @@ class Dashboard extends CI_Controller
 		echo json_encode($queryGetData);
 	}
 
+	public function ambilProses()
+	{
+		$queryGetData = $this->m->getProses();
+		echo json_encode($queryGetData);
+	}
+
 	public function ambilTeknisi()
 	{
 		$queryGetDataTeknisi = $this->m->getDataTeknisi();
@@ -164,6 +170,48 @@ class Dashboard extends CI_Controller
 
 	}
 
+	public function tolak()
+	{
+		$id_pesanan = $this->input->post('id_pesanan');
+
+
+		$delete = $this->m->tolak($id_pesanan);
+
+		if ($delete['error'] == 0) {
+			$result = array(
+				'error' => 0,
+				'data' => 'Data dihapus'
+			);
+		}else{
+			$result = array(
+				'error' => 1,
+				'data' => 'Data gagal dihapus'
+			);
+		}
+
+		echo json_encode($result);
+		//start config
+		$config['protocol']  = 'smtp';
+		$config['smtp_host'] = 'ssl://smtp.googlemail.com';
+		$config['smtp_user'] = 'skripsidito@gmail.com';
+		$config['smtp_pass'] = 'pastilulus';
+		$config['smtp_port'] = 465;
+		$config['charset']   = 'utf-8';
+		$config['mailtype']  = 'html';
+		$config['newline']   = "\r\n";
+
+		$this->load->library('email', $config);
+		$this->email->initialize($config);
+		//end config
+
+
+		$this->email->from('skripsidito@gmail.com','qhome');
+		$this->email->to($this->m->getEmail($id_pesanan));
+		$this->email->subject('Mohon Maaf! Kode Pesanan.'.$id_pesanan.'Ditolak');
+		$this->email->message('Gagal diproses harap mengulangi pesanan');
+		$this->email->send();
+	}
+
 	public function hapusData()
 	{
 		$tabel_pesanan = new Dashboard_model;
@@ -186,9 +234,6 @@ class Dashboard extends CI_Controller
 	{
 		$id_user = $this->input->post('id_user');
 		$tabel_teknisi = $this->m->cekIdTeknisi($id_user);;
-		print_r($tabel_teknisi);
-		die;
-
 		if ($tabel_teknisi['0']->foto) {
 			if (file_exists("./profile/" . $tabel_teknisi['0']->foto)) {
 				unlink("./profile/" . $tabel_teknisi['0']->foto);

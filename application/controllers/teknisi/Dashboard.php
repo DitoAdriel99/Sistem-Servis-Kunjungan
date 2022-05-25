@@ -33,6 +33,43 @@ class Dashboard extends CI_Controller
 		// die();
 	}
 
+	public function tambahBarang()
+	{
+		$id_pesanan = $this->input->post('id_pesanan');
+		$barang_tambahan1 = $this->input->post('barang_tambahan1');
+		$harga_tambahan1 = $this->input->post('harga_tambahan1');
+		$barang_tambahan2 = $this->input->post('barang_tambahan2');
+		$harga_tambahan2 = $this->input->post('harga_tambahan2');
+		$barang_tambahan3 = $this->input->post('barang_tambahan3');
+		$harga_tambahan3 = $this->input->post('harga_tambahan3');
+
+		$data = array(
+			'id_pesanan' => $id_pesanan,
+			'barang_tambahan1' => $barang_tambahan1,
+			'harga_tambahan1' => number_format($harga_tambahan1, 2, ".", ","),
+			'barang_tambahan2' => $barang_tambahan2,
+			'harga_tambahan2' => number_format($harga_tambahan2, 2, ".", ","),
+			'barang_tambahan3' => $barang_tambahan3,
+			'harga_tambahan3' => number_format($harga_tambahan3, 2, ".", ","),
+		);
+
+		$insert = $this->m->masukanTambahan($data);
+
+		if ($insert['error'] == 0) {
+			$result = array(
+				'error' => 0,
+				'data' => 'Data Sudah ditambahkan'
+			);
+		} else {
+			$result = array(
+				'error' => 1,
+				'data' => 'Data Tidak bisa dimasukan'
+			);
+		}
+
+		echo json_encode($result);
+	}
+
 	public function ambilId()
 	{
 		$id_pesanan = $this->input->post('id_pesanan');
@@ -45,11 +82,11 @@ class Dashboard extends CI_Controller
 		if ($data['error'] == 0) {
 			$data['result'];
 
-			$string_harga = intval(preg_replace('/[^\d.]/', '', $data['result']->harga));
-			$string_tambahan = intval(preg_replace('/[^\d.]/', '', $data['result']->biaya_tambahan));
+			// $string_harga = intval(preg_replace('/[^\d.]/', '', $data['result']->harga));
+			// $string_tambahan = intval(preg_replace('/[^\d.]/', '', $data['result']->biaya_tambahan));
 
-			$proses = $string_harga + $string_tambahan;
-			$hasil = number_format($proses,2,".",",");
+			// $proses = $string_harga + $string_tambahan;
+			// $hasil = number_format($proses,2,".",",");
 
 			$dt = array(
 				'id_pesanan' => $data['result']->id_pesanan,
@@ -63,7 +100,6 @@ class Dashboard extends CI_Controller
 				'harga' => $data['result']->harga,
 				'gambar' => $data['result']->gambar,
 				'status' => $data['result']->status,
-				'biaya_tambahan' => $hasil
 			);
 		} else {
 			$dt = array(
@@ -152,54 +188,25 @@ class Dashboard extends CI_Controller
 			exit;
 		}
 
-		if ($barang_tambahan != null) {
-			$data = array(
-				'id_pesanan' => $id_pesanan,
-				'gambar_pekerjaan' => $dataUpload['upload_data']['file_name'],
-				'barang_tambahan' => $barang_tambahan,
-				'biaya_tambahan' => number_format($biaya_tambahan,2,".",","),
-	
+		$data = array(
+			'id_pesanan' => $id_pesanan,
+			'gambar_pekerjaan' => $dataUpload['upload_data']['file_name'],
+
+		);
+
+		$insert = $this->m->selesai($data, 'tb_pesanan');
+		if ($insert['error'] == 0) {
+			$result = array(
+				'error' => 0,
+				'data' => $data
 			);
-	
-			$insert = $this->m->selesai($data, 'tb_pesanan');
-			if ($insert['error'] == 0) {
-				$result = array(
-					'error' => 0,
-					'data' => $data
-				);
-				echo json_encode($result);
-			} else {
-				$result = array(
-					'error' => 1,
-					'data' => $data
-				);
-				echo json_encode($result);
-			}
-		}else{
-			$data = array(
-				'id_pesanan' => $id_pesanan,
-				'gambar_pekerjaan' => $dataUpload['upload_data']['file_name'],
-	
+			echo json_encode($result);
+		} else {
+			$result = array(
+				'error' => 1,
+				'data' => $data
 			);
-	
-			$insert = $this->m->selesai($data, 'tb_pesanan');
-			if ($insert['error'] == 0) {
-				$result = array(
-					'error' => 0,
-					'data' => $data
-				);
-				echo json_encode($result);
-			} else {
-				$result = array(
-					'error' => 1,
-					'data' => $data
-				);
-				echo json_encode($result);
-			}
+			echo json_encode($result);
 		}
-
-		
-
-
 	}
 }

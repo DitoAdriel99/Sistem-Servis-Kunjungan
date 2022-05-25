@@ -79,6 +79,7 @@
 					<div class="modal-footer">
 						<button type="button" id="btn_mulai" value="0" onclick="statuspekerjaan(this.value)" class="btn btn-primary">Mulai Kerja</button>
 						<button type="button" id="btn_modal" href="#selesai" data-toggle="modal" class="btn btn-success">Upload Bukti Pekerjaan</button>
+						<button type="button" id="btn_tambahan" href="#tambahan" data-toggle="modal" class="btn btn-primary">Tambah barang\</button>
 						<!-- <button type="button" id="btn_selesai" value="1" onclick="statuspekerjaan(this.value)" class="btn btn-success">Pekerjaan Selesai</button> -->
 						<button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
 					</div>
@@ -93,22 +94,10 @@
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h3 class="modal-title">Bukti Pekerjaan</h3>
+				<h3 class="modal-title">Tambah Harga</h3>
 			</div>
 			<div class="modal-body">
 				<form action="#" id="forms" class="form-horizontal" method="POST" enctype="multipart/form-data">
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Barang Tambahan</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="barang_tambahan" placeholder="Masukan Barang Tambahan Jika Ada">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Biaya Tambahan</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="biaya_tambahan" placeholder="Masukan Biaya Tambahan Jika Ada">
-						</div>
-					</div>
 					<div class="form-group row">
 						<label class="col-sm-2 col-form-label">Upload Gambar</label>
 						<div class="col-sm-10">
@@ -131,8 +120,93 @@
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
 </div>
+
+<div class="modal fade" id="tambahan" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="modal-title">Bukti Pekerjaan</h3>
+			</div>
+			<div class="modal-body">
+				<form action="#" id="forms" class="form-horizontal" method="POST" enctype="multipart/form-data">
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Barang Tambahan1</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="barang_tambahan1" id="barang_tambahan1" placeholder="Masukan Barang Tambahan">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Harga Tambahan1</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" value="0" name="harga_tambahan1" id="harga_tambahan1" placeholder="Masukan Harga ">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Barang Tambahan2</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="barang_tambahan2" id="barang_tambahan2" placeholder="Masukan Barang Tambahan">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Harga Tambahan2</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" value="0" name="harga_tambahan2" id="harga_tambahan2" placeholder="Masukan Harga">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Barang Tambahan3</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" name="barang_tambahan3" id="barang_tambahan3" placeholder="Masukan Barang Tambahan">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Harga Tambahan3</label>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" value="0" name="harga_tambahan3" id="harga_tambahan3" placeholder="Masukan Harga">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" id="btnSelesai" onclick="tambahBarang()" class="btn btn-primary">Tambah</button>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
 <script>
 	ambildata();
+
+	function tambahBarang(){
+		var id_pesanan = $('#id_pesanan').val();
+		var barang_tambahan1 = $('#barang_tambahan1').val();
+		var harga_tambahan1 = $('#harga_tambahan1').val();
+		var barang_tambahan2 = $('#barang_tambahan2').val();
+		var harga_tambahan2 = $('#harga_tambahan2').val();
+		var barang_tambahan3 = $('#barang_tambahan3').val();
+		var harga_tambahan3 = $('#harga_tambahan3').val();
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() . 'teknisi/dashboard/tambahBarang' ?>',
+			data : {
+				'id_pesanan' : id_pesanan,
+				'barang_tambahan1' : barang_tambahan1,
+				'harga_tambahan1' : harga_tambahan1,
+				'barang_tambahan2' : barang_tambahan2,
+				'harga_tambahan2' : harga_tambahan2,
+				'barang_tambahan3' : barang_tambahan3,
+				'harga_tambahan3' : harga_tambahan3,
+			},
+			dataType :'JSON',
+			success: function(hasil){
+				console.log(hasil)
+				$('#detail_pesanan').modal('hide');
+				$('#tambahan').modal('hide');
+
+			}
+		});
+	}
 
 	var loadFile = function(event) {
 		var reader = new FileReader();
@@ -213,7 +287,7 @@
 				$('[name="alamat_detail"]').text(data['alamat']);
 				$('[name="keluhan_detail"]').text(data['keluhan']);
 				$('[name="detail_keluhan_detail"]').text(data['detail_keluhan']);
-				$('[name="harga_detail"]').text(data['biaya_tambahan']);
+				$('[name="harga_detail"]').text(data['harga']);
 				$('[name="status_pekerjaan_detail"]').text(sp);
 				$('[name="jam_mulai_detail"]').text(jm);
 				$('[name="jam_selesai_detail"]').text(js);
@@ -265,8 +339,6 @@
 		// If you want to add an extra field for the FormData
 		data.append('id_pesanan', $('#id_pesanan').val());
 		data.append('gambar_pekerjaan', $('#gambar_pekerjaan').prop('files')[0]);
-		data.append('barang_tambahan', $("[name='barang_tambahan']").val());
-		data.append('biaya_tambahan', $("[name='biaya_tambahan']").val());
 
 
 		$.ajax({

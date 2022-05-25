@@ -17,6 +17,16 @@ class Dashboard_model extends CI_Model
 		return $query->result();
 	}
 
+	public function getProses()
+	{
+		$query = $this->db->select('*')
+			->from('tb_pesanan')
+			->where('status',1)
+			->where('verifikasi_pembayaran', null)
+			->get();
+		return $query->result();
+	}
+
 	public function getPesananSelesai()
 	{
 		$query = $this->db->select('*')
@@ -38,6 +48,19 @@ class Dashboard_model extends CI_Model
 			} else {
 				return $result = array('error' => 1, 'result' => 'data tidak ditemukan');
 			}
+	}
+
+	public function tolak($id_pesanan)
+	{
+		$this->db->where('id_pesanan', $id_pesanan);
+		$this->db->delete('tb_pesanan');
+		$exist = $this->db->affected_rows();
+		if ($exist > 0 ) {
+			return $result = array('error' => 0 );
+		}else{
+			return $result = array('error' => 1 );	
+
+		}
 	}
 
 	public function insertData($data, $table)

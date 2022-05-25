@@ -57,9 +57,10 @@ class Pesanan extends CI_Controller
 		foreach ($queryDataPembayaran['result'] as $key) {
 
 			$string_harga = intval(preg_replace('/[^\d.]/', '', $key->harga));
-			$string_tambahan = intval(preg_replace('/[^\d.]/', '', $key->biaya_tambahan));
-
-			$proses = $string_harga + $string_tambahan;
+			$string_tambahan1 = intval(preg_replace('/[^\d.]/', '', $key->harga_tambahan1));
+			$string_tambahan2 = intval(preg_replace('/[^\d.]/', '', $key->harga_tambahan2));
+			$string_tambahan3 = intval(preg_replace('/[^\d.]/', '', $key->harga_tambahan3));
+			$proses = $string_harga + $string_tambahan1 + $string_tambahan2 + $string_tambahan3;
 			$hasil = number_format($proses,2,".",",");
 			if ($key->status === '1') {
 				$status = 'Proses';

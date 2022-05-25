@@ -190,19 +190,39 @@
 				<td>Rp. <?= $harga ?></td>
 			</tr>
 
-			<?php if ($barang_tambahan != null) { ?>
-			<tr class="heading">
-				<td>Barang Tambahan</td>
+			<?php if ($barang_tambahan1 != null) { ?>
+				<tr class="heading">
+					<td>Barang Tambahan</td>
 
-				<td>Price</td>
-			</tr>
+					<td>Price</td>
+				</tr>
 				<tr class="item">
-					<td><?= $barang_tambahan ?></td>
+					<td><?= $barang_tambahan1 ?></td>
 
-					<td>Rp. <?= $biaya_tambahan ?></td>
+					<td>Rp. <?= $harga_tambahan1 ?></td>
 				</tr>
 			<?php } else { ?>
-				
+
+			<?php } ?>
+			<?php if ($barang_tambahan2 != null) { ?>
+
+				<tr class="item">
+					<td><?= $barang_tambahan2 ?></td>
+
+					<td>Rp. <?= $harga_tambahan2 ?></td>
+				</tr>
+			<?php } else { ?>
+
+			<?php } ?>
+			<?php if ($barang_tambahan3 != null) { ?>
+
+				<tr class="item">
+					<td><?= $barang_tambahan3 ?></td>
+
+					<td>Rp. <?= $harga_tambahan3 ?></td>
+				</tr>
+			<?php } else { ?>
+
 			<?php } ?>
 
 			<tr class="total">

@@ -33,19 +33,32 @@ class Dashboard extends CI_Controller
 		// print_r($queryGetDataKeluhan);
 	}
 
+	public function detailHarga()
+	{
+		$id_pesanan = $this->input->post('id_pesanan');
+
+		print_r($id_pesanan);
+	}
+
 	public function ambilId()
 	{
 		$id_pesanan = $this->input->post('id_pesanan');
 		$where = array('id_pesanan' => $id_pesanan);
 		$data = $this->m->getId($id_pesanan);
+		$detailharga = $this->m->getDetailHarga($id_pesanan);
+		// print_r($detailharga);
+		// die;
 		if ($data['error'] == 0) {
 			$data['result'];
 			$string_harga = intval(preg_replace('/[^\d.]/', '', $data['result']->harga));
-			$string_tambahan = intval(preg_replace('/[^\d.]/', '', $data['result']->biaya_tambahan));
-			$proses = $string_harga + $string_tambahan;
+			$string_tambahan1 = intval(preg_replace('/[^\d.]/', '', $data['result']->harga_tambahan1));
+			$string_tambahan2 = intval(preg_replace('/[^\d.]/', '', $data['result']->harga_tambahan2));
+			$string_tambahan3 = intval(preg_replace('/[^\d.]/', '', $data['result']->harga_tambahan3));
+			$proses = $string_harga + $string_tambahan1 + $string_tambahan2 + $string_tambahan3;
 			$hasil = number_format($proses,2,".",",");
 			$dt = array(
 				'id_pesanan' => $data['result']->id_pesanan,
+				'id_user' => $data['result']->id_user,
 				'nama_customer' => $data['result']->nama_customer,
 				'alamat' => $data['result']->alamat,
 				'keluhan' => $data['result']->nama_keluhan,
@@ -55,9 +68,17 @@ class Dashboard extends CI_Controller
 				'harga' => $data['result']->harga,
 				'gambar' => $data['result']->gambar,
 				'status' => ($data['result']->status == null) ? 'Menunggu' : 'Diterima' ,
-				'teknisi' => $data['result']->teknisi,
+				// 'teknisi' => $data['result']->username,
+				// 'no_hp' => $data['result']->no_hp,
 				'status_pekerjaan' => $data['result']->status_pekerjaan,
-				'biaya_tambahan' => $hasil,
+				'barang_tambahan1' => $data['result']->barang_tambahan1,
+				'harga_tambahan1' => $data['result']->harga_tambahan1,
+				'barang_tambahan2' => $data['result']->barang_tambahan2,
+				'harga_tambahan2' => $data['result']->harga_tambahan2,
+				'barang_tambahan3' => $data['result']->barang_tambahan3,
+				'harga_tambahan3' => $data['result']->harga_tambahan3,
+				'total' => $hasil,
+
 			);
 		} else {
 			$dt = array(
@@ -301,6 +322,9 @@ class Dashboard extends CI_Controller
 			'id_pesanan' => $id_pesanan,
 			'bukti_pembayaran' => $dataUpload['upload_data']['file_name']
 		);
+
+		// print_r($data);
+		// die;
 
 		$upload = $this->m->uploadBukti($data);
 

@@ -7,14 +7,28 @@ class Dashboard_model extends CI_Model
 		$this->load->database();
 	}
 
+	public function getDetailHarga($id_pesanan)
+	{
+		$query = $this->db->select('*')
+			->from('harga_tambahan')
+			->where('id_pesanan', $id_pesanan)
+			->get();
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0, 'result' => $query->result());
+		} else {
+			return $result = array('error' => 1, 'result' => 'data tidak ditemukan');
+		}
+	}
+
 	public function getData($id_user)
 	{
 		$query = $this->db->select('tp.*,tk.nama_keluhan')
 			->from('tb_pesanan tp')
 			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
 			->where('tp.id_user', $id_user)
+			// ->where('tp.status', 0 )
 			->where('tp.bukti_pembayaran', null)
-			// ->where('status is', )
 			->get();
 		$exist = $this->db->affected_rows();
 		if ($exist > 0) {
@@ -28,6 +42,7 @@ class Dashboard_model extends CI_Model
 	{
 		$query = $this->db->select('tp.*, tk.nama_keluhan')
 			->from('tb_pesanan tp')
+			// ->join('user tu', 'tu.id_user = tp.teknisi')
 			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
 			->where('tp.id_pesanan', $where)
 			->get();
@@ -50,26 +65,26 @@ class Dashboard_model extends CI_Model
 		}
 	}
 
-	public function updateKedatangan($data,$table)
+	public function updateKedatangan($data, $table)
 	{
 		$this->db->where('id_pesanan', $data['id_pesanan']);
-		$this->db->update($table,$data);
+		$this->db->update($table, $data);
 		$exist = $this->db->affected_rows();
 		if ($exist > 0) {
 			return $result = array('error' => 0, 'id_pesanan' => $data['id_pesanan']);
-		}else{
+		} else {
 			return $result = array('error' => 1);
 		}
 	}
 
-	public function updateSelesai($data,$table)
+	public function updateSelesai($data, $table)
 	{
 		$this->db->where('id_pesanan', $data['id_pesanan']);
-		$this->db->update($table,$data);
+		$this->db->update($table, $data);
 		$exist = $this->db->affected_rows();
 		if ($exist > 0) {
 			return $result = array('error' => 0, 'id_pesanan' => $data['id_pesanan']);
-		}else{
+		} else {
 			return $result = array('error' => 1);
 		}
 	}

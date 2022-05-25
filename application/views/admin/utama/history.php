@@ -54,27 +54,13 @@
 				<th width="150px">Nama Customer</th>
 				<th width="150px">Teknisi</th>	
 				<th width="150px">Barang Perbaikan</th>
-				<th width="150px">Barang Tambahan</th>
 				<th width="100px">Harga</th>
 				<th width="100px">Mulai</th>
 				<th width="100px">selesai</th>
 			</tr>
 		</thead>
 		<tbody id="target">
-			<!-- <?php foreach ($history as $val) : ?>
-				<tr>
-					<td scope="row"><?= $val->id_pesanan ?></td>
-					<td><?= $val->tanggal_pesanan ?></td>
-					<td><?= $val->tanggal_perbaikan ?></td>
-					<td><?= $val->nama_customer ?></td>
-					<td><?= $val->nama_keluhan ?></td>
-					<td><?= $val->username ?></td>
-					<td>Rp.<?= $val->harga ?></td>
-					<td><?= $val->jam_mulai ?></td>
-					<td><?= $val->jam_selesai ?></td>
-
-				</tr>
-			<?php endforeach ?> -->
+			
 		</tbody>
 	</table>
 </body>
@@ -116,8 +102,8 @@
 							'<td>' + data[i].nama_customer + '</td>' +
 							'<td>' + data[i].username + '</td>' +
 							'<td>' + data[i].nama_keluhan + '</td>' +
-							'<td>' + data[i].barang_tambahan + '</td>' +
-							'<td>' + data[i].total + '</td>' +
+							// '<td>' + data[i].barang_tambahan + '</td>' +
+							'<td>' + data[i].harga + '</td>' +
 							'<td>' + data[i].jam_mulai + '</td>' +
 							'<td>' + data[i].jam_selesai + '</td>' +		
 							'<tr>';
