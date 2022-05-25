@@ -218,10 +218,56 @@
 	</div>
 </div>
 
+<div class="modal fade" id="cek_teknisi" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="modal-title">Teknisi yang Bertugas</h3>
+			</div>
+			<div class="modal-body form">
+				<form action="#" id="forms" class="form-horizontal" method="POST" enctype="multipart/form-data">
+					<input type="hidden" name="id_pesanan" id="id_pesanan" />
+					<div class="form-body">
+
+						<div class="card">
+							<div class="tampil-gambar" accept="image/*"><img id="profile" src="" style="height: 100px; "></div>
+
+							<div class="container">
+								<p>Nama : <span id="username"></span> </p>
+								<p>No Hp: <span id="no"></span> </p>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Kembali</button>
+					</div>
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
 <script>
 	ambilData();
 	selectKeluhan();
-	detailBayar();
+
+	function cekTeknisi(x) {
+		$.ajax({
+			type: 'post',
+			url: '<?= base_url() . 'customer/dashboard/profileTeknisi' ?>',
+			data: 'id_pesanan=' + x,
+			dataType: 'json',
+			success: function(hasil) {
+				console.log(hasil)
+				$('#username').text(hasil['username']);
+				$('#no').text(hasil['no_hp']);
+				$('#profile').attr('src', '<?= base_url() ?>profile/' + hasil['foto']);
+
+			}
+		});
+	}
 
 	var loadFile = function(event) {
 		var reader = new FileReader();
@@ -376,7 +422,7 @@
 							'<td class="txt-oflo">' + data[i].nama_keluhan + '</td>' +
 							'<td class="txt-oflo"><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + data[i].gambar + '></td>' +
 							'<td class="txt-oflo">' + data[i].status + '</td>' +
-							'<td class="txt-oflo"><button class="btn waves-effect waves-light btn-info" id="btnDetail" href="#detail_forms" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')"><i class="icofont icofont-info-square">cek Detail</i></button></td>'
+							'<td class="txt-oflo"><button class="btn waves-effect waves-light btn-info" id="btnDetail" href="#detail_forms" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')"><i class="icofont icofont-info-square">cek Detail</i></button><button class="btn waves-effect waves-light btn-warning" id="btnTeknisi" href="#cek_teknisi" data-toggle="modal" onclick="cekTeknisi(' + data[i].id_pesanan + ')"><i class="icofont icofont-info-square">Cek Teknisi</i></button></td>'
 						'<tr>';
 					}
 					$('#target').html(baris);
@@ -399,7 +445,11 @@
 					$('#btnKedatangan').show();
 					$('#btnSelesai').hide();
 					$('#btnBayar').hide();
-				} 
+				} else {
+					$('#btnKedatangan').hide();
+					$('#btnSelesai').hide();
+					$('#btnBayar').hide();
+				}
 				if (data['status_pekerjaan'] == null) {
 					var sp = 'Harap Menunggu'
 				} else if (data['status_pekerjaan'] == 0) {

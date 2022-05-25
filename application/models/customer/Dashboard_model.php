@@ -21,6 +21,16 @@ class Dashboard_model extends CI_Model
 		}
 	}
 
+	public function getProfileTeknisi($id_pesanan)
+	{
+		$query = $this->db->select('tu.*')
+			->from('tb_pesanan tp')
+			->join('user tu','tu.id_user = tp.teknisi')
+			->where('id_pesanan', $id_pesanan)
+			->get();
+		return $query->row();
+	}
+
 	public function getData($id_user)
 	{
 		$query = $this->db->select('tp.*,tk.nama_keluhan')

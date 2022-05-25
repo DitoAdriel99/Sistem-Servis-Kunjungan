@@ -34,6 +34,17 @@ class Dashboard extends CI_Controller
 		echo json_encode($queryGetData);
 	}
 
+	public function cek()
+	{
+		$id_pesanan = $this->input->post('id_pesanan');
+		$cekId = $this->m->getCekId($id_pesanan);
+		$convert = intval($cekId);
+		$history = $this->m->getHistoryUser($convert);
+
+		echo json_encode($history);
+		
+	}
+
 	public function ambilTeknisi()
 	{
 		$queryGetDataTeknisi = $this->m->getDataTeknisi();

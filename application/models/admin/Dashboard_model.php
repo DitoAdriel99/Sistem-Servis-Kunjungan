@@ -17,6 +17,27 @@ class Dashboard_model extends CI_Model
 		return $query->result();
 	}
 
+	public function getHistoryUser($cekId)
+	{
+		$query = $this->db->select('tp.*, tu.username, tk.nama_keluhan')
+			->from('tb_pesanan tp')
+			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
+			->join('user tu', 'tu.id_user = tp.teknisi')
+			->where('tp.id_user', $cekId)
+			->where('verifikasi_pembayaran', 1)
+			->get();
+		return $query->result();
+	}
+
+	public function getCekId($id_pesanan)
+	{
+		$query = $this->db->select('*')
+			->from('tb_pesanan')
+			->where('id_pesanan', $id_pesanan)
+			->get();
+		return $query->row()->id_user;
+	}
+
 	public function getProses()
 	{
 		$query = $this->db->select('*')

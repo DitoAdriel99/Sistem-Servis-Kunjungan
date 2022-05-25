@@ -344,6 +344,13 @@ class Dashboard extends CI_Controller
 		echo json_encode($result);
 	}
 
+	public function profileTeknisi()
+	{
+		$id_pesanan = $this->input->post('id_pesanan');
+		$teknisi = $this->m->getProfileTeknisi($id_pesanan);
+		echo json_encode($teknisi);
+	}
+
 
 
 	public function sessions()

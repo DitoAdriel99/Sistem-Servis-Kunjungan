@@ -390,6 +390,41 @@
 		</div><!-- /.modal-dialog -->
 	</div>
 </div>
+
+<div class="modal fade" id="cek_pesanan" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="modal-title">Sejarah pesanan</h3>
+			</div>
+			<div class="modal-body form">
+				<form action="#" id="forms" class="form-horizontal" method="POST" enctype="multipart/form-data">
+					<input type="hidden" name="id_pesanan" id="id_pesanan" />
+					<div class="form-body">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">#</th>
+									<th scope="col">Tanggal pesan</th>
+									<th scope="col">Keluhan</th>
+									<th scope="col">Teknisi</th>
+								</tr>
+							</thead>
+							<tbody id="target-cek">
+
+							</tbody>
+						</table>
+					</div>
+					<div class="modal-footer">
+
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Kembali</button>
+					</div>
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
 <script>
 	ambilData();
 	ambilTeknisi()
@@ -399,7 +434,36 @@
 	selectKeluhan();
 	selectTeknisi();
 	// location.reload();
+	function cek(x) {
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() . 'admin/dashboard/cek' ?>',
+			data: 'id_pesanan=' + x,
+			dataType: 'json',
+			success: function(hasil) {
+				console.log(hasil.length);
+				if (hasil.length < 1) {
+					baris += '<tr>' +
+						'<td colspan="4" class="text-center"> Data Tidak Ditemukan</td>' +
+						'<tr>';
+					$('#target-cek').html(baris);
+				} else {
+					var baris = '';
+					for (var i = 0; i < hasil.length; i++) {
+						baris += '<tr>' +
+							'<td>' + (i + 1) + '</td>' +
+							'<td>' + hasil[i].tanggal_pesanan + '</td>' +
+							'<td>' + hasil[i].nama_keluhan + '</td>' +
+							'<td>' + hasil[i].username + '</td>' +
+							'<tr>';
+					}
+					$('#target-cek').html(baris);
+				}
 
+			}
+
+		});
+	}
 
 	var loadFile = function(event) {
 		var reader = new FileReader();
@@ -531,7 +595,7 @@
 							'<td>' + data[i].nama_customer + '</td>' +
 							'<td>' + data[i].nama_keluhan + '</td>' +
 							'<td><img alt="Paris" width="100" height="100"; src=<?= base_url('gambar/') ?>' + data[i].gambar + '></td>' +
-							'<td><a href="#detail_pesanan" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')" class="btn btn-md btn-success"><i class="fa fa-list"></i></td>' +
+							'<td><a href="#detail_pesanan" data-toggle="modal" onclick="detail_pesanan(' + data[i].id_pesanan + ')" class="btn btn-md btn-success"><i class="fa fa-list"></i><a href="#cek_pesanan" data-toggle="modal" onclick="cek(' + data[i].id_pesanan + ')" class="btn btn-md btn-primary"><i class="fa fa-book"></i></td>' +
 							'<tr>';
 					}
 					$('#target').html(baris);
@@ -539,6 +603,8 @@
 			}
 		});
 	}
+
+
 
 	function ambilTeknisi() {
 		$.ajax({
