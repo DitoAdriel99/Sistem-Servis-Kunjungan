@@ -209,4 +209,14 @@ class Dashboard extends CI_Controller
 			echo json_encode($result);
 		}
 	}
+
+	public function tambahan()
+	{
+		$this->load->view('teknisi/tambahan.php');
+	}
+
+	public function tambahan1()
+	{
+		$this->load->view('teknisi/tambahan1.php');
+	}
 }

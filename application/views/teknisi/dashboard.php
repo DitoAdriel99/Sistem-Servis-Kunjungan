@@ -142,29 +142,9 @@
 							<input type="text" class="form-control" value="0" name="harga_tambahan1" id="harga_tambahan1" placeholder="Masukan Harga ">
 						</div>
 					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Barang Tambahan2</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="barang_tambahan2" id="barang_tambahan2" placeholder="Masukan Barang Tambahan">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Harga Tambahan2</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" value="0" name="harga_tambahan2" id="harga_tambahan2" placeholder="Masukan Harga">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Barang Tambahan3</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" name="barang_tambahan3" id="barang_tambahan3" placeholder="Masukan Barang Tambahan">
-						</div>
-					</div>
-					<div class="form-group row">
-						<label class="col-sm-2 col-form-label">Harga Tambahan3</label>
-						<div class="col-sm-10">
-							<input type="text" class="form-control" value="0" name="harga_tambahan3" id="harga_tambahan3" placeholder="Masukan Harga">
-						</div>
+					<a onclick="show()">show</a>
+					<div id="bt">
+
 					</div>
 				</form>
 			</div>
@@ -178,7 +158,14 @@
 <script>
 	ambildata();
 
-	function tambahBarang(){
+	function show() {
+		$.get("<?= base_url() . 'teknisi/dashboard/tambahan' ?>", function(data) {
+			$("#bt").html(data);
+		});
+	}
+
+
+	function tambahBarang() {
 		var id_pesanan = $('#id_pesanan').val();
 		var barang_tambahan1 = $('#barang_tambahan1').val();
 		var harga_tambahan1 = $('#harga_tambahan1').val();
@@ -189,17 +176,17 @@
 		$.ajax({
 			type: 'POST',
 			url: '<?= base_url() . 'teknisi/dashboard/tambahBarang' ?>',
-			data : {
-				'id_pesanan' : id_pesanan,
-				'barang_tambahan1' : barang_tambahan1,
-				'harga_tambahan1' : harga_tambahan1,
-				'barang_tambahan2' : barang_tambahan2,
-				'harga_tambahan2' : harga_tambahan2,
-				'barang_tambahan3' : barang_tambahan3,
-				'harga_tambahan3' : harga_tambahan3,
+			data: {
+				'id_pesanan': id_pesanan,
+				'barang_tambahan1': barang_tambahan1,
+				'harga_tambahan1': harga_tambahan1,
+				'barang_tambahan2': barang_tambahan2,
+				'harga_tambahan2': harga_tambahan2,
+				'barang_tambahan3': barang_tambahan3,
+				'harga_tambahan3': harga_tambahan3,
 			},
-			dataType :'JSON',
-			success: function(hasil){
+			dataType: 'JSON',
+			success: function(hasil) {
 				console.log(hasil)
 				$('#detail_pesanan').modal('hide');
 				$('#tambahan').modal('hide');
