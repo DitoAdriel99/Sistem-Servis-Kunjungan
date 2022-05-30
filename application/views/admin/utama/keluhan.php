@@ -61,7 +61,7 @@
 			</div>
 			<div class="modal-body form">
 				<form id="form" class="form-horizontal" method="POST" enctype="multipart/form-data">
-					<input type="hidden" value="" name="id_keluhan" />
+					<input type="hidden" value="" id="id_keluhan" name="id_keluhan" />
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-3">Nama keluhan</label>
@@ -88,7 +88,7 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">Harga</label>
 							<div class="col-md-9">
-								<input type="number" class="form-control" placeholder="Masukan Harga" id="harga_keluhan" name="harga_keluhan" required>
+								<input type="text" class="form-control" placeholder="Masukan Harga" id="harga_keluhan" name="harga_keluhan" required>
 								<span id="harga_keluhan_error" class="text-danger"></span>
 
 							</div>
@@ -98,9 +98,9 @@
 				</form>
 			</div>
 			<div class="modal-footer">
-				<button type="button" id="btnSave" onclick="add()" class="btn btn-primary">Save</button>
-				<button type="button" id="btnEdit" onclick="editData()" class="btn btn-warning">Edit</button>
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+				<a type="button" id="btnSave" onclick="add()" class="btn btn-primary">Save</a>
+				<a type="button" id="btnEdit" onclick="editData()" class="btn btn-warning">Edit</a>
+				<a type="button" class="btn btn-danger" data-dismiss="modal">Cancel</a>
 			</div>
 		</div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->
@@ -122,8 +122,8 @@
 						'<td>' + (i + 1) + '</td>' +
 						'<td>' + data[i].nama_keluhan + '</td>' +
 						'<td>' + data[i].grup + '</td>' +
-						'<td>' +"Rp. "+ data[i].harga_keluhan + '</td>' +
-						'<td><a onclick="destroy(' + data[i].id_keluhan + ')" class="btn btn-md btn-danger"><i class="fa fa-trash"></i></td>' +
+						'<td>' + "Rp. " + data[i].harga_keluhan + '</td>' +
+						'<td><a onclick="destroy(' + data[i].id_keluhan + ')" class="btn btn-md btn-danger"><i class="fa fa-trash"></i><a onclick="submit(' + data[i].id_keluhan + ')" href="#formkeluhan" data-toggle="modal" class="btn btn-md btn-warning"><i class="fa fa-edit"></i></td>' +
 						'<tr>';
 				}
 				$('#target').html(baris);
@@ -141,17 +141,67 @@
 		} else {
 			$('#btnSave').hide();
 			$('#btnEdit').show();
-			//masukan untuk detail
+
+			$.ajax({
+				type: 'POST',
+				url: '<?= base_url() . 'admin/keluhan/getId' ?>',
+				data: 'id_keluhan=' + x,
+				dataType: 'json',
+				success: function(hasil) {
+					console.log(hasil);
+					$('#id_keluhan').val(hasil['id_keluhan']);
+					$('[name="nama_keluhan"]').val(hasil['nama_keluhan']);
+					$('[name="grup"]').val(hasil['grup']);
+					$('[name="harga_keluhan"]').val(hasil['harga_keluhan']);
+				}
+			});
 		}
 	}
 
+	function editData() {
+		// preventDefault();/
+		var id_keluhan = $('#id_keluhan').val();
+		var nama_keluhan = $('#nama_keluhan').val();
+		var grup = $('#grup').val();
+		var harga_keluhan = $('#harga_keluhan').val();
+		// alert(id_keluhan)
+
+		$.ajax({
+			type: 'POST',
+			url: '<?= base_url() . 'admin/keluhan/edit' ?>',
+			data: {
+				id_keluhan: id_keluhan,
+				nama_keluhan: nama_keluhan,
+				grup: grup,
+				harga_keluhan: harga_keluhan
+			},
+			dataType: 'json',
+			success: function(hasil) {
+				console.log(hasil.error)
+				if (hasil.error == 0) {
+					alert('Data sudah di ubah!')
+					ambilKeluhan();
+					$('#formkeluhan').modal('hide');
+
+				} else {
+					alert('Data gagal diubah!')
+					ambilKeluhan();
+					$('#formkeluhan').modal('hide');
+
+				}
+
+			}
+		});
+	}
+
 	function add() {
+
 		var nama_keluhan = $('#nama_keluhan').val();
 		var grup = $('#grup').val();
 		var harga_keluhan = $('#harga_keluhan').val();
 
 		$.ajax({
-			type: 'POST',
+			type: 'post',
 			url: '<?= base_url() . 'admin/keluhan/add' ?>',
 			dataType: "json",
 			data: {
@@ -171,7 +221,8 @@
 						$('#grup_error').html(hasil.grup_error);
 					} else {
 						$('#grup_error').html("");
-					}if (hasil.harga_keluhan_error != "") {
+					}
+					if (hasil.harga_keluhan_error != "") {
 						$('#harga_keluhan_error').html(hasil.harga_keluhan_error);
 					} else {
 						$('#harga_keluhan_error').html("");
@@ -193,20 +244,20 @@
 		});
 	}
 
-	function destroy(x){
+	function destroy(x) {
 		let confirmAction = confirm("Apakah Anda Yakin Menghapus?");
 		if (confirmAction) {
 			$.ajax({
-			type: 'post',
-			url : '<?= base_url() . 'admin/keluhan/destroy'?> ',
-			data : 'id_keluhan=' + x,
-			dataType: 'json',
-			success: function(hasil){
-				ambilKeluhan();
-				alert('sip mantap')
-			}
-		});
-		}else{
+				type: 'post',
+				url: '<?= base_url() . 'admin/keluhan/destroy' ?> ',
+				data: 'id_keluhan=' + x,
+				dataType: 'json',
+				success: function(hasil) {
+					ambilKeluhan();
+					alert('sip mantap')
+				}
+			});
+		} else {
 			alert('Gagal hapus');
 		}
 	}

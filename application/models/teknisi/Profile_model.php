@@ -21,8 +21,9 @@ class Profile_model extends CI_Model
 
 	public function getHistory($id_user)
 	{
-		$query = $this->db->select('*')
-				->from('tb_pesanan')
+		$query = $this->db->select('tp.*, tk.*')
+				->from('tb_pesanan tp')
+				->join('tb_keluhan tk','tk.id_keluhan = tp.keluhan')
 				->where('teknisi',$id_user)
 				->get();
 		return $query->result();

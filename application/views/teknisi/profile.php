@@ -23,6 +23,8 @@
 			<div class="container">
 				<h4 id="username"><b>John Doe</b></h4>
 				<p>Grup: <span id="grup"></span> </p>
+				<a type="button" id="btnSave" value="1" onclick="status(this.value)" class="btn btn-primary">Save</a>
+
 			</div>
 		</div>
 	</div>
