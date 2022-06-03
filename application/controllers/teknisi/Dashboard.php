@@ -82,11 +82,12 @@ class Dashboard extends CI_Controller
 		if ($data['error'] == 0) {
 			$data['result'];
 
-			// $string_harga = intval(preg_replace('/[^\d.]/', '', $data['result']->harga));
-			// $string_tambahan = intval(preg_replace('/[^\d.]/', '', $data['result']->biaya_tambahan));
-
-			// $proses = $string_harga + $string_tambahan;
-			// $hasil = number_format($proses,2,".",",");
+			$string_harga = intval(preg_replace('/[^\d.]/', '', $data['result']->harga));
+			$string_tambahan1 = intval(preg_replace('/[^\d.]/', '', $data['result']->harga_tambahan1));
+			$string_tambahan2 = intval(preg_replace('/[^\d.]/', '', $data['result']->harga_tambahan2));
+			$string_tambahan3 = intval(preg_replace('/[^\d.]/', '', $data['result']->harga_tambahan3));
+			$proses = $string_harga + $string_tambahan1 + $string_tambahan2 + $string_tambahan3;
+			$hasil = number_format($proses,2,".",",");
 
 			$dt = array(
 				'id_pesanan' => $data['result']->id_pesanan,
@@ -97,7 +98,7 @@ class Dashboard extends CI_Controller
 				'jam_mulai' => $data['result']->jam_mulai,
 				'jam_selesai' => $data['result']->jam_selesai,
 				'status_pekerjaan' => $data['result']->status_pekerjaan,
-				'harga' => $data['result']->harga,
+				'harga' => $hasil,
 				'gambar' => $data['result']->gambar,
 				'status' => $data['result']->status,
 			);

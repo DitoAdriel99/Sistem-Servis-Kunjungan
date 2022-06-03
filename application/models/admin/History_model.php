@@ -23,5 +23,6 @@ class History_model extends CI_Model
 			return $result = array('error' => 0, 'result' => 'Data tidak ditemukan');
 		}
 	}
+	
 
 }

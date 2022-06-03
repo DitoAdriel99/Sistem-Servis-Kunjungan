@@ -45,8 +45,16 @@ class History extends CI_Controller
 				'nama_keluhan' => $key->nama_keluhan,
 				'jam_mulai' => $key->jam_mulai,
 				'jam_selesai' => $key->jam_selesai,
-				'harga' => $hasil,
+				'harga' => $key->harga,
+				'barang_tambahan1' => $key->barang_tambahan1,
+				'harga_tambahan1' => $key->harga_tambahan1,
+				'barang_tambahan2' => $key->barang_tambahan2,
+				'harga_tambahan2' => $key->harga_tambahan2,
+				'barang_tambahan3' => $key->barang_tambahan3,
+				'harga_tambahan3' => $key->harga_tambahan3,
 				'username' => $key->username,
+				'hasil' => $hasil,
+
 				'status_pekerjaan' => $key->status_pekerjaan,
 			);
 

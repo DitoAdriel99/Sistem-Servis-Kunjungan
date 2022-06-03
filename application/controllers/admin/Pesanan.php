@@ -61,7 +61,7 @@ class Pesanan extends CI_Controller
 			$string_tambahan2 = intval(preg_replace('/[^\d.]/', '', $key->harga_tambahan2));
 			$string_tambahan3 = intval(preg_replace('/[^\d.]/', '', $key->harga_tambahan3));
 			$proses = $string_harga + $string_tambahan1 + $string_tambahan2 + $string_tambahan3;
-			$hasil = number_format($proses,2,".",",");
+			$hasil = number_format($proses, 2, ".", ",");
 			if ($key->status === '1') {
 				$status = 'Proses';
 			} else {
@@ -100,7 +100,7 @@ class Pesanan extends CI_Controller
 				'error' => 0,
 				'data' => 'Berhasil'
 			);
-		}else{
+		} else {
 			$result = array(
 				'error' => 1,
 				'data' => 'Data Gagal di verifikasi'
@@ -123,13 +123,50 @@ class Pesanan extends CI_Controller
 		$this->email->initialize($config);
 		//end config
 
-		$bukti['data'] = $this->m->getBukti($id_pesanan);
+		$bukti = $this->m->getBukti($id_pesanan);
+		if ($bukti['error'] == 0) {
+			$bukti['result'];
+			$string_harga = intval(preg_replace('/[^\d.]/', '', $bukti['result']->harga));
+			$string_tambahan1 = intval(preg_replace('/[^\d.]/', '', $bukti['result']->harga_tambahan1));
+			$string_tambahan2 = intval(preg_replace('/[^\d.]/', '', $bukti['result']->harga_tambahan2));
+			$string_tambahan3 = intval(preg_replace('/[^\d.]/', '', $bukti['result']->harga_tambahan3));
+			$proses = $string_harga + $string_tambahan1 + $string_tambahan2 + $string_tambahan3;
+			$hasil = number_format($proses, 2, ".", ",");
+			$dt = array(
+				'id_pesanan' => $bukti['result']->id_pesanan,
+				'tanggal_perbaikan' => $bukti['result']->tanggal_perbaikan,
+				'nama_customer' => $bukti['result']->nama_customer,
+				'alamat' => $bukti['result']->alamat,
+				'no_hp' => $bukti['result']->no_hp,
+				'nama_keluhan' => $bukti['result']->nama_keluhan,
+				'harga' => $bukti['result']->harga,
+				'barang_tambahan1' => $bukti['result']->barang_tambahan1,
+				'harga_tambahan1' => $bukti['result']->harga_tambahan1,
+				'barang_tambahan2' => $bukti['result']->barang_tambahan2,
+				'harga_tambahan2' => $bukti['result']->harga_tambahan2,
+				'barang_tambahan3' => $bukti['result']->barang_tambahan3,
+				'harga_tambahan3' => $bukti['result']->harga_tambahan3,
+				'total' => $hasil,
+			);
+		} else {
+			$dt = array(
+				'id_pesanan' => $bukti['error'],
+				'tanggal_perbaikan' => $bukti['error'],
+				'nama_customer' => $bukti['error'],
+				'alamat' => $bukti['error'],
+				'no_hp' => $bukti['error'],
+				'nama_keluhan' => $bukti['error'],
+				'harga' => $bukti['error'],
+				'barang_tambahan' => $bukti['error'],
+				'biaya_tambahan' => $bukti['error'],
+			);
+		}
 
 
-		$this->email->from('skripsidito@gmail.com','qhome');
+		$this->email->from('skripsidito@gmail.com', 'qhome');
 		$this->email->to($this->m->getIdPesanan($id_pesanan));
-		$this->email->subject('Terimakasih! Kode Pesanan.'.$id_pesanan.'Sudah Selesai');
-		$this->email->message($this->load->view('customer/bukti', $bukti, true));
+		$this->email->subject('Terimakasih! Kode Pesanan.' . $id_pesanan . 'Sudah Selesai');
+		$this->email->message($this->load->view('customer/bukti', $dt, true));
 
 		if ($this->email->send()) {
 			echo "berhasil";

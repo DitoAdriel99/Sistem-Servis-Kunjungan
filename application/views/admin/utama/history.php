@@ -52,15 +52,22 @@
 				<th width="150px">Tanggal Pesanan</th>
 				<th width="150px">Tanggal Perbaikan</th>
 				<th width="150px">Nama Customer</th>
-				<th width="150px">Teknisi</th>	
+				<th width="150px">Teknisi</th>
 				<th width="150px">Barang Perbaikan</th>
 				<th width="100px">Harga</th>
+				<th width="150px">Barang Tambahan 1</th>
+				<th width="150px">Harga Tambahan 1</th>
+				<th width="150px">Barang Tambahan 2</th>
+				<th width="150px">Harga Tambahan 2</th>
+				<th width="150px">Barang Tambahan 3</th>
+				<th width="150px">Harga Tambahan 3</th>
+				<th width="100px">Hasil</th>
 				<th width="100px">Mulai</th>
 				<th width="100px">selesai</th>
 			</tr>
 		</thead>
 		<tbody id="target">
-			
+
 		</tbody>
 	</table>
 </body>
@@ -69,6 +76,7 @@
 
 <script>
 	ambilData()
+
 	function cetak() {
 		$.ajax({
 			type: 'post',
@@ -79,12 +87,12 @@
 		});
 	}
 
-	function ambilData(){
+	function ambilData() {
 		$.ajax({
 			type: 'get',
 			url: '<?= base_url() . '/admin/history/laporan' ?>',
 			dataType: 'json',
-			success: function(data){
+			success: function(data) {
 				console.log(data)
 				if (data.length < 1) {
 					var baris = '';
@@ -95,6 +103,40 @@
 				} else {
 					var baris = '';
 					for (var i = 0; i < data.length; i++) {
+
+						if (data[i].barang_tambahan1 == null) {
+							var bt1 = 'Tidak Ada'
+						}else{
+							var bt1 = data[i].barang_tambahan1;
+						}
+						if (data[i].harga_tambahan1 < 1) {
+							var ht1 = 'Tidak Ada'
+						}else{
+							var ht1 = data[i].harga_tambahan1;
+						}
+
+						if (data[i].barang_tambahan2 == null) {
+							var bt2 = 'Tidak Ada'
+						}else{
+							var bt2 = data[i].barang_tambahan2;
+						}
+						if (data[i].harga_tambahan2 < 1) {
+							var ht2 = 'Tidak Ada'
+						}else{
+							var ht2 = data[i].harga_tambahan2;
+						}
+
+
+						if (data[i].barang_tambahan3 == null) {
+							var bt3 = 'Tidak Ada'
+						}else{
+							var bt3 = data[i].barang_tambahan3;
+						}
+						if (data[i].harga_tambahan3 < 1) {
+							var ht3 = 'Tidak Ada'
+						}else{
+							var ht3 = data[i].harga_tambahan3;
+						}
 						baris += '<tr>' +
 							'<td scope="row">' + (i + 1) + '</td>' +
 							'<td>' + data[i].tanggal_pesanan + '</td>' +
@@ -104,8 +146,15 @@
 							'<td>' + data[i].nama_keluhan + '</td>' +
 							// '<td>' + data[i].barang_tambahan + '</td>' +
 							'<td>' + data[i].harga + '</td>' +
+							'<td>' + bt1 + '</td>' +
+							'<td>' + bt1 + '</td>' +
+							'<td>' + bt2 + '</td>' +
+							'<td>' + ht2 + '</td>' +
+							'<td>' + bt3 + '</td>' +
+							'<td>' + ht3 + '</td>' +
+							'<td>' + data[i].hasil + '</td>' +
 							'<td>' + data[i].jam_mulai + '</td>' +
-							'<td>' + data[i].jam_selesai + '</td>' +		
+							'<td>' + data[i].jam_selesai + '</td>' +
 							'<tr>';
 					}
 					$('#target').html(baris);

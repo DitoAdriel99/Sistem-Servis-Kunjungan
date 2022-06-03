@@ -38,7 +38,8 @@ class Dashboard_model extends CI_Model
 			->join('tb_keluhan tk', 'tk.id_keluhan = tp.keluhan')
 			->where('tp.id_user', $id_user)
 			// ->where('tp.status', 0 )
-			->where('tp.bukti_pembayaran', null)
+			// ->where('tp.bukti_pembayaran', null)
+			->where('tp.verifikasi_pembayaran', null)
 			->get();
 		$exist = $this->db->affected_rows();
 		if ($exist > 0) {

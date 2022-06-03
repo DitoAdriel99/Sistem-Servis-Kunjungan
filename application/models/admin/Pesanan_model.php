@@ -69,6 +69,12 @@ class Pesanan_model extends CI_Model
 			->join('user tu', 'tu.id_user = tp.teknisi')
 			->where('tp.id_pesanan', $id_pesanan)
 			->get();
-		return $query->result();
+
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0, 'result' => $query->row());
+		} else {
+			return $result = array('error' => 0, 'result' => 'Data tidak ditemukan');
+		}
 	}
 }

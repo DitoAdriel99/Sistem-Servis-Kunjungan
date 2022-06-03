@@ -9,11 +9,9 @@ class Pdfview extends CI_Controller {
 
 		$this->load->model('admin/History_model', 'm');
 
-		$getData = $this->m->getHistory();
 
 		$data = array(
 			'title_pdf' => 'Laporan Servis Qhm',
-			'history' => $getData
 		);
         
         
