@@ -153,6 +153,7 @@ class Dashboard_model extends CI_Model
 		$this->db->delete($table);
 	}
 
+
 	// public function verifikasi($id_pesanan, $status)
 	// {
 	// 	$this->db->where('id_pesanan', $id_pesanan);
@@ -165,18 +166,10 @@ class Dashboard_model extends CI_Model
 	// 	}
 	// }
 
-	public function verifikasiSelesai($id_pesanan, $teknisi, $verifikasi_selesai)
+	public function verifikasiSelesai($sts)
 	{
-		$this->db->trans_start();
-
-		$this->db->query("UPDATE tb_pesanan SET verifikasi_selesai = $verifikasi_selesai WHERE id_pesanan = $id_pesanan");
-		$this->db->query("UPDATE user set status = '1' where id_user = $teknisi");
-		$this->db->trans_complete();
-		if ($this->db->trans_status() === FALSE) {
-			return $result = array('error' => 1);
-		} else {
-			return $result = array('error' => 0, 'id_pesanan' => $id_pesanan);
-		}
+		$this->db->where('id_user',$sts['id_user']);
+		$this->db->update('user',$sts);
 	}
 
 	public function uploadBukti($data)

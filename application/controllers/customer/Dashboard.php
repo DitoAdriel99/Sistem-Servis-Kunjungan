@@ -59,6 +59,7 @@ class Dashboard extends CI_Controller
 			$dt = array(
 				'id_pesanan' => $data['result']->id_pesanan,
 				'id_user' => $data['result']->id_user,
+				'teknisi' => $data['result']->teknisi,
 				'nama_customer' => $data['result']->nama_customer,
 				'alamat' => $data['result']->alamat,
 				'keluhan' => $data['result']->nama_keluhan,
@@ -242,6 +243,7 @@ class Dashboard extends CI_Controller
 		date_default_timezone_set("Asia/Jakarta");
 		$time = date("h:i:sa");
 		
+		
 		$data = array(
 			'id_pesanan' => $id_pesanan,
 			'jam_selesai' => $time,
@@ -269,8 +271,8 @@ class Dashboard extends CI_Controller
 	{
 		$id_pesanan = $this->input->post('id_pesanan');
 		$teknisi = $this->input->post('teknisi');
-		// echo $teknisi;
-		// die();
+		echo $teknisi;
+		die();
 
 		$verifikasi_selesai = $this->input->post('verifikasi_selesai');
 
@@ -298,6 +300,8 @@ class Dashboard extends CI_Controller
 		$id_pesanan = $this->input->post('id_pesanan');
 		$teknisi = $this->input->post('teknisi');
 		$verifikasi_selesai = 1;
+		// print_r($teknisi);
+		// die;
 
 		$config['upload_path']   = './gambar/';
 		$config['allowed_types'] = 'gif|jpg|png|pdf';
@@ -320,15 +324,21 @@ class Dashboard extends CI_Controller
 
 		$data = array(
 			'id_pesanan' => $id_pesanan,
-			'bukti_pembayaran' => $dataUpload['upload_data']['file_name']
+			'bukti_pembayaran' => $dataUpload['upload_data']['file_name'],
+			'verifikasi_selesai' => $verifikasi_selesai
 		);
 
-		// print_r($data);
-		// die;
+		
+		$sts = array(
+			'id_user' => $teknisi,
+			'status' => 1,
+		);
+		
 
 		$upload = $this->m->uploadBukti($data);
 
-		$this->m->verifikasiSelesai($id_pesanan,$teknisi,$verifikasi_selesai);
+		$this->m->verifikasiSelesai($sts);
+		
 
 		if ($upload['error'] == 0) {
 			$result = array(

@@ -1,9 +1,8 @@
-<h1>Daftar Barang Perbaikan</h1>
+<h1>Daftar Barang Servis</h1>
 
 <div class="col-md-12">
 	<div class="panel panel-default ">
 		<div class="panel-heading">
-			List Barang Perbaikan
 			<span id="success_message"></span>
 			<a href="#formkeluhan" onclick="submit('tambah')" data-toggle="modal" class="btn btn-md btn-primary">Tambah data</a>
 			<ul class="pull-right panel-settings panel-button-tab-right">

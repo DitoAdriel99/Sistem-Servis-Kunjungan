@@ -54,7 +54,7 @@ class History extends CI_Controller
 				'harga_tambahan3' => $key->harga_tambahan3,
 				'username' => $key->username,
 				'hasil' => $hasil,
-
+				'gambar_pekerjaan' =>$key->gambar_pekerjaan,
 				'status_pekerjaan' => $key->status_pekerjaan,
 			);
 

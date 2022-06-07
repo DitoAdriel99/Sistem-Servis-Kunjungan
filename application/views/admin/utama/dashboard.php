@@ -285,7 +285,7 @@
 					<div class="modal-footer">
 
 						<button type="button" href="#form_teknisi" data-toggle="modal" id="btn_terima" class="btn btn-primary">TERIMA</button>
-						<button type="button" id="btn_tolak" value="0" onclick="tolak(this.value)" class="btn btn-warning">TOLAK</button>
+						<button type="button" href="#modaltolak" data-toggle="modal" id="btn_terima" class="btn btn-warning">TOLAK</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">BATAL</button>
 					</div>
 				</form>
@@ -391,6 +391,8 @@
 	</div>
 </div>
 
+
+
 <div class="modal fade" id="cek_pesanan" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
@@ -417,6 +419,35 @@
 						</table>
 					</div>
 					<div class="modal-footer">
+
+						<button type="button" class="btn btn-danger" data-dismiss="modal">Kembali</button>
+					</div>
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+<div class="modal fade" id="modaltolak" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="modal-title">Tolak Pesanan</h3>
+			</div>
+			<div class="modal-body form">
+				<form action="#" id="formtolak" class="form-horizontal" method="POST" enctype="multipart/form-data">
+					<input type="hidden" name="id_pesanan" id="id_pesanan" />
+					<div class="form-body">
+						<div class="form-group">
+							<label class="control-label col-md-3">Alasan</label>
+							<div class="col-md-9">
+								<input class="form-control" placeholder="Masukan Alasan" id="pesan" name="pesan" required>
+							</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" id="btn_tolak" value="" onclick="tolak()" class="btn btn-warning">TOLAK</button>
 
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Kembali</button>
 					</div>
@@ -673,18 +704,21 @@
 		});
 	}
 
-	function tolak(x) {
+	function tolak() {
 		var id_pesanan = $('#id_pesanan').val()
+		var pesan = $('#pesan').val()
 		$.ajax({
 			type: 'POST',
 			url: '<?= base_url() . 'admin/dashboard/tolak' ?>',
 			data: {
 				'id_pesanan': id_pesanan,
-				'status': x,
+				'pesan': pesan
 			},
+			dataType:'JSON',
 			success: function(hasil) {
-				alert('Berhasil')
+				alert('Berhasil ditolak')
 				$('#detail_pesanan').modal('hide');
+				$('#modaltolak').modal('hide');
 				ambilData();
 				ambilTeknisi()
 				listOrderan();

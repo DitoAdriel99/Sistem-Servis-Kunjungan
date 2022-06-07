@@ -64,6 +64,8 @@
 				<th width="100px">Hasil</th>
 				<th width="100px">Mulai</th>
 				<th width="100px">selesai</th>
+				<th width="100px">bukti pekerjaan</th>
+
 			</tr>
 		</thead>
 		<tbody id="target">
@@ -144,10 +146,9 @@
 							'<td>' + data[i].nama_customer + '</td>' +
 							'<td>' + data[i].username + '</td>' +
 							'<td>' + data[i].nama_keluhan + '</td>' +
-							// '<td>' + data[i].barang_tambahan + '</td>' +
 							'<td>' + data[i].harga + '</td>' +
 							'<td>' + bt1 + '</td>' +
-							'<td>' + bt1 + '</td>' +
+							'<td>' + ht1 + '</td>' +
 							'<td>' + bt2 + '</td>' +
 							'<td>' + ht2 + '</td>' +
 							'<td>' + bt3 + '</td>' +
@@ -155,6 +156,9 @@
 							'<td>' + data[i].hasil + '</td>' +
 							'<td>' + data[i].jam_mulai + '</td>' +
 							'<td>' + data[i].jam_selesai + '</td>' +
+
+
+							'<td><a href="<?= base_url()?>gambar/' + data[i].gambar_pekerjaan +'" target="_blank" class="card-link">Lihat</a></td>' +
 							'<tr>';
 					}
 					$('#target').html(baris);

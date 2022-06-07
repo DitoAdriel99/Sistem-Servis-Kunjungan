@@ -1,4 +1,4 @@
-<h1>Data Perbaikan</h1>
+<h1>Data Servis</h1>
 <div class="panel-body timeline-container" style="display: block;">
 	<table class="table">
 		<thead>
@@ -66,7 +66,7 @@
 									<td name="status_pekerjaan_detail">John</td>
 								</tr>
 								<tr>
-									<td><b>Jam MUlai</b></td>
+									<td><b>Jam Mulai</b></td>
 									<td name="jam_mulai_detail">John</td>
 								</tr>
 								<tr>

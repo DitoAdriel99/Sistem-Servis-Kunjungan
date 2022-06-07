@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>PT.QHM</title>
+	<title>QHM</title>
 	<script src="<?= base_url() ?>assets/js/jquery-1.11.1.min.js"></script>
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 	<link href="<?= base_url() ?>assets/css/bootstrap.min.css" rel="stylesheet">
@@ -28,7 +28,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span></button>
-				<a class="navbar-brand"><span style="color: #ffff00;">PT.</span>QHM</a>
+				<a class="navbar-brand"><span style="color: #ffff00;">QHM</span></a>
 				<!-- <ul class="nav navbar-top-links navbar-right">
 					<li class="dropdown"><a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
 							<em class="fa fa-envelope"></em><span class="label label-danger">15</span>
@@ -118,7 +118,7 @@
 				<li><a class="button" id="" href="javascript:void()" onclick="dashboardAdmin()"><em class="fa fa-dashboard">&nbsp;</em> Halaman Utama</a></li>
 				<li><a class="button" id="" href="javascript:void()" onclick="pesananAdmin()"><em class="fa fa-calendar">&nbsp;</em> Pesanan</a></li>
 				<li><a class="button" id=""	href="javascript:void()" onclick="historyAdmin()"><em class="fa fa-bar-chart">&nbsp;</em> History</a></li>
-				<li><a class="button" id="" href="javascript:void()" onclick="keluhanAdmin()"><em class="fa fa-bar-chart">&nbsp;</em> Keluhan</a></li>
+				<li><a class="button" id="" href="javascript:void()" onclick="keluhanAdmin()"><em class="fa fa-bar-chart">&nbsp;</em> Barang Servis</a></li>
 			<?php } elseif ($this->session->userdata('level') == 2) { ?>
 				<li><a class="button" id="" href="javascript:void()" onclick="dashboardTeknisi()"><em class="fa fa-dashboard">&nbsp;</em> Halaman Utama</a></li>
 				<li><a class="button" id="" href="javascript:void()" onclick="profileTeknisi()"><em class="fa fa-dashboard">&nbsp;</em> Profile</a></li>

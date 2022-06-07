@@ -358,6 +358,7 @@
 				var json = $.parseJSON(hasil)
 				console.log(json);
 				location.reload()
+				alert('Harap Menunggu Verifikasi Admin')
 			}
 		});
 	}
@@ -507,7 +508,7 @@
 				}
 
 				$('#id_pesanan').val(data['id_pesanan']);
-				$('#teknisi').val(data['id_user']);
+				$('#teknisi').val(data['teknisi']);
 				$('[name="detail_keluhan"]').text(data['keluhan']);
 				$('[name="detail_keluhan_detail"]').text(data['detail_keluhan']);
 				$('[name="hasil"]').text(data['harga']);
@@ -557,12 +558,15 @@
 		let confirmAction = confirm("Apakah Teknisi Anda Sudah Selesai? ")
 		if (confirmAction) {
 			var id_pesanan = $('#id_pesanan').val()
+			var teknisi = $('#teknisi').val()
+
 			$.ajax({
 				type: 'POST',
 				url: '<?= base_url() . "customer/dashboard/selesai" ?>',
 				dataType: 'JSON',
 				data: {
 					'id_pesanan': id_pesanan,
+					'teknisi': teknisi,
 				},
 				success: function(data) {
 					$('#detail_forms').modal('hide');

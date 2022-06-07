@@ -233,4 +233,10 @@ class Dashboard_model extends CI_Model
 			return $result = array('error' => 1,);
 		}
 	}
+
+	// public function getEmailTolak($id_pesanan)
+	// {
+	// 	$query = $this->db->select('*')->from('tb_pesanan')->where('id_pesanan', $id_pesanan)->get();
+	// 	return $query->result();
+	// }
 }

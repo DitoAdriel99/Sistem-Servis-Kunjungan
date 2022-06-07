@@ -28,4 +28,16 @@ class Profile_model extends CI_Model
 				->get();
 		return $query->result();
 	}
+
+	public function update($data)
+	{
+		$this->db->where('id_user', $data['id_user']);
+		$this->db->update('user', $data);
+		$exist = $this->db->affected_rows();
+		if ($exist > 0) {
+			return $result = array('error' => 0, 'id_user' => $data['id_user']);
+		} else {
+			return $result = array('error' => 1,);
+		}
+	}
 }

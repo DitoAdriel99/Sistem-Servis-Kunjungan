@@ -32,10 +32,12 @@ class Profile extends CI_Controller
 				'id_user' => $profile['result']->id_user,
 				'username' => $profile['result']->username,
 				'grup' => $profile['result']->grup,
+				'status' => $profile['result']->status,
 			);
 		}else{
 			$dt = array(
 				'id_user' => $profile['error'],
+				'status' => $profile['error'],
 				'username' => $profile['error'],
 				'grup' => $profile['error'],
 			);
@@ -49,6 +51,34 @@ class Profile extends CI_Controller
 		$history = $this->m->getHistory($id_user);
 
 		echo json_encode($history);
+	}
+
+	public function status()
+	{
+		$id_user = $this->input->post('id_user');
+		$status = $this->input->post('status');
+
+		$data = array(
+			'id_user' => $id_user,
+			'status' => $status
+		);
+
+		$update = $this->m->update($data);
+
+		if ($update['error'] == 0) {
+			$result = array(
+				'error' => 0,
+				'data' => 'Berhasil di ubah'
+			);
+			echo json_encode($result);
+		} else {
+			$result = array(
+				'error' => 1,
+				'data' => 'gagal melakukan update ke database'
+			);
+			echo json_encode($result);
+		}
+
 	}
 
 }

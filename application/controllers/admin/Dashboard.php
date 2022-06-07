@@ -55,8 +55,11 @@ class Dashboard extends CI_Controller
 		foreach($queryGetDataTeknisi['result'] as $key){
 			if ($key->status == 0) {
 				$status = 'Sedang Tugas';
-			}else{
+			}elseif ($key->status == 1){
 				$status = 'Tersedia';
+			}else{
+				$status = 'Tidak Hadir';
+
 			}
 
 			$result[$i++] = array(
@@ -184,7 +187,13 @@ class Dashboard extends CI_Controller
 	public function tolak()
 	{
 		$id_pesanan = $this->input->post('id_pesanan');
+		$pesan = $this->input->post('pesan');
 
+		$queryemail = $this->db->select('*')->from('tb_pesanan')->where('id_pesanan', $id_pesanan)->get();
+
+		$email = $queryemail->row()->email;
+		
+	
 
 		$delete = $this->m->tolak($id_pesanan);
 
@@ -217,9 +226,9 @@ class Dashboard extends CI_Controller
 
 
 		$this->email->from('skripsidito@gmail.com','qhome');
-		$this->email->to($this->m->getEmail($id_pesanan));
+		$this->email->to($email);
 		$this->email->subject('Mohon Maaf! Kode Pesanan.'.$id_pesanan.'Ditolak');
-		$this->email->message('Gagal diproses harap mengulangi pesanan');
+		$this->email->message($pesan);
 		$this->email->send();
 	}
 
