@@ -113,7 +113,7 @@ class Pesanan extends CI_Controller
 		$config['protocol']  = 'smtp';
 		$config['smtp_host'] = 'ssl://smtp.googlemail.com';
 		$config['smtp_user'] = 'skripsidito@gmail.com';
-		$config['smtp_pass'] = 'pastilulus';
+		$config['smtp_pass'] = 'tujmezupyrnpughm';
 		$config['smtp_port'] = 465;
 		$config['charset']   = 'utf-8';
 		$config['mailtype']  = 'html';
@@ -167,12 +167,12 @@ class Pesanan extends CI_Controller
 		$this->email->to($this->m->getIdPesanan($id_pesanan));
 		$this->email->subject('Terimakasih! Kode Pesanan.' . $id_pesanan . 'Sudah Selesai');
 		$this->email->message($this->load->view('customer/bukti', $dt, true));
-
-		if ($this->email->send()) {
-			echo "berhasil";
-		} else {
-			echo "gagal";
-		}
+		$this->email->send();
+		// if ($this->email->send()) {
+		// echo 'behasil';
+		// } else {
+		// 	echo $this->email->log_message();
+		// }
 	}
 
 	public function send_mail()

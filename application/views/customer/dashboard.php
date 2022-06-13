@@ -106,7 +106,7 @@
 						<table class="table table-striped">
 							<tbody>
 								<tr>
-									<td><b>Keluhan</b> </td>
+									<td><b>Barang</b> </td>
 									<td name="detail_keluhan">John</td>
 								</tr>
 								<tr>

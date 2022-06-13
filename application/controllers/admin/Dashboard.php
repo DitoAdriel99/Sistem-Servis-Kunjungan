@@ -214,7 +214,7 @@ class Dashboard extends CI_Controller
 		$config['protocol']  = 'smtp';
 		$config['smtp_host'] = 'ssl://smtp.googlemail.com';
 		$config['smtp_user'] = 'skripsidito@gmail.com';
-		$config['smtp_pass'] = 'pastilulus';
+		$config['smtp_pass'] = 'tujmezupyrnpughm';
 		$config['smtp_port'] = 465;
 		$config['charset']   = 'utf-8';
 		$config['mailtype']  = 'html';
@@ -337,7 +337,7 @@ class Dashboard extends CI_Controller
 		$config['protocol']  = 'smtp';
 		$config['smtp_host'] = 'ssl://smtp.googlemail.com';
 		$config['smtp_user'] = 'skripsidito@gmail.com';
-		$config['smtp_pass'] = 'pastilulus';
+		$config['smtp_pass'] = 'tujmezupyrnpughm';
 		$config['smtp_port'] = 465;
 		$config['charset']   = 'utf-8';
 		$config['mailtype']  = 'html';

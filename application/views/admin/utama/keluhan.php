@@ -35,7 +35,7 @@
 				<thead>
 					<tr>
 						<th scope="col">#</th>
-						<th scope="col">Nama Keluhan</th>
+						<th scope="col">Nama Barang</th>
 						<th scope="col">Grup</th>
 						<th scope="col">Harga</th>
 						<th></th>
@@ -63,9 +63,9 @@
 					<input type="hidden" value="" id="id_keluhan" name="id_keluhan" />
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label col-md-3">Nama keluhan</label>
+							<label class="control-label col-md-3">Nama Barang</label>
 							<div class="col-md-9">
-								<input class="form-control" placeholder="Nama keluhan" id="nama_keluhan" name="nama_keluhan" required>
+								<input class="form-control" placeholder="Nama Barang" id="nama_keluhan" name="nama_keluhan" required>
 								<span id="nama_keluhan_error" class="text-danger"></span>
 
 
